@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Berkeley Park — Research Scope</title>
+  <style>
+    :root {
+      --ink:        #111418;
+      --ink-light:  #4a5260;
+      --ink-faint:  #6b7585;
+      --border:     #dde1e8;
+      --bg:         #f5f6f8;
+      --bg-white:   #ffffff;
+      --accent:     #1a56db;
+      --accent-bg:  #eef3ff;
+      --flag-bg:    #fff8ec;
+      --flag-border:#e8a020;
+      --action-bg:  #f0faf4;
+      --action-border:#2e9e60;
+      --ctx-bg:     #f4f5f7;
+      --ctx-border: #9aa3b0;
+      --layer1-bg:  #0f172a;
+      --layer2-bg:  #1e293b;
+      --layer3-bg:  #fafbfc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    header {
+      background: var(--layer1-bg);
+      color: #e2e8f0;
+      padding: 40px 48px 36px;
+    }
+    header .kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+    header .meta {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    header .meta span { margin-right: 20px; }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .wrapper { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── Layer badges ────────────────────────────────────── */
+    .layer-header {
+      margin: 48px 0 0;
+      padding: 20px 32px;
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .layer-header.l0 { background: #fff3cd; border-bottom: 2px solid #e8a020; margin-top: 32px; border-radius: 10px 10px 0 0; }
+    .layer-header.l1 { background: var(--layer1-bg); }
+    .layer-header.l2 { background: var(--layer2-bg); }
+    .layer-header.l3 { background: #1e3a5f; }
+
+    .layer-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .l0 .layer-badge { background: #e8a020; color: #fff; }
+    .l1 .layer-badge { background: #3b82f6; color: #fff; }
+    .l2 .layer-badge { background: #6366f1; color: #fff; }
+    .l3 .layer-badge { background: #0ea5e9; color: #fff; }
+
+    .layer-title { font-size: 15px; font-weight: 600; }
+    .l0 .layer-title { color: #7c4a00; }
+    .l1 .layer-title, .l2 .layer-title, .l3 .layer-title { color: #e2e8f0; }
+    .layer-sub { font-size: 13px; }
+    .l0 .layer-sub { color: #9a5800; }
+    .l1 .layer-sub, .l2 .layer-sub, .l3 .layer-sub { color: #94a3b8; }
+
+    /* ── Card shells ─────────────────────────────────────── */
+    .layer-body {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 32px 36px;
+    }
+
+    /* ── Section ─────────────────────────────────────────── */
+    .section { margin-bottom: 36px; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-preview {
+      font-size: 13px;
+      color: var(--ink-faint);
+      font-style: italic;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .strategic-summary-box {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 28px;
+    }
+    .strategic-summary-box .ss-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 10px;
+    }
+    .strategic-summary-box .ss-statement {
+      font-size: 17px;
+      font-weight: 600;
+      color: #f1f5f9;
+      line-height: 1.55;
+    }
+
+    /* ── Tables ──────────────────────────────────────────── */
+    .table-wrap { overflow-x: auto; margin: 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead tr { background: #f8f9fb; }
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafbfc; }
+
+    td .status-yes  { color: #16a34a; font-weight: 600; }
+    td .status-no   { color: var(--ink-faint); }
+    td .status-pri  { color: #16a34a; font-weight: 600; }
+    td .status-dep  { color: #b45309; }
+
+    /* ── Step-0 verdict badges ───────────────────────────── */
+    .verdict {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-right: 5px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .verdict-ok      { background: #dcfce7; color: #15803d; }   /* green  — not a problem */
+    .verdict-problem { background: #fee2e2; color: #b91c1c; }   /* red    — is a problem  */
+    .verdict-partial { background: #fff3cd; color: #92400e; }   /* amber  — partial issue */
+    .verdict-unknown { background: #f1f5f9; color: #475569; }   /* slate  — unclear       */
+    .verdict-info    { background: #eff6ff; color: #1d4ed8; }   /* blue   — informational */
+
+    /* ── Callout blocks ───────────────────────────────────── */
+    .callout {
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      margin: 14px 0;
+      line-height: 1.55;
+    }
+    .callout .callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .callout-action {
+      background: var(--action-bg);
+      border-left: 3px solid var(--action-border);
+    }
+    .callout-action .callout-label { color: #166534; }
+
+    .callout-flag {
+      background: var(--flag-bg);
+      border-left: 3px solid var(--flag-border);
+    }
+    .callout-flag .callout-label { color: #92400e; }
+
+    .callout-context {
+      background: var(--ctx-bg);
+      border-left: 3px solid var(--ctx-border);
+    }
+    .callout-context .callout-label { color: #374151; }
+
+    /* ── Hypotheses ──────────────────────────────────────── */
+    .hypothesis-list { list-style: none; counter-reset: hyp; }
+    .hypothesis-list li {
+      counter-increment: hyp;
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .hypothesis-list li:last-child { border-bottom: none; }
+    .hyp-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      background: var(--accent-bg);
+      color: var(--accent);
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* ── Questions list ──────────────────────────────────── */
+    .q-primary {
+      background: var(--accent-bg);
+      border: 1px solid #c7d9f8;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 14px;
+    }
+    .q-primary .q-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #3b82f6;
+      margin-bottom: 5px;
+    }
+    .sub-question-list { list-style: none; }
+    .sub-question-list li {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .sub-question-list li:last-child { border-bottom: none; }
+    .sq-num {
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-faint);
+      padding-top: 1px;
+    }
+
+    /* ── Signal list ─────────────────────────────────────── */
+    .signal-list { list-style: none; }
+    .signal-list li {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .signal-list li:last-child { border-bottom: none; }
+    .sig-dot {
+      flex-shrink: 0;
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-top: 7px;
+    }
+
+    /* ── Constraint list ─────────────────────────────────── */
+    .constraint-list { list-style: none; }
+    .constraint-list li {
+      padding: 9px 0 9px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      position: relative;
+    }
+    .constraint-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--ink-faint);
+    }
+    .constraint-list li:last-child { border-bottom: none; }
+    .constraint-list li strong { color: var(--ink); }
+
+    /* ── Stakeholder block ───────────────────────────────── */
+    .stakeholder-list { list-style: none; }
+    .stakeholder-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .stakeholder-list li:last-child { border-bottom: none; }
+    .stakeholder-list li strong { color: var(--ink); }
+
+    /* ── Closing statement ───────────────────────────────── */
+    .closing {
+      margin-top: 52px;
+      background: var(--layer1-bg);
+      border-radius: 10px;
+      padding: 32px 36px;
+    }
+    .closing .c-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .closing p {
+      font-size: 16px;
+      font-weight: 500;
+      color: #cbd5e1;
+      line-height: 1.65;
+    }
+
+    /* ── Divider ─────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+    p { font-size: 14px; line-height: 1.6; color: var(--ink-light); margin-bottom: 10px; }
+    p:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="kicker">Research Scope — City of Berkeley</div>
+  <h1>Berkeley Public Park Improvement</h1>
+  <div class="meta">
+    <span>Audience: Ages 13–44</span>
+    <span>Timeline: 4 weeks</span>
+    <span>Date: April 2026</span>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- ═══════════════════════════════════════════════
+       STEP 0
+  ═══════════════════════════════════════════════ -->
+  <div class="layer-header l0" style="margin-top:40px;">
+    <div class="layer-badge">0</div>
+    <div>
+      <div class="layer-title">Is This the Right Problem?</div>
+      <div class="layer-sub">Run before scoping — determines whether research is the correct next step</div>
+    </div>
+  </div>
+  <div class="layer-body">
+    <div class="section">
+      <p class="section-preview">Four checks against the brief determine whether to proceed with research or redirect to a different owner.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Check</th><th>Assessment</th></tr></thead>
+          <tbody>
+            <tr><td>Already known or studied recently</td><td><span class="verdict verdict-unknown">Unknown</span> No prior research cited. Data review required before fieldwork begins.</td></tr>
+            <tr><td>Design or usability problem</td><td><span class="verdict verdict-ok">No</span> This is a public investment prioritization decision.</td></tr>
+            <tr><td>Metrics gap</td><td><span class="verdict verdict-problem">Yes</span> No usage data provided. Existing signals must be reviewed before research is designed.</td></tr>
+            <tr><td>Policy, ops, or strategy in disguise</td><td><span class="verdict verdict-partial">Partially</span> "Support local events" and "enhance community spirit" may be programming or operations decisions, not research questions. These should be separated from the usage and behavior questions before scoping proceeds.</td></tr>
+            <tr><td>Fast answer or foundational</td><td><span class="verdict verdict-info">Fast answer</span> The city needs to prioritize specific improvements before committing budget. This is not a foundational study.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-action" style="margin-top:16px;">
+        <div class="callout-label">→ Action Required</div>
+        Project lead should separate "increase usage" and "encourage physical activity" (research questions) from "enhance community spirit" and "better support local events" (potential programming and operations decisions) before research is designed. If all four remain in scope without prioritization, findings will be too diffuse to act on.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       LAYER 1
+  ═══════════════════════════════════════════════ -->
+  <div class="layer-header l1">
+    <div class="layer-badge">1</div>
+    <div>
+      <div class="layer-title">Strategic Summary</div>
+      <div class="layer-sub">For everyone — what this is, what we recommend, what is at stake</div>
+    </div>
+  </div>
+  <div class="layer-body">
+
+    <div class="strategic-summary-box">
+      <div class="ss-label">Strategic Summary</div>
+      <div class="ss-statement">Without evidence on why people ages 13–44 currently avoid this park, the city cannot distinguish between an infrastructure problem, a safety perception problem, a programming problem, or a communications problem — and risks funding the wrong one.</div>
+    </div>
+
+    <div class="step-label">Recommended Path Forward</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>What this is really about</td><td>Identifying the primary barrier to park use among ages 13–44 before committing to a specific improvement path</td></tr>
+          <tr><td>Is research the right next step</td><td>Yes — four competing goals, no usage data, no segmentation signal</td></tr>
+          <tr><td>Recommended method</td><td>Contextual intercept interviews and brief intercept survey at the park site</td></tr>
+          <tr><td>Decision this unlocks</td><td>Which improvement category to fund first and how to sequence the rest</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-action" style="margin-top:20px;">
+      <div class="callout-label">→ Action Required</div>
+      Project lead should confirm the primary decision this research must inform — improvement prioritization — and align stakeholders on the most critical age sub-segment within 13–44 before fieldwork is designed. Proceeding without this alignment will compromise the usefulness of the output.
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       LAYER 2
+  ═══════════════════════════════════════════════ -->
+  <div class="layer-header l2">
+    <div class="layer-badge">2</div>
+    <div>
+      <div class="layer-title">Why We Recommend This</div>
+      <div class="layer-sub">For decision-makers — rationale, hypotheses, method, key constraints</div>
+    </div>
+  </div>
+  <div class="layer-body">
+
+    <!-- Step 1 -->
+    <div class="section">
+      <div class="step-label">Step 1 — Decision and Risk</div>
+      <h2>What Is Being Decided and What Is at Stake</h2>
+      <p class="section-preview">This section identifies the decision being made and what is at stake if that decision is wrong.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Element</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Decision being made</td><td>Which park improvements to fund and in what sequence</td></tr>
+            <tr><td>Risk of getting it wrong</td><td>Budget distributed across improvements that do not address the primary barrier — no measurable change in usage</td></tr>
+            <tr><td>Risk of skipping research</td><td>City defaults to conventional improvement assumptions without evidence they address the actual barriers for this audience</td></tr>
+            <tr><td>Reversible or irreversible</td><td>Partially irreversible — infrastructure changes are costly to undo; programming and events are more reversible</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-context" style="margin-top:14px;">
+        <div class="callout-label">📋 Context</div>
+        The higher the infrastructure investment, the more consequential it is to correctly diagnose the barrier before committing.
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 2 -->
+    <div class="section">
+      <div class="step-label">Step 2 — Mental Model Gap</div>
+      <h2>Where Assumptions and Reality Diverge</h2>
+      <p class="section-preview">This section names where the team's assumptions and user reality may diverge — that gap is what the research tests.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>What the team or industry assumes</th><th>What may actually be true</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>The park is underused because it lacks amenities or programming</td>
+              <td>People may avoid the park due to safety perception, lack of social context, or low awareness — not missing features</td>
+            </tr>
+            <tr>
+              <td>Ages 13–44 is a coherent audience with shared needs</td>
+              <td>This range spans teenagers, young adults, and parents with children — groups with fundamentally different use cases and barriers</td>
+            </tr>
+            <tr>
+              <td>More events build community spirit <em style="color:var(--ink-faint);font-size:12px;">(conventional parks programming assumption)</em></td>
+              <td>Passive improvements — lighting, seating, landscaping — may drive daily use more than events, which produce short-term spikes without sustained behavior change</td>
+            </tr>
+            <tr>
+              <td>Physical activity infrastructure is the primary driver of usage for this demographic</td>
+              <td>Perceived safety and social belonging may be stronger motivators than courts or fitness equipment</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-action" style="margin-top:14px;">
+        <div class="callout-label">→ Action Required</div>
+        Project lead should align stakeholders on which age sub-segment is the primary focus before research is designed. A single study treating ages 13–44 as one group will produce findings too broad to drive a prioritization decision.
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 3 -->
+    <div class="section">
+      <div class="step-label">Step 3 — Hypotheses</div>
+      <h2>Three Positions to Test</h2>
+      <p class="section-preview">Each hypothesis surfaces an assumption the team may be carrying. Alignment on priority is required before fieldwork is scheduled.</p>
+      <ul class="hypothesis-list">
+        <li>
+          <div class="hyp-num">1</div>
+          <div>People ages 13–24 avoid the park not because of missing features, but because it is not perceived as a relevant social space for their peer group — which means design and programming must address belonging and identity, not amenities alone.</div>
+        </li>
+        <li>
+          <div class="hyp-num">2</div>
+          <div>Adults ages 25–44 do not use the park regularly because it fails to support multiple simultaneous needs (fitness, child-friendliness, socializing) in one visit — which means a single improvement category will not be sufficient to shift their behavior.</div>
+        </li>
+        <li>
+          <div class="hyp-num">3</div>
+          <div>Event attendance already outpaces casual daily use, and the real gap is non-event repeat behavior — which means community spirit initiatives anchored in events will produce short-term spikes without sustained usage change.</div>
+        </li>
+      </ul>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 4 -->
+    <div class="section">
+      <div class="step-label">Step 4 — Research Approach</div>
+      <h2>What We Will and Will Not Do</h2>
+      <p class="section-preview">This section explains method selection given the specific constraints of this project — 4 weeks, unspecified budget, and a minor audience requirement.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Method</th><th>Status</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Contextual intercept interviews at the park</td>
+              <td><span class="status-pri">✓ Prioritized</span></td>
+              <td>Fastest access to current users; surfaces actual use patterns and barriers without recruitment lag in a 4-week window</td>
+            </tr>
+            <tr>
+              <td>Brief intercept survey (5–7 questions)</td>
+              <td><span class="status-pri">✓ Prioritized</span></td>
+              <td>Quantifies visit frequency and top barriers across sub-segments; reaches near-park non-visitors passively</td>
+            </tr>
+            <tr>
+              <td>Desk research — city usage data and prior studies</td>
+              <td><span class="status-pri">✓ Prioritized</span></td>
+              <td>May already answer several questions; prevents duplicate investment; must be completed before fieldwork begins</td>
+            </tr>
+            <tr>
+              <td>In-depth remote interviews with non-users</td>
+              <td><span class="status-dep">✗ Deprioritized</span></td>
+              <td>Recruiting confirmed non-users within 4 weeks is high-risk; intercepts and survey provide the essential signal</td>
+            </tr>
+            <tr>
+              <td>Ethnographic observation</td>
+              <td><span class="status-dep">✗ Deprioritized</span></td>
+              <td>Valuable but time-intensive; not feasible alongside primary methods in this timeline</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-context" style="margin-top:14px;">
+        <div class="callout-label">📋 Context</div>
+        This approach assumes low-to-moderate budget. If incentivized recruitment is approved, add a brief online screener to access confirmed non-users from the 13–24 segment — the hardest group to reach through intercepts alone.
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 5 -->
+    <div class="section">
+      <div class="step-label">Step 5 — Human-Led Session Assessment</div>
+      <h2>When a Human Researcher Is Required</h2>
+      <p class="section-preview">This section explicitly determines whether any part of this research requires a human researcher — it does not assume.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Condition</th><th>Present</th><th>Implication</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Sensitive or trust-dependent topic</td>
+              <td><span class="status-no">No</span></td>
+              <td>Park use is low-stakes for most participants</td>
+            </tr>
+            <tr>
+              <td>Vulnerable participants — minors ages 13–17</td>
+              <td><span class="status-yes">Yes</span></td>
+              <td>Parental consent and a trained researcher are required for all sessions with minors</td>
+            </tr>
+            <tr>
+              <td>Foundational research — problem is unknown</td>
+              <td><span class="status-yes">Yes</span></td>
+              <td>Human judgment is needed to surface unanticipated barriers the team has not named</td>
+            </tr>
+            <tr>
+              <td>Irreversible decision with no prior signal</td>
+              <td><span class="status-yes">Partially</span></td>
+              <td>Infrastructure spend is not easily reversed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout callout-action" style="margin-top:14px;">
+        <div class="callout-label">→ Action Required</div>
+        Research team must develop a parental consent protocol for participants ages 13–17 before fieldwork begins. This is a legal and ethical prerequisite — not a procedural step. All sessions with minors must be conducted by a trained human researcher. AI-assisted methods — synthesis, survey analysis, desk research — are appropriate for adult segments and back-end analysis.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       LAYER 3
+  ═══════════════════════════════════════════════ -->
+  <div class="layer-header l3">
+    <div class="layer-badge">3</div>
+    <div>
+      <div class="layer-title">How to Execute</div>
+      <div class="layer-sub">For researchers and PMs — full plan: questions, segments, metrics, stakeholder plan, impact chain</div>
+    </div>
+  </div>
+  <div class="layer-body" style="background: var(--layer3-bg);">
+
+    <!-- Step 6 -->
+    <div class="section">
+      <div class="step-label">Step 6 — Constraints</div>
+      <h2>What Is Achievable in 4 Weeks</h2>
+      <p class="section-preview">These constraints determine what is achievable — and where the plan will break if not addressed before fieldwork begins.</p>
+      <ul class="constraint-list">
+        <li><strong>Timeline:</strong> 4 weeks. Realistic allocation: Week 1 — desk research and protocol development. Weeks 2–3 — fieldwork. Week 4 — synthesis and readout.</li>
+        <li><strong>Audience includes minors:</strong> Consent and safeguarding protocols are prerequisites, not parallel workstreams.</li>
+        <li><strong>Budget unspecified:</strong> Method selection assumes low-to-moderate budget. Incentivized recruitment of non-users is not assumed.</li>
+        <li><strong>Four unresolved goals:</strong> Without pre-fieldwork prioritization, the study will produce findings too diffuse to support a clear decision.</li>
+      </ul>
+
+      <div class="callout callout-flag" style="margin-top:14px;">
+        <div class="callout-label">⚠ Flag</div>
+        Parental consent protocol for ages 13–17 is a legal and ethical blocker. Fieldwork cannot begin until this is in place.
+      </div>
+      <div class="callout callout-flag">
+        <div class="callout-label">⚠ Flag</div>
+        Budget has not been confirmed. If intercept incentives are not approved, access to non-users — the most critical segment — will be substantially limited.
+      </div>
+      <div class="callout callout-flag">
+        <div class="callout-label">⚠ Flag</div>
+        Four goals remain in scope with no stated priority. Research design should not proceed until the primary decision is named.
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 7 -->
+    <div class="section">
+      <div class="step-label">Step 7 — Existing Signals</div>
+      <h2>What to Review Before Fieldwork Is Designed</h2>
+      <p class="section-preview">These sources should be reviewed before any fieldwork is designed — several questions may already be answered.</p>
+      <ul class="signal-list">
+        <li><div class="sig-dot"></div><div>City of Berkeley parks department usage data — permit applications, foot traffic counts, maintenance logs for this site</div></li>
+        <li><div class="sig-dot"></div><div>Prior community needs assessments or park master plans for this specific location</div></li>
+        <li><div class="sig-dot"></div><div>Service requests and complaints submitted to the parks department related to this park</div></li>
+        <li><div class="sig-dot"></div><div>Feedback from local schools, recreation programs, or community organizations that serve the 13–24 segment</div></li>
+      </ul>
+      <div class="callout callout-flag" style="margin-top:14px;">
+        <div class="callout-label">⚠ Flag</div>
+        No existing signals were provided in the brief. The research team must formally request this data from the parks department in Week 1. Fieldwork should not begin until this review is complete — or explicitly documented as unavailable and labeled as an assumption in the research plan.
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 8 -->
+    <div class="section">
+      <div class="step-label">Step 8 — Research Questions</div>
+      <h2>What We Need to Answer</h2>
+      <p class="section-preview">These questions, if answered, directly inform the prioritization decision named in Layer 1.</p>
+
+      <div class="q-primary">
+        <div class="q-label">Primary Question</div>
+        What prevents people ages 13–44 from using this park more regularly — and which single improvement would most change that behavior?
+      </div>
+
+      <ul class="sub-question-list">
+        <li><div class="sq-num">Q1</div><div>What does each age sub-segment within 13–44 currently use the park for, and what do they report as missing or off-putting?</div></li>
+        <li><div class="sq-num">Q2</div><div>What are the primary perceived barriers: safety, awareness, amenities, social context, programming, or other?</div></li>
+        <li><div class="sq-num">Q3</div><div>What would make someone in this age range visit more frequently — a physical change, a recurring activity, or a social draw?</div></li>
+        <li><div class="sq-num">Q4</div><div>Does event attendance currently translate into repeat non-event usage — and does that pattern differ by age sub-segment?</div></li>
+      </ul>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 9 -->
+    <div class="section">
+      <div class="step-label">Step 9 — Participant Segments</div>
+      <h2>Who We Are Talking To</h2>
+      <p class="section-preview">Segments are defined by behavior. Priority goes to the people closest to the decision point — those most likely to shift if the right improvement is made.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Segment</th><th>Behavior definition</th><th>Why they matter</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Occasional visitors, ages 25–44 (1–3×/month)</td>
+              <td>Visit sometimes but cite specific barriers to coming more often</td>
+              <td>Closest to the conversion point — most likely to shift behavior in response to a targeted improvement</td>
+            </tr>
+            <tr>
+              <td>Teens and young adults, ages 13–24, low or no park use</td>
+              <td>Active in the area but do not choose the park as a destination</td>
+              <td>Largest gap between stated goal and current behavior; require minor consent protocol for under-18s</td>
+            </tr>
+            <tr>
+              <td>Regular users, any age within 13–44 (weekly+)</td>
+              <td>Use the park consistently across seasons</td>
+              <td>Establish what is working; serve as contrast group for identifying barriers</td>
+            </tr>
+            <tr>
+              <td>Event-only visitors, ages 13–44</td>
+              <td>Attend organized park events but do not use the space outside of them</td>
+              <td>Tests whether event-driven engagement converts to independent daily use</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 10 -->
+    <div class="section">
+      <div class="step-label">Step 10 — Success Metrics</div>
+      <h2>How We Will Know This Worked</h2>
+      <p class="section-preview">Four layers of success — from immediate research outcomes to long-term system signal. This study will have worked when a specific decision can be attributed to the findings.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>Metric</th><th>When we will know</th></tr></thead>
+          <tbody>
+            <tr><td>Research success</td><td>Decision-maker can name the primary barrier and top recommended action after the readout</td><td>End of Week 4</td></tr>
+            <tr><td>Team goal</td><td>Prioritized improvement list with evidence-backed rationale, approved by project lead</td><td>End of Week 4</td></tr>
+            <tr><td>User outcome</td><td>% of 13–44 residents who report at least one cited barrier addressed by the implemented improvement</td><td>Post-implementation survey, 6 months</td></tr>
+            <tr><td>Business / system metric</td><td>Monthly park visit frequency among 13–44 (foot traffic data)</td><td>6–12 months post-improvement</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 11 -->
+    <div class="section">
+      <div class="step-label">Step 11 — Stakeholder and Action Plan</div>
+      <h2>Who Acts and When</h2>
+      <p class="section-preview">Research without a named owner for each recommendation does not produce decisions — it produces reports.</p>
+      <ul class="stakeholder-list">
+        <li><strong>Who this plan is for:</strong> City of Berkeley parks department, project lead</li>
+        <li><strong>Who must align before research starts:</strong> Parks department data team (usage signals); legal or compliance lead (minor consent protocol); community liaisons already engaged with the 13–24 segment</li>
+        <li><strong>What happens after:</strong> Week 4 readout to project lead and parks department, followed by a prioritization workshop mapping findings to specific improvement options and a Phase 1 scope decision</li>
+        <li><strong>Relationship move this enables:</strong> Positions the research function as a partner in evidence-based public investment — demonstrates that community input shaped the outcome, building credibility for future city engagement work</li>
+      </ul>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Step 12 -->
+    <div class="section">
+      <div class="step-label">Step 12 — Impact Chain</div>
+      <h2>From Finding to Action</h2>
+      <p class="section-preview">Each hypothesis must resolve into a complete chain before research starts. Any row that cannot be completed should be cut from scope.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Anticipated Finding</th><th>Implication</th><th>Action + Owner</th><th>Metric to Watch</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Teens and young adults do not perceive the park as a relevant social space</td>
+              <td>Design and programming must address social identity and belonging, not amenities</td>
+              <td>Parks programming team redesigns activation strategy with direct teen input before implementation</td>
+              <td>Repeat visits among 13–24 (monthly foot traffic)</td>
+            </tr>
+            <tr>
+              <td>Safety perception is a primary barrier, particularly for women and young adults</td>
+              <td>Lighting and sight-line improvements take priority over amenity additions</td>
+              <td>City infrastructure team adds lighting review to improvement scope before final design submission</td>
+              <td>Reported safety comfort in post-implementation survey (6 months)</td>
+            </tr>
+            <tr>
+              <td>Adults 25–44 require the park to support multiple simultaneous uses</td>
+              <td>Single-use design fails this segment; multi-zone layout is required</td>
+              <td>Design team validates zoning plan against this finding before submitting to city council</td>
+              <td>Usage frequency among 25–44 sub-segment</td>
+            </tr>
+            <tr>
+              <td>Event attendance is high but daily non-event use is low</td>
+              <td>Investment ratio should shift toward permanent infrastructure over one-time programming</td>
+              <td>Project lead adjusts budget allocation before Phase 1 funding is committed</td>
+              <td>Ratio of event visits to non-event visits (month over month, 12 months)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       CLOSING
+  ═══════════════════════════════════════════════ -->
+  <div class="closing">
+    <div class="c-label">Closing Statement</div>
+    <p>A park improvement program that proceeds with four unresolved goals and a 31-year age range as its audience will distribute investment across changes too incremental to shift behavior in any segment — and will have no basis for evaluating whether it succeeded.</p>
+  </div>
+
+</div>
+</body>
+</html>
