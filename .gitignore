@@ -1,0 +1,5 @@
+# Git worktrees — managed by Claude Code, not part of main branch
+.claude/worktrees/
+
+# macOS
+.DS_Store
