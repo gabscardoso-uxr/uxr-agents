@@ -1,7 +1,7 @@
 ---
-name: Research Synthesis
+name: synthesis
 description: Takes raw session notes or transcripts and produces structured decision-ready findings. No fabrication.
-user-invocable: synthesis
+user-invocable: true
 ---
 
 # SKILL: Research Synthesis

@@ -1,7 +1,7 @@
 ---
-name: Discussion Guide Generator
+name: discussion-guide
 description: Takes a completed research scope and generates a field-ready discussion guide. Stage-aware, no leading questions.
-user-invocable: discussion-guide
+user-invocable: true
 ---
 
 # SKILL: Discussion Guide Generator
