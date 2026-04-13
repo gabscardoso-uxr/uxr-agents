@@ -1,7 +1,7 @@
 ---
-name: Participant Screener Generator
+name: screener
 description: Takes a research scope and generates a field-ready participant screener. Criteria-first, quota-aware.
-user-invocable: screener
+user-invocable: true
 ---
 
 # SKILL: Participant Screener Generator

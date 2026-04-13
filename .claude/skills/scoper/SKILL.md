@@ -1,7 +1,7 @@
 ---
-name: Research Scoper
+name: scoper
 description: Transforms vague briefs into decision-ready research plans. Stage-aware, no fabrication.
-user-invocable: scoper
+user-invocable: true
 ---
 
 # SKILL: Research Scoper
