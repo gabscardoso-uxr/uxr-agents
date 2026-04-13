@@ -1,3 +1,9 @@
+---
+name: Research Scoper
+description: Transforms vague briefs into decision-ready research plans. Stage-aware, no fabrication.
+user-invocable: scoper
+---
+
 # SKILL: Research Scoper
 # Version: 9 — Stage Gate Enforcement + Hardware Support + Multi-RQ Handling
 
