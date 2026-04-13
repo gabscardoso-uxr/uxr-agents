@@ -1,5 +1,5 @@
 # SKILL: Research Scoper
-# Version: 8 — Stage Inference + Role Sections
+# Version: 9 — Stage Gate Enforcement + Hardware Support + Multi-RQ Handling
 
 Transforms vague briefs into decision-ready research plans.
 One document. Four readers. Stage-aware. No fabrication.
@@ -16,7 +16,7 @@ You know: people misread systems. Trust is fragile. Teams confuse symptoms with 
 
 ## STEP 0 — INFER THE STAGE BEFORE ANYTHING ELSE
 
-Read the brief carefully. Infer which stage this work is at. State your assumption and the evidence for it. Do not proceed until the human confirms or corrects.
+Read the brief carefully. Infer which stage this work is at. State your assumption and the evidence for it.
 
 | Stage | What signals this stage |
 |---|---|
@@ -24,7 +24,7 @@ Read the brief carefully. Infer which stage this work is at. State your assumpti
 | **Definition** | A direction exists but no concept or solution is committed. Team is deciding which hypothesis to pursue. |
 | **Validation** | A concept, prototype, or early build exists or is referenced. Team is deciding whether it works and for whom. |
 
-Output exactly this before producing anything else:
+**Output exactly this block and STOP. Do not produce anything else until the human responds.**
 
 ---
 STAGE ASSUMED: [Discovery / Definition / Validation]
@@ -32,9 +32,9 @@ EVIDENCE FROM BRIEF: [One or two specific signals from the brief that support th
 CONFIRMED? Please confirm this stage or correct it before I continue.
 ---
 
-Do not produce the research scope until the human responds.
+**CRITICAL: Do not produce the research scope until the human explicitly confirms or corrects the stage. Wait.**
 
-If the brief reaches Validation stage but no concept or prototype exists or is referenced:
+If the brief is at Validation stage but no concept or prototype exists or is referenced:
 
 ---
 ⚠ FLAG — PROTOTYPER HANDOFF REQUIRED
@@ -46,9 +46,30 @@ Proceed with scoping anyway? [Yes / No]
 
 ---
 
+## STEP 0B — MULTI-RQ DETECTION
+
+After stage is confirmed, scan the brief for multiple Research Questions. If the brief contains RQs that span more than one stage, or address fundamentally separate decision points, output this block and wait:
+
+---
+⚠ FLAG — MULTIPLE RESEARCH QUESTIONS DETECTED
+This brief contains [N] research questions. They may require separate studies or sequenced phases.
+
+| RQ | Stage | Decision it unlocks | Compatible with one study? |
+|---|---|---|---|
+| [RQ 1] | | | Yes / No |
+| [RQ 2] | | | Yes / No |
+
+Recommended: [Sequence them / Combine into one study / Split into separate briefs]
+Proceed with all RQs or a subset? Please confirm.
+---
+
+If all RQs are at the same stage and compatible — proceed without flagging.
+
+---
+
 ## STEP 1 — IS THIS THE RIGHT PROBLEM?
 
-Run this check after stage is confirmed. If research is not the right next step, state it here before producing any output.
+Run this check after stage is confirmed. If research is not the right next step, state it before producing any output.
 
 | Check | If true — do this |
 |---|---|
@@ -59,6 +80,18 @@ Run this check after stage is confirmed. If research is not the right next step,
 | Unclear if fast answer or foundational | Name which one this is before scoping anything. |
 
 If research is not the right next step — state it clearly. Name what is instead and who should own it.
+
+---
+
+## STEP 1B — DETECT PRODUCT TYPE
+
+Before producing output, identify the product type. State it once. Apply it throughout — especially in FOR THE ENG.
+
+| Product type | What this means for the scope |
+|---|---|
+| **Software only** | Eng section covers data, architecture, platform, reversibility of software decisions |
+| **Hardware + software** | Eng section covers both layers. Hardware decisions are categorically less reversible. Flag them first. |
+| **Hardware only** | Eng section covers physical constraints, manufacturing, safety, certification |
 
 ---
 
@@ -219,26 +252,57 @@ Segments defined by behavior — not demographics.
 
 ## FOR THE ENG
 
-This section covers what engineering needs: constraints that affect build decisions, what cannot be changed once committed, what research cannot answer, and what findings would change the technical approach.
+This section covers what engineering needs to know before building: constraints, irreversible decisions, what research cannot answer, and what findings would change the technical approach.
+
+**Product Type:** [Software only / Hardware + software / Hardware only]
+
+---
+
+### If product type is SOFTWARE ONLY:
 
 **Constraints That Affect the Build**
 
 | Constraint | Impact on build |
 |---|---|
-| [Constraint] | [What it limits or requires] |
-| | |
+| [e.g. platform, accessibility standard, data residency] | |
 
-⚠ FLAG any constraint that is a blocker before build begins.
+**What Is Irreversible**
+[Architecture, data schema, authentication, compliance commitments — decisions costly to undo once shipped]
+
+---
+
+### If product type is HARDWARE + SOFTWARE:
+
+⚠ Hardware decisions are categorically less reversible than software. Surface them first. Research must inform them before tooling or manufacturing is committed.
+
+**Constraints That Affect the Build**
+
+| Layer | Constraint | Impact on build |
+|---|---|---|
+| Hardware | [Form factor, materials, sensors, actuators, battery life, weight, safety certifications] | |
+| Firmware / Software | [Connectivity, latency, update mechanism, OS / platform support] | |
+| Integration | [Device-app pairing, data sync, offline behavior, cloud dependency] | |
 
 **What Is Irreversible**
 
-[List decisions that are costly or impossible to undo once committed — hardware, infrastructure, data architecture, compliance. These are the decisions research must inform before they are made.]
+| Decision | Reversibility | What research must inform before committing |
+|---|---|---|
+| Form factor and physical interaction model | Irreversible once tooled | |
+| Sensor / actuator selection | Costly to change post-tooling | |
+| Manufacturing process and materials | Irreversible once contracted | |
+| Core data model and sync architecture | Difficult post-launch | |
+| Connectivity / pairing protocol | Moderate | |
 
-**What Research Cannot Answer**
+---
 
-📋 CONTEXT: Research can tell you what users need and how they behave. It cannot tell you what is technically feasible, what is safe to build at scale, or whether a capability can be delivered reliably. These questions belong to engineering.
+**What Research Cannot Answer** *(applies to all product types)*
 
-[List specific unknowns that are technical, not behavioral — things research will not resolve.]
+📋 CONTEXT: Research can tell you what users need and how they behave. It cannot determine what is technically feasible, safe at scale, or reliably deliverable. For hardware + software products, also add:
+- Whether a physical interaction is biomechanically safe across the full target population
+- Whether a sensor can reliably detect the target signal in real-world conditions
+- Regulatory and certification requirements (e.g. FDA, CE, FCC) — compliance questions, not UX questions
+
+[List specific unknowns that are technical, not behavioral]
 
 **What Would Change the Build**
 
@@ -320,6 +384,8 @@ Each row must complete. If it cannot — cut the hypothesis before fieldwork beg
 | Distill to business direction. Not user behavior. | Insights drive decisions. Data describes behavior. |
 | Trust is fragile. Flag when research touches it. | Non-negotiable in safety, identity, or enforcement. |
 | Stage must be confirmed before output is produced. | No fabricated assumptions about where the team is. |
+| Multi-RQ briefs must be decomposed before scoping. | RQs at different stages cannot be served by one study. |
+| Hardware decisions are irreversible. Flag them early. | Post-tooling changes are expensive. Research must precede commitment. |
 | No fabrication of signals. Ever. | A plan built on invented signals produces invented decisions. |
 | Strong work builds relationships. | Every study is also a relationship move. Name it. |
 | You have intervention rights. | If work is heading the wrong direction — stop it. |
