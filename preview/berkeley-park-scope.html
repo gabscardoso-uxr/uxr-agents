@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Scope — Berkeley Park Improvement</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #f5f5f3;
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+    .doc-header .label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .doc-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .doc-header .meta {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #666;
+      display: flex;
+      gap: 24px;
+    }
+    .doc-header .meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── Section ── */
+    section {
+      margin-bottom: 48px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .section-tag.pm    { background: #2563eb; }
+    .section-tag.des   { background: #7c3aed; }
+    .section-tag.eng   { background: #b45309; }
+    .section-tag.rp    { background: #065f46; }
+    .section-tag.exec  { background: #1a1a1a; }
+
+    section h2 {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #444;
+      margin: 28px 0 12px;
+    }
+
+    p { margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Callout blocks ── */
+    .callout {
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .callout strong { display: block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+
+    .callout.action {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      color: #1e3a5f;
+    }
+    .callout.action strong { color: #2563eb; }
+
+    .callout.flag {
+      background: #fffbeb;
+      border-left: 3px solid #d97706;
+      color: #5c3d00;
+    }
+    .callout.flag strong { color: #d97706; }
+
+    .callout.context {
+      background: #f0fdf4;
+      border-left: 3px solid #16a34a;
+      color: #14401f;
+    }
+    .callout.context strong { color: #16a34a; }
+
+    .callout.recommended {
+      background: #1a1a1a;
+      border-left: none;
+      color: #fff;
+      border-radius: 6px;
+    }
+    .callout.recommended strong { color: #a3a3a3; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 16px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead tr {
+      background: #f0f0ee;
+    }
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #555;
+      padding: 10px 14px;
+      border-bottom: 1px solid #ddd;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #e8e8e6;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #fafaf9; }
+
+    .check-yes { color: #16a34a; font-weight: 700; }
+    .check-no  { color: #9ca3af; }
+    .check-pri { color: #2563eb; font-weight: 700; }
+    .check-dep { color: #9ca3af; }
+
+    /* ── Strategic summary card ── */
+    .summary-card {
+      background: #fff;
+      border: 1px solid #e0e0de;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .summary-card .headline {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #1a1a1a;
+    }
+
+    /* ── Numbered list ── */
+    ol.rq {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+    ol.rq li {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    ol.rq li span {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* ── Hypotheses ── */
+    .hypothesis {
+      background: #fafaf9;
+      border: 1px solid #e8e8e6;
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin: 10px 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .hypothesis .num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #7c3aed;
+      margin-bottom: 4px;
+    }
+
+    /* ── Closing statement ── */
+    .closing {
+      border-top: 2px solid #1a1a1a;
+      margin-top: 56px;
+      padding-top: 24px;
+      font-size: 15px;
+      font-style: italic;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    /* ── Divider ── */
+    hr {
+      border: none;
+      border-top: 1px solid #e0e0de;
+      margin: 32px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="label">Research Scope — Scoper V8</div>
+    <h1>Berkeley Public Park Improvement</h1>
+    <div class="meta">
+      <span>Stage: Discovery</span>
+      <span>Audience: Ages 13–44</span>
+      <span>Timeline: 4 weeks</span>
+      <span>Client: City of Berkeley</span>
+    </div>
+  </div>
+
+  <!-- EXEC SUMMARY -->
+  <section>
+    <div class="section-header">
+      <span class="section-tag exec">Exec Summary</span>
+      <h2>Strategic Summary</h2>
+    </div>
+
+    <div class="summary-card">
+      <div class="headline">The city is framing this as an amenity problem when it is more likely an activation problem — the 13–44 demographic's absence from public parks is typically driven by social context, programming gaps, and perception of who else is there, not by the presence or absence of physical infrastructure.</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Element</th><th>Answer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>What this is really about</td><td>Understanding why the target demographic is not using the park now, before deciding what to change</td></tr>
+            <tr><td>Is research the right next step</td><td>Yes — four goals are stated but no diagnosis exists for which is most constrained or where to begin</td></tr>
+            <tr><td>Recommended method</td><td>In-park observation paired with off-site intercept interviews with the absent 13–44 segment</td></tr>
+            <tr><td>Decision this unlocks</td><td>Which improvement category (infrastructure, programming, activation, or events) to fund first, and for which sub-segment</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="callout recommended">
+      <strong>Recommended Action</strong>
+      The project lead should confirm whether capital budget, programming budget, or both are in scope before research begins — this determines which decisions the findings can actually inform, and scoping without it risks producing a readout that cannot connect to any fundable action.
+    </div>
+  </section>
+
+  <!-- FOR THE PM -->
+  <section>
+    <div class="section-header">
+      <span class="section-tag pm">For the PM</span>
+      <h2>Decision, Risk &amp; Timeline</h2>
+    </div>
+    <p style="color:#555; font-size:14px;">What is at stake, when decisions happen, what success looks like, and what the findings must connect to.</p>
+
+    <h3>Decision and Risk</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Decision being made</td><td>Which park improvements to prioritize and fund within the available budget and timeline</td></tr>
+          <tr><td>Risk of getting it wrong</td><td>Investing in physical infrastructure that does not shift behavior for the 13–44 demographic, because the barrier was social or programmatic, not physical</td></tr>
+          <tr><td>Risk of skipping research</td><td>Defaulting to conventional upgrades that serve existing heavy users rather than the absent segment the goals are explicitly targeting</td></tr>
+          <tr><td>Reversible or irreversible</td><td>Infrastructure investment is largely irreversible; programming and activation decisions are reversible — research must inform the irreversible category first</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Timeline</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Week</th><th>Activity</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Week 1</strong></td><td>Review existing signals (usage data, event attendance, community feedback); finalize screener; begin recruitment for off-site interviews</td></tr>
+          <tr><td><strong>Week 2</strong></td><td>In-park observation sessions (multiple time slots, weekday and weekend); intercept interviews on-site; off-site interviews with absent 13–44 residents</td></tr>
+          <tr><td><strong>Week 3</strong></td><td>Analysis; identify behavioral segments; map barriers by sub-group</td></tr>
+          <tr><td><strong>Week 4</strong></td><td>Readout to project stakeholders; decision brief with prioritized improvement categories</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Success Metrics</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Layer</th><th>Metric</th><th>When we will know</th></tr></thead>
+        <tbody>
+          <tr><td>Research success</td><td>Behavioral barriers identified for at least two distinct sub-segments within 13–44</td><td>End of Week 3</td></tr>
+          <tr><td>Team goal</td><td>Improvement priorities ranked and rationale documented before budget commitment</td><td>End of Week 4</td></tr>
+          <tr><td>User outcome</td><td>Increased park visits among 13–44 demographic in the target neighborhood</td><td>6 months post-implementation</td></tr>
+          <tr><td>Business / system metric</td><td>Event attendance and repeat usage rates</td><td>12 months post-implementation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>What Happens After</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>Readout format and audience</td><td>Decision brief and presentation to Berkeley Parks &amp; Recreation leadership and relevant city council stakeholders</td></tr>
+          <tr><td>Decision meeting</td><td>Project lead, Parks &amp; Rec director, budget authority — end of Week 4 — what gets decided: improvement category priority and funding allocation</td></tr>
+          <tr><td>What enters the roadmap</td><td>Capital improvement plan items and/or programming budget line for the following fiscal year</td></tr>
+          <tr><td>6-month signal</td><td>Foot traffic counts and event attendance at this park vs. comparable Berkeley parks</td></tr>
+          <tr><td>12-month signal</td><td>Self-reported community satisfaction and repeat usage surveys</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout action">
+      <strong>→ Action Required</strong>
+      The project lead should pull existing park usage data and any prior community feedback before Week 1 ends — if this data does not exist, that gap is itself a finding that will affect what the city can responsibly claim post-implementation.
+    </div>
+  </section>
+
+  <!-- FOR THE DESIGNER -->
+  <section>
+    <div class="section-header">
+      <span class="section-tag des">For the Designer</span>
+      <h2>Mental Models, Hypotheses &amp; Segments</h2>
+    </div>
+    <p style="color:#555; font-size:14px;">Where assumptions and user reality are most likely to diverge, and what design work must account for before concepts are developed.</p>
+
+    <h3>Where Assumptions and Reality Diverge</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>What the team assumes</th><th>What may actually be true</th></tr></thead>
+        <tbody>
+          <tr><td>Adding or upgrading physical amenities drives usage among younger demographics</td><td>Usage in the 13–44 range is more often driven by social anchors, programming, and perception of who else is present — not infrastructure alone</td></tr>
+          <tr><td>13–44 is a coherent target audience that can be designed for together</td><td>A 15-year-old and a 40-year-old parent have almost nothing in common behaviorally in a park context; treating them as one segment will produce design that serves neither well</td></tr>
+          <tr><td>People are staying away because the park lacks features</td><td>People may be staying away because the park lacks a reason to come at a specific time — programming and activation gaps, not amenity gaps</td></tr>
+          <tr><td>Community spirit is built through shared space</td><td>Community spirit in this demographic is more typically built through repeated shared experiences; events and recurring social rituals matter more than the space itself</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout action">
+      <strong>→ Action Required</strong>
+      Design should not begin concept development until fieldwork surfaces what the absent 13–44 sub-segments are currently doing instead of using this park — those behaviors are the design's direct competition.
+    </div>
+
+    <h3>Hypotheses to Design Against</h3>
+
+    <div class="hypothesis">
+      <div class="num">Hypothesis 1</div>
+      Teens (13–19) use parks as social infrastructure rather than physical activity venues — which means activity-focused improvements will underperform for this group unless a social anchor (gathering space, visibility, informal programming) is built in alongside them.
+    </div>
+    <div class="hypothesis">
+      <div class="num">Hypothesis 2</div>
+      Adults 25–44 perceive the park as intended for a different user (younger children, older adults, or unhoused residents) and self-exclude without testing it — which means design must signal that this space is for them specifically, not just add generic amenities.
+    </div>
+    <div class="hypothesis">
+      <div class="num">Hypothesis 3</div>
+      The absent segments are not absent because of what the park lacks, but because no recurring reason to arrive at a specific time exists — which means activation programming (scheduled, repeating, low-commitment events) may unlock usage more than any physical change.
+    </div>
+
+    <h3>Who We Are Designing For</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Segment</th><th>Behavior definition</th><th>Design implication</th></tr></thead>
+        <tbody>
+          <tr><td><strong>The social activator</strong> (13–44)</td><td>Organizes informal group activity — pickup sports, group runs, casual meetups — and brings others with them</td><td>Design must give this person a reliable, flexible surface to activate; they are the multiplier</td></tr>
+          <tr><td><strong>The event participant</strong> (13–44)</td><td>Comes for scheduled programming; does not self-generate reasons to visit</td><td>Needs infrastructure that makes events reliable: power access, flexible open space, clear signage, promotion channels</td></tr>
+          <tr><td><strong>The absent teen</strong> (13–19)</td><td>Present in the neighborhood but not in the park; using commercial spaces, streets, or adjacent spaces for social time</td><td>Must be surfaced through off-site fieldwork; their current alternative is what design must compete with or integrate</td></tr>
+          <tr><td><strong>The habitual solo user</strong></td><td>Already visiting — runs, walks, exercises alone</td><td>Not the target for increasing usage; do not over-index design to their existing behavior at the expense of other segments</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Workarounds That Already Exist</h3>
+    <div class="callout flag">
+      <strong>⚠ Flag</strong>
+      Workarounds are unknown at this stage. Fieldwork must surface what the 13–44 demographic currently does instead of using this park — other parks, private gyms, commercial spaces, streets, or private homes. Designing concepts before workarounds are understood creates friction the team will discover after investment.
+    </div>
+  </section>
+
+  <!-- FOR THE ENG -->
+  <section>
+    <div class="section-header">
+      <span class="section-tag eng">For the Eng</span>
+      <h2>Constraints, Irreversible Decisions &amp; Build Implications</h2>
+    </div>
+    <p style="color:#555; font-size:14px;">What capital planning and facilities teams need to know before committing to build decisions.</p>
+
+    <h3>Constraints That Affect the Build</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Constraint</th><th>Impact on build</th></tr></thead>
+        <tbody>
+          <tr><td>4-week research timeline precedes any build commitment</td><td>No infrastructure design should begin until findings are in — parallel-tracking risks building for the wrong priority</td></tr>
+          <tr><td>City permitting and procurement timelines</td><td>Capital improvements may take 12–24 months from decision to implementation; programming changes can move in weeks — these are not equivalent options</td></tr>
+          <tr><td>ADA and municipal code compliance</td><td>Any new structure, surface, or fixture must meet accessibility requirements regardless of what research recommends</td></tr>
+          <tr><td>Budget category constraints (capital vs. operating)</td><td>Physical improvements and programming are funded differently; findings must connect to the correct budget category or they cannot be acted on</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout flag">
+      <strong>⚠ Flag</strong>
+      If the capital improvement budget is already allocated to a specific category, that constraint must be disclosed before research begins — scoping findings against a decision that has already been made produces theater, not direction.
+    </div>
+
+    <h3>What Is Irreversible</h3>
+    <ul style="font-size:14px; padding-left:20px; line-height:2;">
+      <li>Hardscape installation (courts, paths, stages, permanent structures) — costly to modify once poured or built</li>
+      <li>Electrical and utility infrastructure — requires trenching; not reversible without significant cost</li>
+      <li>Removal of existing trees or green space — ecological and community impact; may require environmental review</li>
+      <li>Any commitment made publicly to a specific improvement before research concludes</li>
+    </ul>
+
+    <h3>What Research Cannot Answer</h3>
+    <div class="callout context">
+      <strong>📋 Context</strong>
+      Research will identify what the target demographic needs and what barriers exist. It will not answer what is structurally feasible on this site, what subsurface conditions allow, what the permitting timeline is for specific improvement categories, or what the city's maintenance capacity can realistically support. Those questions belong to facilities and capital planning.
+    </div>
+
+    <h3>What Would Change the Build</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>If research finds this</th><th>Facilities / capital planning should do this</th></tr></thead>
+        <tbody>
+          <tr><td>Primary barrier is lack of programming, not infrastructure</td><td>Prioritize operating budget for activation over capital budget for physical amenities</td></tr>
+          <tr><td>Teens need social gathering space, not activity equipment</td><td>Shift design toward flexible hardscape and seating clusters rather than fixed activity stations</td></tr>
+          <tr><td>Adults 25–44 are deterred by safety perception or poor lighting</td><td>Prioritize lighting and sightline improvements before any amenity addition</td></tr>
+          <tr><td>Events are the primary draw but infrastructure (power, staging) is inadequate</td><td>Scope electrical and flexible surface work as the first capital priority</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout action">
+      <strong>→ Action Required</strong>
+      Facilities lead should document which improvement categories are within the current capital budget scope before Week 2 fieldwork begins — findings will be mapped directly to fundable decisions, and this mapping cannot happen without knowing what is in scope.
+    </div>
+  </section>
+
+  <!-- RESEARCH PLAN -->
+  <section>
+    <div class="section-header">
+      <span class="section-tag rp">Research Plan</span>
+      <h2>Full Study Design</h2>
+    </div>
+    <p style="color:#555; font-size:14px;">For whoever is running the study.</p>
+
+    <h3>Existing Signals to Review First</h3>
+    <ol class="rq">
+      <li>Park foot traffic counts or usage data held by Berkeley Parks &amp; Recreation (if instrumented)</li>
+      <li>Event attendance records for any programming previously held at this park</li>
+      <li>Community feedback already on record: 311 service requests, Parks &amp; Rec public comment logs, neighborhood association meeting notes, NextDoor or community social media posts referencing the park</li>
+      <li>Demographic data for neighborhoods within walking distance — to understand whether the 13–44 target is well-represented nearby or requires a different recruitment strategy</li>
+    </ol>
+
+    <div class="callout flag">
+      <strong>⚠ Flag</strong>
+      If none of these signals exist, that absence is itself a finding — the city has been making park decisions without behavioral data, which raises the risk that past investments have also missed the target demographic. Name this in the readout.
+    </div>
+
+    <h3>Research Questions</h3>
+    <p style="font-size:14px;"><strong>Primary question:</strong> What prevents residents aged 13–44 in the surrounding neighborhood from using this park regularly, and what specific change would make them more likely to visit?</p>
+
+    <ol class="rq">
+      <li>Which sub-segments within 13–44 are currently absent, and what are they doing instead?
+        <span>Informs: who to design for and what the design competes with</span>
+      </li>
+      <li>Which of the four stated goals is most constrained by a behavioral or environmental barrier that a park change could address?
+        <span>Informs: which improvement category to fund first</span>
+      </li>
+      <li>What programming or activation, if any, would bring the absent segments in on a recurring basis?
+        <span>Informs: whether capital or operating budget is the higher-leverage investment</span>
+      </li>
+      <li>What signals in the current park environment cause the 13–44 demographic to self-exclude or feel the space is not for them?
+        <span>Informs: design language, activation framing, and communication</span>
+      </li>
+    </ol>
+
+    <h3>Research Approach</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>Status</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>In-park structured observation (multiple time slots, weekday + weekend)</td><td class="check-pri">✓ Prioritized</td><td>Reveals who is actually present, what they are doing, and what space is unused — foundational before any interviews</td></tr>
+          <tr><td>Off-site intercept interviews with absent 13–44 residents</td><td class="check-pri">✓ Prioritized</td><td>The absent segment cannot be reached in the park; this is the only way to surface their barriers directly</td></tr>
+          <tr><td>On-site intercept interviews with current park users</td><td class="check-pri">✓ Prioritized</td><td>Establishes what is already working and who the current user base is</td></tr>
+          <tr><td>Survey</td><td class="check-dep">✗ Deprioritized</td><td>Discovery stage; behavioral motivations are not yet defined well enough to survey against — generates noise before patterns are established</td></tr>
+          <tr><td>Focus groups</td><td class="check-dep">✗ Deprioritized</td><td>Social desirability effects are high in community settings; individual interviews produce more honest barrier data</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>When Human-Led Sessions Are Required</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Condition</th><th>Present</th><th>Implication</th></tr></thead>
+        <tbody>
+          <tr><td>Sensitive or trust-dependent topic</td><td class="check-yes">Yes</td><td>Community and government context; participants may be skeptical of city-sponsored research — researcher relationship and framing matter</td></tr>
+          <tr><td>Vulnerable participants</td><td class="check-yes">Yes</td><td>Minors (13–17) are included in the target audience; parental consent protocols required</td></tr>
+          <tr><td>Foundational — problem is unknown</td><td class="check-yes">Yes</td><td>No prior behavioral data exists for this park or this demographic segment</td></tr>
+          <tr><td>Irreversible decision, no prior signal</td><td class="check-yes">Yes</td><td>Capital improvements are largely irreversible; this is the signal that informs them</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout action">
+      <strong>→ Action Required</strong>
+      All sessions with participants aged 13–17 require a human researcher, a parental or guardian consent process, and IRB or city ethics review clearance before recruitment begins. Research lead should confirm the consent protocol with the city's legal or compliance team in Week 1. AI-assisted analysis can support synthesis of observation notes and adult interview transcripts after fieldwork concludes.
+    </div>
+
+    <h3>From Finding to Action</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Anticipated Finding</th><th>Implication</th><th>Action + Owner</th><th>Metric to Watch</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Absent 13–44 residents report that no recurring reason to visit exists</td>
+            <td>Programming and activation are the primary lever, not physical infrastructure</td>
+            <td>Parks &amp; Rec to scope a recurring activation calendar before any capital commitment</td>
+            <td>Monthly attendance counts 6 months post-activation</td>
+          </tr>
+          <tr>
+            <td>Teens use nearby commercial or street spaces because the park lacks social gathering infrastructure</td>
+            <td>Flexible seating, shade, and gathering nodes are higher priority than activity equipment</td>
+            <td>Capital planning to reprioritize next improvement cycle toward social infrastructure</td>
+            <td>Teen presence during peak afternoon hours (observation repeat)</td>
+          </tr>
+          <tr>
+            <td>Adults 25–44 perceive the park as unsafe or poorly lit at evening hours</td>
+            <td>Lighting and sightline improvements unlock the segment with highest potential for regular usage</td>
+            <td>Facilities to assess lighting coverage and prioritize in capital plan</td>
+            <td>Adult usage counts during evening hours</td>
+          </tr>
+          <tr>
+            <td>Current events draw participants but logistical gaps (power, staging, load-in) limit frequency</td>
+            <td>Event infrastructure investment has the highest multiplier across all four stated goals</td>
+            <td>Capital planning to scope electrical and staging infrastructure as first build priority</td>
+            <td>Number of events hosted per quarter and attendance per event</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <div class="closing">
+    If the city proceeds from research to implementation without establishing behavioral baselines now, it will have no way to measure whether the improvements caused the change in usage they were designed to produce — and no evidence base for the next funding request.
+  </div>
+
+</div>
+</body>
+</html>
