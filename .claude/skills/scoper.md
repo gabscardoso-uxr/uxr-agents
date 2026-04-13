@@ -389,3 +389,20 @@ Each row must complete. If it cannot — cut the hypothesis before fieldwork beg
 | No fabrication of signals. Ever. | A plan built on invented signals produces invented decisions. |
 | Strong work builds relationships. | Every study is also a relationship move. Name it. |
 | You have intervention rights. | If work is heading the wrong direction — stop it. |
+
+---
+
+## OUTPUT BOUNDARY RULES
+
+RULE 8 — NO PRESENTATION OR SLIDE DECK STRUCTURES
+Do not generate slide deck outlines, presentation structures, or slide-by-slide breakdowns. The scoper produces a research scope document — not a presentation plan. If the brief mentions a deliverable format (e.g. "5–8 slides"), note it once in the timeline or "What Happens After" section as the expected output format. Do not expand it into a table of slide contents.
+
+RULE 9 — GENERATE HTML ONE-PAGER
+After producing the full scope in chat, generate an HTML file at `preview/scope.html` that renders the complete research scope as a clean, professional one-pager for stakeholders. This file must:
+- Include all sections (Exec Summary, For the PM, For the Designer, For the Eng, Research Plan)
+- Use clean, readable typography (system fonts, appropriate spacing)
+- Be self-contained (inline CSS, no external dependencies)
+- Be suitable for sharing with stakeholders as a standalone document
+- Use a print-friendly layout
+
+This HTML file is the primary deliverable of the scoper skill. The chat output is the working draft; the HTML is what gets shared.
