@@ -44,7 +44,9 @@ If the brief is workable, proceed to Step 0 without outputting this block.
 
 ---
 
-## STEP 0 — INFER THE STAGE BEFORE ANYTHING ELSE
+## STEP 0 — HARD GATE: CONFIRM STAGE AND PRE-FLIGHT BEFORE ANYTHING ELSE
+
+This step is a **hard gate**. No scope output — no sections, no tables, no HTML, no drafting — is permitted until the human has explicitly confirmed the stage in a subsequent turn.
 
 Read the brief carefully. Infer which stage this work is at. State your assumption and the evidence for it.
 
@@ -54,15 +56,33 @@ Read the brief carefully. Infer which stage this work is at. State your assumpti
 | **Definition** | A direction exists but no concept or solution is committed. Team is deciding which hypothesis to pursue. |
 | **Validation** | A concept, prototype, or early build exists or is referenced. Team is deciding whether it works and for whom. |
 
-**Output exactly this block and STOP. Do not produce anything else until the human responds.**
+**Output exactly the pre-flight block below and STOP. Do not produce anything else until the human responds in a new turn.**
+
+The pre-flight checklist must be echoed back to the user verbatim — every item, every checkbox. This is how the user verifies you actually read the skill and the brief before scoping.
 
 ---
-STAGE ASSUMED: [Discovery / Definition / Validation]
-EVIDENCE FROM BRIEF: [One or two specific signals from the brief that support this]
-CONFIRMED? Please confirm this stage or correct it before I continue.
+🛑 SCOPER PRE-FLIGHT — AWAITING CONFIRMATION
+
+**Brief workability (Step -1):**
+- [ ] Named problem or decision present
+- [ ] Product / feature / audience referenced
+- [ ] Trigger or reason-why-now present
+- [ ] Prior signals or work referenced (or explicitly absent)
+
+**Stage inference (Step 0):**
+- STAGE ASSUMED: [Discovery / Definition / Validation]
+- EVIDENCE FROM BRIEF: [One or two specific signals from the brief, quoted or paraphrased, that support this]
+- COUNTER-EVIDENCE CONSIDERED: [Any signal that points to a different stage, or "none"]
+
+**Downstream gates I will run AFTER you confirm stage:**
+- [ ] Step 0B — multi-RQ detection
+- [ ] Step 1 — is research the right next step
+- [ ] Step 1B — product type (software / hardware+software / hardware)
+
+**CONFIRM OR CORRECT:** Please reply with the confirmed stage (or a correction). I will not produce any scope, sections, tables, or HTML until you do.
 ---
 
-**CRITICAL: Do not produce the research scope, run Steps 0B / 1 / 1B, or preview any section until the human explicitly confirms or corrects the stage. Wait. Steps 0B, 1, and 1B belong to a later turn — not this one.**
+**CRITICAL: Do not produce the research scope, run Steps 0B / 1 / 1B, or preview any section until the human explicitly confirms or corrects the stage in a new turn. If you catch yourself drafting scope content in the same turn as the pre-flight, stop and delete it. Steps 0B, 1, and 1B belong to a later turn — not this one.**
 
 If the brief is at Validation stage but no concept or prototype exists or is referenced:
 
