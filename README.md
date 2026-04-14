@@ -4,6 +4,33 @@ A set of Claude Code skills for UX researchers. Each skill takes a specific rese
 
 ---
 
+## Install
+
+These skills run inside [Claude Code](https://claude.com/claude-code). You'll need it installed first.
+
+**Option 1 — use the repo as your working directory (simplest):**
+
+```bash
+git clone https://github.com/gabscardoso-uxr/uxr-agents.git
+cd uxr-agents
+claude
+```
+
+The skills in `.claude/skills/` are available automatically when Claude Code runs from this directory.
+
+**Option 2 — install into your user-level Claude config (skills available everywhere):**
+
+```bash
+git clone https://github.com/gabscardoso-uxr/uxr-agents.git
+cp -r uxr-agents/.claude/skills/* ~/.claude/skills/
+```
+
+After either setup, `/scoper`, `/screener`, `/discussion-guide`, and `/synthesis` are available as slash commands in any Claude Code session.
+
+To stay up to date, `git pull` in the cloned repo (Option 1) or re-copy the skills directory (Option 2).
+
+---
+
 ## Skills
 
 ### `/scoper` — Research Scoper
