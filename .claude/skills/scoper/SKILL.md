@@ -190,6 +190,7 @@ Structure (in order):
 
 Style contract:
 - Self-contained: inline CSS, no external fonts, no JS, no external assets
+- Pin light color-scheme so the document renders consistently in dark-themed preview panels and browsers: set `html { color-scheme: light; background: #ffffff; }` and set explicit `background` and `color` on `body`. Do not rely on UA defaults.
 - System font stack: `-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
 - Max content width ~720px, generous line-height (1.5+), readable at A4/Letter print
 - Render tables as HTML `<table>` with borders — do not flatten to lists

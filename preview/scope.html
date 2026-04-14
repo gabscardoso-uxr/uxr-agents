@@ -3,314 +3,301 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research Scope — Google Home for Alzheimer's Quality of Life</title>
+<title>Research Scope — AI Assistant Drop-Off Diagnostic</title>
 <style>
   :root {
-    --text: #1a1a1a;
-    --muted: #555;
+    --accent: #2e5cb8;
+    --flag: #a8561b;
+    --muted: #666;
     --border: #d0d0d0;
-    --bg: #ffffff;
-    --section-bg: #f8f8f8;
-    --accent: #2c5282;
-    --flag: #c53030;
-    --action: #2b6cb0;
-    --context: #6b7280;
+    --bg-muted: #f6f6f6;
+    --bg-action: #eef3fb;
+    --bg-flag: #fbf4ec;
   }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
+  html { color-scheme: light; background: #ffffff; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: var(--text);
-    background: var(--bg);
-    line-height: 1.6;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 40px 24px 80px;
-    font-size: 15px;
-  }
-  h1 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    color: var(--accent);
-  }
-  .subtitle {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 32px;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 16px;
-  }
-  h2 {
-    font-size: 16px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--accent);
-    margin: 36px 0 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-  }
-  h3 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 14px;
-    font-weight: 700;
-    margin: 20px 0 8px;
-    color: var(--text);
+    line-height: 1.55;
+    color: #1a1a1a;
+    background: #ffffff;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1.25rem;
   }
-  p { margin-bottom: 10px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0 16px;
-    font-size: 13px;
-  }
-  th, td {
-    text-align: left;
-    padding: 8px 10px;
-    border: 1px solid var(--border);
-    vertical-align: top;
-  }
-  th {
-    background: var(--section-bg);
-    font-weight: 600;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
+  header { border-bottom: 2px solid var(--accent); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
+  header h1 { margin: 0 0 0.25rem; font-size: 1.5rem; }
+  header .meta { color: var(--muted); font-size: 0.85rem; }
+  section { margin-bottom: 2rem; }
+  h2 { font-size: 1.15rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; margin-top: 1.75rem; }
+  h3 { font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+  p.preview { color: var(--muted); font-style: italic; margin: 0.25rem 0 0.75rem; }
+  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; font-size: 0.92rem; }
+  th, td { border: 1px solid var(--border); padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+  th { background: var(--bg-muted); font-weight: 600; }
+  ul, ol { padding-left: 1.25rem; margin: 0.4rem 0 0.8rem; }
+  li { margin-bottom: 0.25rem; }
   .action {
-    background: #ebf4ff;
-    border-left: 3px solid var(--action);
-    padding: 10px 14px;
-    margin: 12px 0;
-    font-size: 13px;
-    font-weight: 500;
+    border-left: 4px solid var(--accent);
+    background: var(--bg-action);
+    padding: 0.6rem 0.85rem;
+    margin: 0.75rem 0;
+    border-radius: 2px;
+  }
+  .context {
+    border-left: 4px solid var(--border);
+    background: var(--bg-muted);
+    padding: 0.6rem 0.85rem;
+    margin: 0.75rem 0;
+    color: #333;
+    border-radius: 2px;
   }
   .flag {
-    background: #fff5f5;
-    border-left: 3px solid var(--flag);
-    padding: 10px 14px;
-    margin: 12px 0;
-    font-size: 13px;
+    border-left: 4px solid var(--flag);
+    background: var(--bg-flag);
+    padding: 0.6rem 0.85rem;
+    margin: 0.75rem 0;
+    border-radius: 2px;
   }
-  .context-block {
-    background: var(--section-bg);
-    border-left: 3px solid var(--context);
-    padding: 10px 14px;
-    margin: 12px 0;
-    font-size: 13px;
-    color: var(--muted);
-  }
-  ol, ul { margin: 8px 0 12px 20px; font-size: 14px; }
-  li { margin-bottom: 4px; }
-  .hypothesis { margin-bottom: 10px; font-size: 14px; }
-  .stage-badge {
-    display: inline-block;
-    background: var(--accent);
-    color: white;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-  }
+  .label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
+  .label.action { color: var(--accent); background: none; border: none; padding: 0; display: inline; }
+  .label.flag   { color: var(--flag);   background: none; border: none; padding: 0; display: inline; }
+  .label.context{ color: var(--muted);  background: none; border: none; padding: 0; display: inline; }
+  footer { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 1rem; color: var(--muted); font-size: 0.85rem; }
   @media print {
-    body { padding: 20px; font-size: 12px; }
-    h2 { margin-top: 24px; }
-    .action, .flag, .context-block { break-inside: avoid; }
-    table { font-size: 11px; }
+    body { margin: 0.6in; font-size: 11pt; max-width: none; }
+    section, table, .action, .context, .flag { page-break-inside: avoid; }
+    h2 { page-break-after: avoid; }
   }
 </style>
 </head>
 <body>
 
-<h1>Research Scope: Google Home for Alzheimer's Quality of Life</h1>
-<p class="subtitle">Alzheimer's Association + Google | Discovery Stage | 4-Week Timeline</p>
+<header>
+  <h1>Research Scope — AI Assistant Drop-Off Diagnostic</h1>
+  <div class="meta">Stage: Discovery &nbsp;·&nbsp; Product type: Software only &nbsp;·&nbsp; Date: 2026-04-14 &nbsp;·&nbsp; Duration: 3 weeks</div>
+</header>
 
-<span class="stage-badge">Discovery</span>
+<section>
+  <h2>Exec Summary</h2>
+  <p class="preview">Readable in under 90 seconds. Everyone reads this.</p>
 
-<!-- EXEC SUMMARY -->
-<h2>Executive Summary</h2>
+  <h3>Strategic Summary</h3>
+  <p>The week-one adoption signal is likely curiosity, not value — the real question is not which of the four hypotheses is correct, but whether the assistant is solving a problem users return to, and if so, for whom.</p>
 
-<h3>Strategic Summary</h3>
-<p>Whether Google Home can improve quality of life for people with Alzheimer's depends on understanding how cognitive decline reshapes daily routines and social connection — neither of which is well-documented in the context of voice-assisted technology in the home.</p>
+  <h3>Recommended Path Forward</h3>
+  <table>
+    <tr><th>Element</th><th>Answer</th></tr>
+    <tr><td>What this is really about</td><td>Whether the assistant has a returning-user job to do, and for which segment</td></tr>
+    <tr><td>Is research the right next step</td><td>Yes — but only after a behavioral data review narrows the four hypotheses</td></tr>
+    <tr><td>Recommended method</td><td>Two-stage mixed-method: cohort/log analysis (Week 1) → contrastive interviews with returners vs. lapsed users (Week 2)</td></tr>
+    <tr><td>Decision this unlocks</td><td>Where to invest next cycle: trust repair, onboarding rebuild, output quality, or feature repositioning / sunset</td></tr>
+  </table>
 
-<h3>Recommended Path Forward</h3>
-<table>
-  <tr><th>Element</th><th>Answer</th></tr>
-  <tr><td>What this is really about</td><td>Establishing whether voice interaction is a viable modality for people whose memory, language, and executive function are declining</td></tr>
-  <tr><td>Is research the right next step</td><td>Yes — no existing signals on this population's relationship with ambient voice technology in domestic settings</td></tr>
-  <tr><td>Recommended method</td><td>In-home contextual inquiry with participant–caregiver dyads, supplemented by expert interviews</td></tr>
-  <tr><td>Decision this unlocks</td><td>Whether to fund the full project — and which use cases to prioritize if funded</td></tr>
-</table>
+  <div class="action">
+    <span class="label action">Recommended Action →</span>
+    PM and data lead should pull a cohort breakdown of week-1 users (returned vs. lapsed, by first-session task type and outcome) within the first 3 working days. Without this, interview recruitment is unfocused and the four hypotheses cannot be tested in three weeks.
+  </div>
+</section>
 
-<div class="action">ACTION REQUIRED: Research lead should secure IRB/ethics review for research with cognitively impaired adults within the first 5 business days. Without this, recruitment cannot begin and the 4-week timeline collapses.</div>
+<section>
+  <h2>For the PM</h2>
+  <p class="preview">What's at stake, when things happen, what success looks like, what happens after.</p>
 
-<!-- FOR THE PM -->
-<h2>For the PM</h2>
-<p>What the PM needs to make a decision: what's at stake, when things happen, what success looks like, and what happens after.</p>
+  <h3>Decision and Risk</h3>
+  <table>
+    <tr><th>Element</th><th>Detail</th></tr>
+    <tr><td>Decision being made</td><td>Where to invest the next product cycle on the AI assistant: trust, onboarding, output quality, feature scope, or sunset</td></tr>
+    <tr><td>Risk of getting it wrong</td><td>Investing in the wrong layer wastes a cycle and entrenches drop-off</td></tr>
+    <tr><td>Risk of skipping research</td><td>Team picks the loudest hypothesis, not the correct one; leadership loses confidence in the feature</td></tr>
+    <tr><td>Reversible or irreversible</td><td>Mostly reversible at software level; reputational trust damage is slower to reverse</td></tr>
+  </table>
 
-<h3>Decision and Risk</h3>
-<table>
-  <tr><th>Element</th><th>Detail</th></tr>
-  <tr><td>Decision being made</td><td>Whether Google Home has sufficient potential to warrant full project funding from Google</td></tr>
-  <tr><td>Risk of getting it wrong</td><td>Full funding is allocated to use cases that do not match the real needs or capabilities of people with Alzheimer's — project fails at scale</td></tr>
-  <tr><td>Risk of skipping research</td><td>The pitch is built on assumptions about what "support" means for this population — funder confidence erodes when assumptions surface later</td></tr>
-  <tr><td>Reversible or irreversible</td><td>Practically irreversible — a failed pitch is unlikely to get a second hearing</td></tr>
-</table>
+  <h3>Timeline</h3>
+  <table>
+    <tr><th>Week</th><th>Activity</th></tr>
+    <tr><td>Week 1</td><td>Behavioral data + cohort analysis; review prior signals; recruit returners and lapsed users; finalize guide</td></tr>
+    <tr><td>Week 2</td><td>10–14 contrastive interviews (lapsed + returning users), plus task replay where consented; mid-week synthesis checkpoint</td></tr>
+    <tr><td>Week 3</td><td>Synthesis, triangulation with logs, readout to leadership, decision meeting</td></tr>
+  </table>
 
-<h3>Timeline</h3>
-<table>
-  <tr><th>Week</th><th>Activity</th></tr>
-  <tr><td>Week 1</td><td>Ethics/consent review. Desk research and 3–4 expert interviews (clinicians, OTs, Alzheimer's care specialists). Recruit 6–8 participant–caregiver dyads. Finalize protocol.</td></tr>
-  <tr><td>Week 2</td><td>In-home contextual inquiry sessions (60–90 min each). Observe daily routines, communication patterns, existing workarounds. Brief Google Home interaction probe where appropriate.</td></tr>
-  <tr><td>Week 3</td><td>Analysis and synthesis. Pattern mapping across dyads. Identify top use-case candidates. Co-interpretation session with design and clinical advisors.</td></tr>
-  <tr><td>Week 4</td><td>Build deliverable deck. Internal readout. Refine for funder presentation.</td></tr>
-</table>
+  <h3>Success Metrics</h3>
+  <table>
+    <tr><th>Layer</th><th>Metric</th><th>When we will know</th></tr>
+    <tr><td>Research success</td><td>Clear ranking of the four hypotheses with evidence; named segments; named investment recommendation</td><td>End of Week 3</td></tr>
+    <tr><td>Team goal</td><td>Leadership commits to one investment direction at readout</td><td>Week 3 readout</td></tr>
+    <tr><td>User outcome</td><td>Repeat usage rate among target segment improves in the cycle following investment</td><td>6–12 weeks post-change</td></tr>
+    <tr><td>Business / system metric</td><td>Week-2 and week-4 retention; task completion rate; trust-linked support tickets</td><td>Ongoing</td></tr>
+  </table>
 
-<h3>Success Metrics</h3>
-<table>
-  <tr><th>Layer</th><th>Metric</th><th>When we will know</th></tr>
-  <tr><td>Research success</td><td>3+ distinct, evidence-backed use cases identified with clear behavioral grounding</td><td>End of Week 3</td></tr>
-  <tr><td>Team goal</td><td>Funder receives a plan that demonstrates methodological rigor and population understanding</td><td>End of Week 4</td></tr>
-  <tr><td>User outcome</td><td>Research surfaces unmet needs not currently addressed by existing tools or routines</td><td>End of Week 3</td></tr>
-  <tr><td>Business / system metric</td><td>Full funding is approved by Google</td><td>Post-presentation (Week 5+)</td></tr>
-</table>
+  <h3>What Happens After</h3>
+  <ul>
+    <li>Readout format and audience: written brief + 30-min session with product, design, eng, leadership sponsor</li>
+    <li>Decision meeting: end of Week 3 — which investment direction enters next cycle</li>
+    <li>What enters the roadmap: one named workstream (trust / onboarding / output quality / scope) with success metric</li>
+    <li>6-month signal: week-4 retention of AI assistant cohort</li>
+    <li>12-month signal: whether the assistant has a defensible returning-user job</li>
+  </ul>
 
-<h3>What Happens After</h3>
-<ul>
-  <li><strong>Readout:</strong> 5–8 slide deck presented to Alzheimer's Association leadership + Google funding stakeholders</li>
-  <li><strong>Decision meeting:</strong> Funding review with Google — the deck must answer "why this population, why this device, why now"</li>
-  <li><strong>If funded:</strong> 6–12 month research-through-design program with clinical partnership</li>
-  <li><strong>6-month signal:</strong> Whether identified use cases hold across a larger, more diverse sample</li>
-  <li><strong>12-month signal:</strong> Whether prototype interactions produce measurable quality-of-life improvement</li>
-</ul>
+  <div class="action">
+    <span class="label action">Action Required →</span>
+    PM must confirm the decision sponsor and the date of the decision meeting before Week 1 begins. Without a committed decision forum, the readout becomes informational and the cycle is wasted.
+  </div>
+</section>
 
-<div class="action">ACTION REQUIRED: PM must confirm Google's evaluation criteria for the funding decision before Week 1 ends. The research plan must be shaped around what the funder needs to see.</div>
+<section>
+  <h2>For the Designer</h2>
+  <p class="preview">Where assumptions and reality diverge, hypotheses to design against, segments, workarounds.</p>
 
-<!-- FOR THE DESIGNER -->
-<h2>For the Designer</h2>
-<p>Where assumptions about voice technology and Alzheimer's diverge from likely reality, who the research must include, and what existing behaviors the design must account for.</p>
+  <h3>Where Assumptions and Reality Diverge</h3>
+  <table>
+    <tr><th>What the team or industry assumes</th><th>What may actually be true</th></tr>
+    <tr><td>High week-1 adoption = product-market fit</td><td>Week-1 usage reflects curiosity and in-app promotion, not durable utility (hypothesis)</td></tr>
+    <tr><td>Drop-off indicates a failure (onboarding, trust, quality)</td><td>Drop-off may be rational — users tried it, got the answer, and don't need it weekly (hypothesis)</td></tr>
+    <tr><td>Users trust the assistant because they trust the app</td><td>Trust in the app brand does not transfer to AI outputs about their money (hypothesis)</td></tr>
+    <tr><td>All four candidate causes are equally likely</td><td>One or two will dominate per segment; they are not equally weighted (hypothesis)</td></tr>
+  </table>
 
-<h3>Where Assumptions and Reality Diverge</h3>
-<table>
-  <tr><th>What the team assumes</th><th>What may actually be true</th></tr>
-  <tr><td>People with Alzheimer's can initiate voice interactions independently</td><td>Initiation may require caregiver prompting or environmental cues — the interaction model may need to be device-initiated</td></tr>
-  <tr><td>"Daily task management" means reminders and calendars</td><td>The relevant tasks are more embodied (medication, meals, hygiene) — requiring contextual, not scheduled, support</td></tr>
-  <tr><td>Staying in touch means making calls or sending messages</td><td>Connection may mean ambient presence, shared routines, or caregiver-mediated contact — not self-directed communication</td></tr>
-  <tr><td>Voice is accessible for people with cognitive impairment</td><td>Word-finding difficulties and anxiety around technology may make open-ended voice interaction a source of frustration</td></tr>
-</table>
+  <div class="action">
+    <span class="label action">Action Required →</span>
+    Designer should hold concept work until the diagnostic is complete. Early concepting against the wrong hypothesis creates sunk-cost bias in the Week 3 decision.
+  </div>
 
-<div class="action">ACTION REQUIRED: Designer should prepare 2–3 low-fidelity interaction concepts (device-initiated check-in, ambient sharing, caregiver-mediated reminder) as discussion probes for Week 2 fieldwork.</div>
+  <h3>Hypotheses to Design Against</h3>
+  <ol>
+    <li>Lapsed users tried the assistant for a high-stakes money question, received an output they could not verify, and disengaged — which means the design must make source, confidence, and verification visible before users act.</li>
+    <li>Lapsed users completed a one-off task and had no recurring reason to return — which means the design must either create recurring triggers tied to user events or accept an occasional-use pattern and stop optimizing for retention.</li>
+    <li>Returning users are a narrow behavioral segment whose needs differ from mass-adopters — which means the design should specialize for that segment rather than generalize for the week-1 crowd.</li>
+  </ol>
 
-<h3>Hypotheses to Design Against</h3>
-<ol>
-  <li class="hypothesis"><strong>Caregiver-established routines:</strong> People with early-to-moderate Alzheimer's rely on caregiver-established routines more than personal memory for daily tasks — the product must be configured and maintained by caregivers, not by the person with Alzheimer's.</li>
-  <li class="hypothesis"><strong>Familiar repetition over variety:</strong> Social connection is sustained through familiar, repetitive interactions (same voice, same time, same format) rather than novel contact — the interaction model should prioritize consistency over flexibility.</li>
-  <li class="hypothesis"><strong>Transition-triggered need:</strong> The moments of greatest need occur during transitions (waking, mealtimes, caregiver departure) — the product should be context-triggered, not always-available.</li>
-</ol>
+  <h3>Who We Are Designing For</h3>
+  <table>
+    <tr><th>Segment</th><th>Behavior definition</th><th>Design implication</th></tr>
+    <tr><td>Returners</td><td>Used the assistant 3+ times across 2+ weeks</td><td>Understand the recurring job; design to reinforce it</td></tr>
+    <tr><td>One-and-done</td><td>Used it once or twice in week 1, did not return</td><td>Understand the task and outcome; decide if this is failure or completion</td></tr>
+    <tr><td>Abandoners mid-task</td><td>Started a session and dropped before completion</td><td>Likely trust or output quality signal; highest diagnostic value</td></tr>
+  </table>
 
-<h3>Who We Are Designing For</h3>
-<table>
-  <tr><th>Segment</th><th>Behavior definition</th><th>Design implication</th></tr>
-  <tr><td>Early-stage Alzheimer's</td><td>Aware of memory loss, still partially self-managing, anxious about decline</td><td>Product must support without signaling incompetence — dignity is a design constraint</td></tr>
-  <tr><td>Moderate-stage Alzheimer's</td><td>Dependent on caregiver routines, limited initiation, responsive to familiar cues</td><td>Product must be caregiver-configured; interactions the person can respond to, not initiate</td></tr>
-  <tr><td>Primary caregiver (family)</td><td>Managing logistics, emotional labor, and their own wellbeing — often overwhelmed</td><td>Product must reduce caregiver burden, not add a new system to manage</td></tr>
-  <tr><td>Professional caregiver</td><td>Following care plans, managing multiple clients, time-constrained</td><td>Product must integrate with existing care workflows</td></tr>
-</table>
+  <h3>Workarounds That Already Exist</h3>
+  <div class="flag">
+    <span class="label flag">Flag ⚠</span>
+    Workarounds are unknown and must be surfaced in fieldwork. Candidates to probe: in-app search, support chat, external search engines, financial advisors, spreadsheets, other fintech apps. Designing without knowing what the assistant competes with risks building against a weaker substitute than the one users actually use.
+  </div>
+</section>
 
-<h3>Workarounds That Already Exist</h3>
-<div class="flag">FLAG: Workarounds are largely unknown for this population–technology pairing. Fieldwork in Week 2 must surface: how daily tasks are currently prompted, how social connection is maintained, what technology is already in the home, and what has been tried and abandoned.</div>
+<section>
+  <h2>For the Eng</h2>
+  <p class="preview">Constraints, irreversible decisions, what research cannot answer, what findings change the build.</p>
 
-<!-- FOR THE ENG -->
-<h2>For the Eng</h2>
-<p>Technical constraints of building on Google Home for a cognitively impaired population, what is irreversible, and what findings would change the approach.</p>
+  <h3>Constraints That Affect the Build</h3>
+  <table>
+    <tr><th>Constraint</th><th>Impact on build</th></tr>
+    <tr><td>Financial regulation (disclosure, advice boundaries)</td><td>Output framing, disclaimers, what the assistant is permitted to say</td></tr>
+    <tr><td>Data residency and PII handling in prompts</td><td>What user context can be passed to the model; logging scope</td></tr>
+    <tr><td>Model latency and cost per session</td><td>Affects how much grounding, retrieval, and verification can be layered in</td></tr>
+    <tr><td>Auditability of outputs for compliance</td><td>Logging, output capture, reproducibility</td></tr>
+  </table>
 
-<p><strong>Product Type:</strong> Hardware + software (existing Google Home hardware; software/service layer to be designed)</p>
+  <h3>What Is Irreversible</h3>
+  <ul>
+    <li>Data schema for conversation logs and user feedback signals — changing this later breaks longitudinal measurement</li>
+    <li>Compliance posture on what the assistant asserts about user accounts vs. general information — rolling back is costly</li>
+    <li>Integration surface (which in-app contexts invoke the assistant) — widely deployed entry points are hard to retract</li>
+  </ul>
 
-<h3>Constraints That Affect the Build</h3>
-<table>
-  <tr><th>Layer</th><th>Constraint</th><th>Impact</th></tr>
-  <tr><td>Hardware</td><td>Voice-only input; no screen on base model; always-powered; single-room range; requires Wi-Fi</td><td>Interaction must be fully voice-based or use companion app on caregiver's device</td></tr>
-  <tr><td>Software</td><td>Google Assistant SDK; Actions on Google platform; wake-word dependency ("Hey Google")</td><td>Custom actions must work within Assistant framework. Wake-word may be a barrier.</td></tr>
-  <tr><td>Integration</td><td>Google account required; caregiver/patient may not share accounts; health data considerations</td><td>Account architecture must support caregiver-managed setup. Health data handling requires legal review.</td></tr>
-</table>
+  <h3>What Research Cannot Answer</h3>
+  <div class="context">
+    <span class="label context">Context</span>
+    Research can identify which of the four hypotheses is driving drop-off and for whom. It cannot determine: whether a given output was factually correct (requires eval infrastructure); whether model quality can be improved to the level users need; compliance and regulatory boundaries on output scope; cost-per-session economics of proposed improvements.
+  </div>
 
-<h3>What Is Irreversible</h3>
-<table>
-  <tr><th>Decision</th><th>Reversibility</th><th>What research must inform</th></tr>
-  <tr><td>Google Home as sole platform</td><td>Moderate</td><td>Whether voice-only interaction is viable for this population</td></tr>
-  <tr><td>Interaction model (user-initiated vs. device-initiated)</td><td>Difficult post-launch</td><td>Whether people with Alzheimer's can reliably initiate voice interactions</td></tr>
-  <tr><td>Data model for routines and contacts</td><td>Difficult post-launch</td><td>What "daily responsibilities" and "staying in touch" mean in behavioral terms</td></tr>
-  <tr><td>Caregiver configuration model</td><td>Moderate</td><td>How much setup and maintenance caregivers can handle</td></tr>
-</table>
+  <h3>What Would Change the Build</h3>
+  <table>
+    <tr><th>If research finds this</th><th>Engineering should do this</th></tr>
+    <tr><td>Trust is the dominant driver</td><td>Prioritize provenance, source citation, confidence signaling, human handoff</td></tr>
+    <tr><td>Output quality is the dominant driver</td><td>Prioritize evaluation infrastructure and retrieval grounding before UX changes</td></tr>
+    <tr><td>Onboarding is the dominant driver</td><td>Lightweight — re-sequence first-run; not an architectural change</td></tr>
+    <tr><td>Feature-market fit is weak — no recurring job</td><td>Reconsider entry points and investment level; do not scale infrastructure</td></tr>
+  </table>
 
-<h3>What Would Change the Build</h3>
-<table>
-  <tr><th>If research finds this</th><th>Engineering should do this</th></tr>
-  <tr><td>People with Alzheimer's cannot reliably use the wake word</td><td>Investigate proximity-triggered or caregiver-initiated interaction models</td></tr>
-  <tr><td>Caregivers want to configure remotely</td><td>Prioritize companion app with remote management over on-device setup</td></tr>
-  <tr><td>Most valuable moments are predictable transitions</td><td>Build scheduled, proactive interaction engine rather than on-demand response</td></tr>
-  <tr><td>Social connection is primarily caregiver-to-person</td><td>Design for asymmetric communication rather than bidirectional</td></tr>
-</table>
+  <div class="action">
+    <span class="label action">Action Required →</span>
+    Eng lead should confirm before Week 1 what log fields exist for the cohort analysis (session outcomes, task types, feedback signals, re-engagement events). If fields are missing, instrument now — waiting until after the study wastes the next cycle.
+  </div>
+</section>
 
-<div class="action">ACTION REQUIRED: Engineering lead should confirm Google Home SDK capabilities for proactive/scheduled interactions before Week 2 fieldwork.</div>
+<section>
+  <h2>Research Plan</h2>
+  <p class="preview">For whoever is running the study. Full detail.</p>
 
-<!-- RESEARCH PLAN -->
-<h2>Research Plan</h2>
+  <h3>Existing Signals to Review First</h3>
+  <ol>
+    <li>Session logs segmented by week-1 returners vs. lapsed users — task type, session length, completion, feedback signals</li>
+    <li>Funnel from assistant entry point → first question → outcome → re-entry</li>
+    <li>Existing feedback mechanisms: thumbs ratings, in-app NPS, support tickets mentioning the assistant</li>
+    <li>App store reviews and social mentions from the launch window</li>
+    <li>Any prior qualitative research on the parent app's trust, onboarding, or AI feature expectations</li>
+  </ol>
 
-<h3>Existing Signals to Review First</h3>
-<ol>
-  <li>Published literature on voice assistant use by older adults and people with cognitive impairment</li>
-  <li>Google's internal research on Google Home accessibility and elder use cases</li>
-  <li>Alzheimer's Association's existing data on daily living challenges and caregiver burden</li>
-  <li>Comparable pilots: Amazon Alexa dementia care projects, UK NHS voice assistant trials</li>
-</ol>
+  <div class="flag">
+    <span class="label flag">Flag ⚠</span>
+    If session logs do not distinguish task type or outcome, the cohort analysis cannot narrow the four hypotheses. Name the gap before Week 1 and instrument if possible.
+  </div>
 
-<div class="flag">FLAG: If Google's internal accessibility research is unavailable, the team is building without knowing the platform's known limitations. Escalate to Google partner contact by Day 2.</div>
+  <h3>Research Questions</h3>
+  <p><strong>Primary question:</strong> What is driving the drop-off in AI assistant usage after week one, and for which users?</p>
+  <ol>
+    <li>What job did lapsed users come to the assistant to do, and what happened in that session?</li>
+    <li>What distinguishes users who return from those who don't — task type, outcome, context, or prior trust in AI?</li>
+    <li>Where, specifically, does trust break down (before asking, during output, after acting)?</li>
+    <li>What do lapsed users use instead today, and how does the assistant compare?</li>
+  </ol>
 
-<h3>Research Questions</h3>
-<p><strong>Primary:</strong> What are the highest-potential use cases for Google Home to improve quality of life for people with Alzheimer's — in daily task management and social connection — and what evidence supports their viability?</p>
-<ol>
-  <li>How do people with early-to-moderate Alzheimer's currently manage daily responsibilities, and where do breakdowns occur?</li>
-  <li>How is social connection currently maintained, and what role could an ambient device play?</li>
-  <li>What is the caregiver's role in establishing and maintaining technology-supported routines?</li>
-  <li>What interaction patterns are viable given the cognitive profile of this population?</li>
-</ol>
+  <h3>Research Approach</h3>
+  <table>
+    <tr><th>Method</th><th>Status</th><th>Reason</th></tr>
+    <tr><td>Behavioral cohort and log analysis</td><td>✓ Prioritized — Week 1</td><td>Narrows which hypotheses are plausible before interview time is spent</td></tr>
+    <tr><td>Contrastive interviews: returners vs. lapsed (10–14)</td><td>✓ Prioritized — Week 2</td><td>Diagnostic power comes from contrast; identifies segment-specific drivers</td></tr>
+    <tr><td>Task replay in-session (where consented)</td><td>✓ Prioritized — Week 2</td><td>Surfaces real breakdown moments rather than recalled impressions</td></tr>
+    <tr><td>Large-N survey</td><td>✗ Deprioritized</td><td>Three-week timeline does not allow rigorous design; existing thumbs/NPS is faster to mine</td></tr>
+    <tr><td>Concept testing</td><td>✗ Deprioritized</td><td>Premature — no concept exists and none should be built until the diagnostic is complete</td></tr>
+    <tr><td>Diary study</td><td>✗ Deprioritized</td><td>Timeline too short to yield reliable repeat-use signal</td></tr>
+  </table>
 
-<h3>Research Approach</h3>
-<table>
-  <tr><th>Method</th><th>Status</th><th>Reason</th></tr>
-  <tr><td>Expert interviews</td><td style="color:green;font-weight:600;">Prioritized</td><td>Fast signal in Week 1 — grounds the team before fieldwork</td></tr>
-  <tr><td>In-home contextual inquiry with dyads</td><td style="color:green;font-weight:600;">Prioritized</td><td>Discovery requires observing real routines in real environments</td></tr>
-  <tr><td>Interaction probe (Google Home)</td><td style="color:green;font-weight:600;">Prioritized</td><td>Demonstrates feasibility to funder — exploratory, not evaluative</td></tr>
-  <tr><td>Diary study</td><td style="color:var(--flag);font-weight:600;">Deprioritized</td><td>Requires sustained self-reporting — not feasible for this population/timeline</td></tr>
-  <tr><td>Survey</td><td style="color:var(--flag);font-weight:600;">Deprioritized</td><td>Discovery stage — structured questions presuppose known categories</td></tr>
-  <tr><td>Remote / unmoderated</td><td style="color:var(--flag);font-weight:600;">Deprioritized</td><td>Vulnerable population requires in-person facilitation with consent monitoring</td></tr>
-</table>
+  <h3>When Human-Led Sessions Are Required</h3>
+  <table>
+    <tr><th>Condition</th><th>Present</th><th>Implication</th></tr>
+    <tr><td>Sensitive or trust-dependent topic</td><td>Yes</td><td>Money + AI — trust is fragile; human-led interviews required</td></tr>
+    <tr><td>Vulnerable participants</td><td>Possible</td><td>If segment includes users in financial stress, human-led only</td></tr>
+    <tr><td>Foundational — problem is unknown</td><td>Yes</td><td>Diagnostic discovery; human-led</td></tr>
+    <tr><td>Irreversible decision, no prior signal</td><td>Partial</td><td>Investment direction is reversible at software level; reputational trust is not</td></tr>
+  </table>
 
-<h3>Participants</h3>
-<table>
-  <tr><th>Parameter</th><th>Detail</th></tr>
-  <tr><td>Primary unit</td><td>Dyad: person with early-to-moderate Alzheimer's + primary caregiver</td></tr>
-  <tr><td>Sample size</td><td>6–8 dyads</td></tr>
-  <tr><td>Recruitment</td><td>Alzheimer's Association member networks; partnering memory clinics</td></tr>
-  <tr><td>Inclusion</td><td>Diagnosed early-to-moderate Alzheimer's; living at home; caregiver involved in daily support</td></tr>
-  <tr><td>Exclusion</td><td>Late-stage (unable to converse); no caregiver; institutional care</td></tr>
-  <tr><td>Consent</td><td>Dual consent — person + legally authorized representative. Re-confirmed at session start. Ongoing assent monitoring.</td></tr>
-</table>
+  <div class="action">
+    <span class="label action">Action Required →</span>
+    All interviews should be human-led. AI can support transcript coding, log analysis, and synthesis pattern detection — not the sessions themselves.
+  </div>
 
-<div class="flag">FLAG: All fieldwork sessions must be led by a human researcher experienced with cognitively impaired populations. AI tools can support desk research, transcription, and pattern coding — but cannot facilitate sessions, monitor consent, or make in-the-moment ethical judgments.</div>
+  <h3>From Finding to Action</h3>
+  <table>
+    <tr><th>Anticipated Finding</th><th>Implication</th><th>Action + Owner</th><th>Metric to Watch</th></tr>
+    <tr><td>Lapsed users did not trust outputs on money-specific questions</td><td>Invest in provenance, confidence signaling, verification UX</td><td>Design + Eng co-own; PM sponsors</td><td>Trust-linked feedback; week-4 retention</td></tr>
+    <tr><td>Lapsed users completed a one-off task and had no return trigger</td><td>Feature is occasional-use; reposition metric or build event-triggered re-engagement</td><td>PM owns repositioning</td><td>Task-to-return rate among triggered cohorts</td></tr>
+    <tr><td>Output quality is the dominant failure</td><td>Eng evaluation infrastructure before UX changes</td><td>Eng lead owns; PM sequences</td><td>Output accuracy eval score; thumbs-down rate</td></tr>
+    <tr><td>Returners are a narrow segment with a distinct job</td><td>Specialize for that segment; stop optimizing for mass adoption</td><td>PM + Design own segmentation strategy</td><td>Retention within named segment</td></tr>
+    <tr><td>Onboarding weakness is real but secondary</td><td>Lightweight first-run redesign</td><td>Design owns</td><td>First-session completion and return rate</td></tr>
+  </table>
+</section>
 
-<h3>From Finding to Action</h3>
-<table>
-  <tr><th>Anticipated Finding</th><th>Implication</th><th>Action + Owner</th><th>Metric to Watch</th></tr>
-  <tr><td>Cannot reliably initiate voice interactions but can respond</td><td>Device-initiated model is viable, not user-initiated</td><td>Design lead: reframe concepts around proactive interactions</td><td>Response rate to device-initiated prompts in pilot</td></tr>
-  <tr><td>Caregivers willing to configure but not maintain daily</td><td>Onboarding must be simple; operation autonomous</td><td>Eng lead: prioritize set-and-forget architecture</td><td>Caregiver time-on-system per week</td></tr>
-  <tr><td>Social connection need is about reassurance, not conversation</td><td>Focus on ambient awareness, not calls</td><td>Design lead: prototype ambient status-sharing</td><td>Caregiver-reported anxiety reduction</td></tr>
-  <tr><td>Existing workarounds work well enough for some tasks</td><td>Target gaps, not replace what works</td><td>PM: narrow use-case list to unmet needs only</td><td>Adoption rate per use case</td></tr>
-  <tr><td>Distress or confusion when interacting with Google Home</td><td>Voice may not be viable for moderate-stage</td><td>Research lead: flag to funder, narrow to early-stage</td><td>Interaction completion rate by disease stage</td></tr>
-</table>
+<footer>
+  <strong>Open flags surfaced to the top:</strong>
+  <ul>
+    <li>Workarounds outside the app are unknown — must be surfaced in fieldwork before concepts are built.</li>
+    <li>Log instrumentation may not distinguish task type or outcome. Confirm with eng lead in Week 1; instrument gaps if present.</li>
+    <li>Decision sponsor and meeting date must be confirmed before Week 1 or the readout becomes informational.</li>
+  </ul>
+</footer>
 
 </body>
 </html>
