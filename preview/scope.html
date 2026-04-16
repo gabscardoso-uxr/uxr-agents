@@ -107,6 +107,22 @@
     margin-bottom: 0.75rem;
   }
 
+  mark {
+    background: #36FFCA40;
+    padding: 0.1em 0.25em;
+    border-radius: 2px;
+    color: inherit;
+  }
+
+  .pullquote {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 1.5rem 0;
+    padding: 0 0 0 0;
+    line-height: 1.5;
+  }
+
   ol, ul { padding-left: 1.5rem; margin: 0.5rem 0; }
   li { margin-bottom: 0.4rem; }
 
@@ -136,7 +152,8 @@
 <section>
 <h2>Exec Summary</h2>
 
-<p>We're losing Gen Z women and we don't know if it's a safety problem, a product problem, or a market shift. The answer changes everything — whether we invest in trust infrastructure, redesign the experience, or reposition against competitors who are winning on intentionality. We need to talk to these women before the quarterly planning cycle locks.</p>
+<p class="pullquote">We're losing Gen Z women and we don't know if it's a <mark>safety problem, a product problem, or a market shift</mark>.</p>
+<p>The answer changes everything — whether we invest in trust infrastructure, redesign the experience, or reposition against competitors who are winning on intentionality. We need to talk to these women before the quarterly planning cycle locks.</p>
 
 <table>
   <thead><tr><th>Element</th><th>Answer</th></tr></thead>
@@ -189,7 +206,7 @@
     <div class="action"><strong>Action:</strong> PM should confirm the quarterly planning lock date and set the readout deadline by working backward from it. Research that arrives after decisions are made is waste.</div>
 
     <h3>The decision</h3>
-    <p>We're deciding where to put next quarter's investment: safety and trust infrastructure, core product experience, or competitive repositioning. These are fundamentally different bets that require different teams, timelines, and success metrics. The risk of getting it wrong is building something that doesn't address why people are actually leaving — like adding profile features when the real problem is harassment. This decision is partially reversible (roadmap can shift quarter-over-quarter) but the reputational cost of continued inaction on safety, if that's the driver, is not.</p>
+    <p>We're deciding where to put next quarter's investment: <strong>safety and trust infrastructure</strong>, <strong>core product experience</strong>, or <strong>competitive repositioning</strong>. These are fundamentally different bets that require different teams, timelines, and success metrics. The risk of getting it wrong is building something that doesn't address why people are actually leaving — like adding profile features when the real problem is harassment. This decision is partially reversible (roadmap can shift quarter-over-quarter) but <mark>the reputational cost of continued inaction on safety, if that's the driver, is not</mark>.</p>
 
     <h3>Timeline</h3>
     <table>
@@ -203,7 +220,7 @@
     </table>
 
     <h3>How we'll know it worked</h3>
-    <p>Research succeeds if the team can name the top 2–3 drivers of churn with evidence and confidence levels by end of Week 3. The team-level goal is that at least one initiative in next quarter's plan is directly shaped by these findings. The business signals to track at 6 and 12 months: 30-day retention for Gen Z women, and DAU/MAU ratio for this segment returning to pre-decline levels.</p>
+    <p>Research succeeds if the team can <strong>name the top 2–3 drivers of churn with evidence and confidence levels</strong> by end of Week 3. The team-level goal is that at least one initiative in next quarter's plan is directly shaped by these findings. The business signals to track: <strong>30-day retention</strong> for Gen Z women at 6 months, and <strong>DAU/MAU ratio</strong> for this segment returning to pre-decline levels at 12 months.</p>
 
     <h3>What happens after</h3>
     <p>30-minute readout to VP Product, Head of Design, Trust &amp; Safety lead, and Engineering leads. That meeting ends with a decision: which investment track are we committing to for next quarter? The chosen track enters the roadmap with research evidence as the supporting rationale.</p>
@@ -222,9 +239,9 @@
     <div class="action"><strong>Action:</strong> Design lead should pull the last 6 months of safety-related support tickets and app store reviews filtered to Gen Z women before fieldwork starts. This data shapes the interview guide and prevents us from asking questions we could answer from existing data.</div>
 
     <h3>What we think we know vs. what might actually be true</h3>
-    <p>The industry assumption is that Gen Z women want more features and engagement mechanics — more ways to express themselves, more filters, more prompts. But the desk research suggests the opposite: they may be leaving because the product demands too much emotional labor, not too little. Swiping feels transactional, conversations feel scripted, and the cumulative weight of low-grade negative interactions is exhausting.</p>
-    <p>We also assume that safety features (report, block) are sufficient because they exist. But public signal strongly suggests that the <em>experience of needing to use safety tools</em> is itself a deterrent. Women aren't saying "I reported someone and nothing happened" — they're saying "I shouldn't have to deal with this at all." The bar isn't better reporting. It's fewer incidents.</p>
-    <p>And we assume competitive loss is about features. It may actually be about norms and culture. Apps like Hinge and Feeld are gaining ground not because they have better features, but because they feel different to use. The behavioral contract between users is different.</p>
+    <p>The industry assumption is that Gen Z women want <strong>more features and engagement mechanics</strong> — more ways to express themselves, more filters, more prompts. But the desk research suggests the opposite: they may be leaving because the product <mark>demands too much emotional labor, not too little</mark>. Swiping feels transactional, conversations feel scripted, and the cumulative weight of low-grade negative interactions is exhausting.</p>
+    <p>We also assume that safety features (report, block) are sufficient because they exist. But public signal strongly suggests that <strong>the experience of needing to use safety tools is itself a deterrent</strong>. Women aren't saying "I reported someone and nothing happened" — they're saying <mark>"I shouldn't have to deal with this at all."</mark> The bar isn't better reporting. It's fewer incidents.</p>
+    <p>And we assume competitive loss is about features. It may actually be about <strong>norms and culture</strong>. Apps like Hinge and Feeld are gaining ground not because they have better features, but because they <em>feel</em> different to use. The behavioral contract between users is different.</p>
 
     <h3>Hypotheses to design against</h3>
     <ol>
@@ -264,7 +281,7 @@
     <p>This study will tell us what users need and how they behave, but it can't determine whether behavioral signals (message tone, interaction patterns) can be reliably detected at scale — that's an eng spike. It can't tell us whether moderation latency can meet the threshold where intervention feels timely — that's a performance assessment. And it won't resolve platform-level impact of real-time behavioral monitoring — that needs load testing and architecture review, ideally in parallel with the research.</p>
 
     <h3>What would change the build</h3>
-    <p>If we find that drop-off is driven by repeated low-grade negative interactions rather than reportable incidents, the investment shifts from reactive tools (report/block) to passive behavioral detection and proactive intervention — a fundamentally different architecture. If it turns out users are leaving because of how the platform <em>feels</em> (brand, norms, culture) rather than how it <em>works</em>, the technical investment shifts to community norms infrastructure: onboarding flows, profile signals, behavioral nudges. And if users are fragmenting to specialized apps, we might need modular architecture that supports differentiated experiences within one app rather than one-size-fits-all.</p>
+    <p>If we find that drop-off is driven by <strong>repeated low-grade negative interactions</strong> rather than reportable incidents, the investment shifts from reactive tools (report/block) to <mark>passive behavioral detection and proactive intervention</mark> — a fundamentally different architecture. If it turns out users are leaving because of how the platform <em>feels</em> (brand, norms, culture) rather than how it <em>works</em>, the technical investment shifts to <strong>community norms infrastructure</strong>: onboarding flows, profile signals, behavioral nudges. And if users are fragmenting to specialized apps, we might need <strong>modular architecture</strong> that supports differentiated experiences within one app rather than one-size-fits-all.</p>
   </div>
 </details>
 
@@ -281,9 +298,9 @@
 
     <h3>What's already out there — desk research</h3>
     <p>There's substantial public signal on this topic. Three themes emerge consistently across Reddit threads, app store reviews, industry reporting, and academic research:</p>
-    <p><strong>Safety and harassment fatigue is the loudest signal.</strong> Research shows sexual harassment on dating apps ranges between 57% and 89% of women, with younger women at higher risk. 57% of female users 18–34 report receiving unsolicited explicit images. But the issue isn't just acute incidents — it's the cumulative burden. Women describe exhaustion from constant low-level boundary violations that individually don't feel "bad enough" to report but collectively make the platform feel hostile. A 2025 NPR investigation found that individuals accused of assault could remain on major platforms despite multiple complaints.</p>
-    <p><strong>Swipe fatigue and emotional labor are driving burnout.</strong> More than half of Gen Z reports feeling burned out "often or always" on dating apps — the highest of any age group. The swiping mechanic is described as transactional and superficial. Gen Z women aren't asking for more matches; they're asking for less confusion and fewer scripted conversations. Apps that emphasize intentionality (Hinge's "designed to be deleted," Thursday's event-driven model, Feeld's consent-forward design) are gaining ground specifically because they feel less like work.</p>
-    <p><strong>The competitive landscape has fragmented.</strong> Gen Z women aren't moving to a single competitor — they're spreading across apps with narrower, more specific value propositions. Hinge for serious dating, Feeld for exploratory, Her for LGBTQ+ community, Thursday for event-driven connection. The common thread isn't features but <em>norms</em> — platforms where the behavioral contract between users feels different.</p>
+    <p><strong>Safety and harassment fatigue is the loudest signal.</strong> Research shows sexual harassment on dating apps affects <mark>57–89% of women</mark>, with younger women at higher risk. <mark>57% of female users 18–34</mark> report receiving unsolicited explicit images. But the issue isn't just acute incidents — it's the <strong>cumulative burden</strong>. Women describe exhaustion from constant low-level boundary violations that individually don't feel "bad enough" to report but collectively make the platform feel hostile. A 2025 NPR investigation found that individuals accused of assault could remain on major platforms despite multiple complaints.</p>
+    <p><strong>Swipe fatigue and emotional labor are driving burnout.</strong> <mark>More than half of Gen Z</mark> reports feeling burned out "often or always" on dating apps — the highest of any age group. The swiping mechanic is described as transactional and superficial. Gen Z women aren't asking for more matches; they're asking for <strong>less confusion and fewer scripted conversations</strong>. Apps that emphasize intentionality (Hinge, Thursday, Feeld) are gaining ground specifically because they feel less like work.</p>
+    <p><strong>The competitive landscape has fragmented.</strong> Gen Z women aren't moving to a single competitor — they're spreading across apps with <strong>narrower, more specific value propositions</strong>. Hinge for serious dating, Feeld for exploratory, Her for LGBTQ+ community, Thursday for event-driven connection. The common thread isn't features but <mark>norms</mark> — platforms where the behavioral contract between users feels different.</p>
 
     <div class="flag"><strong>Gap:</strong> Public signal is strong on the industry-wide trend but thin on what's specific to <em>this</em> platform. Internal retention data, support tickets, and app store reviews need to confirm whether these broader patterns explain our specific drop-off or if something platform-specific is happening.</div>
 
