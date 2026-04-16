@@ -6,6 +6,7 @@
 
 # Generated scoper HTML previews (artifact, not source)
 .claude/skills/*/preview/
+preview/scope.html
 
 # Nested clone of the public plugin distribution repo
 uxr-agents-plugin/
