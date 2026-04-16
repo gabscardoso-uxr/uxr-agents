@@ -3,301 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research Scope — AI Assistant Drop-Off Diagnostic</title>
+<title>Research Scope — Gen Z Women Platform Drop-off</title>
 <style>
-  :root {
-    --accent: #2e5cb8;
-    --flag: #a8561b;
-    --muted: #666;
-    --border: #d0d0d0;
-    --bg-muted: #f6f6f6;
-    --bg-action: #eef3fb;
-    --bg-flag: #fbf4ec;
-  }
-  * { box-sizing: border-box; }
   html { color-scheme: light; background: #ffffff; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 14px;
-    line-height: 1.55;
-    color: #1a1a1a;
     background: #ffffff;
+    color: #1a1a1a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.7;
     max-width: 720px;
-    margin: 2rem auto;
-    padding: 0 1.25rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    font-size: 15px;
   }
-  header { border-bottom: 2px solid var(--accent); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
-  header h1 { margin: 0 0 0.25rem; font-size: 1.5rem; }
-  header .meta { color: var(--muted); font-size: 0.85rem; }
-  section { margin-bottom: 2rem; }
-  h2 { font-size: 1.15rem; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; margin-top: 1.75rem; }
-  h3 { font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.4rem; }
-  p.preview { color: var(--muted); font-style: italic; margin: 0.25rem 0 0.75rem; }
-  table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; font-size: 0.92rem; }
-  th, td { border: 1px solid var(--border); padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
-  th { background: var(--bg-muted); font-weight: 600; }
-  ul, ol { padding-left: 1.25rem; margin: 0.4rem 0 0.8rem; }
-  li { margin-bottom: 0.25rem; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.25rem; font-weight: 800; }
+  h2 { font-size: 1.15rem; margin-top: 2.5rem; font-weight: 700; color: #1a1a1a; border-bottom: none; }
+  h3 { font-size: 0.95rem; margin-top: 1.5rem; font-weight: 600; color: #555; }
+  .header-meta { color: #777; font-size: 0.8rem; margin-bottom: 2.5rem; letter-spacing: 0.02em; }
+  .header-meta span { display: inline-block; margin-right: 1.5rem; }
+  p { margin: 0.6rem 0; }
+  strong { font-weight: 600; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+  th, td { border: 1px solid #e0e0e0; padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+  th { background: #f8f8f8; font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: #555; }
+
   .action {
-    border-left: 4px solid var(--accent);
-    background: var(--bg-action);
-    padding: 0.6rem 0.85rem;
-    margin: 0.75rem 0;
-    border-radius: 2px;
-  }
-  .context {
-    border-left: 4px solid var(--border);
-    background: var(--bg-muted);
-    padding: 0.6rem 0.85rem;
-    margin: 0.75rem 0;
-    color: #333;
-    border-radius: 2px;
+    border-left: 4px solid #FF6636;
+    background: #FFF5F2;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    border-radius: 0 4px 4px 0;
   }
   .flag {
-    border-left: 4px solid var(--flag);
-    background: var(--bg-flag);
-    padding: 0.6rem 0.85rem;
-    margin: 0.75rem 0;
-    border-radius: 2px;
+    border-left: 4px solid #E8A830;
+    background: #FFFBF0;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.88rem;
+    border-radius: 0 4px 4px 0;
   }
-  .label { font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.75rem; }
-  .label.action { color: var(--accent); background: none; border: none; padding: 0; display: inline; }
-  .label.flag   { color: var(--flag);   background: none; border: none; padding: 0; display: inline; }
-  .label.context{ color: var(--muted);  background: none; border: none; padding: 0; display: inline; }
-  footer { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 1rem; color: var(--muted); font-size: 0.85rem; }
+  .context {
+    border-left: 4px solid #ddd;
+    background: #fafafa;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.85rem;
+    color: #555;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .actions-table { margin: 1.5rem 0; }
+  .actions-table th { background: #FF6636; color: white; }
+  .actions-table td:first-child { font-weight: 600; width: 80px; color: #FF6636; }
+
+  details {
+    margin-top: 1.25rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  details summary {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    background: #fafafa;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary .section-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  details summary .section-title::before {
+    content: "\25B6";
+    font-size: 0.6rem;
+    color: #aaa;
+    transition: transform 0.15s;
+  }
+  details[open] summary .section-title::before {
+    content: "\25BC";
+  }
+  details summary .section-action {
+    font-size: 0.82rem;
+    color: #FF6636;
+    font-weight: 500;
+    padding-left: 1.1rem;
+  }
+  details[open] summary { border-bottom: 1px solid #e8e8e8; }
+  details > div { padding: 1.25rem; }
+
+  .director-lens {
+    font-style: italic;
+    color: #888;
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
+  }
+
+  mark {
+    background: #36FFCA40;
+    padding: 0.1em 0.25em;
+    border-radius: 2px;
+    color: inherit;
+  }
+
+  .pullquote {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 1.5rem 0;
+    padding: 0 0 0 0;
+    line-height: 1.5;
+  }
+
+  ol, ul { padding-left: 1.5rem; margin: 0.5rem 0; }
+  li { margin-bottom: 0.4rem; }
+
+  hr { border: none; border-top: 1px solid #eee; margin: 2rem 0; }
+
   @media print {
-    body { margin: 0.6in; font-size: 11pt; max-width: none; }
-    section, table, .action, .context, .flag { page-break-inside: avoid; }
-    h2 { page-break-after: avoid; }
+    body { max-width: 100%; padding: 1rem; font-size: 12px; }
+    details { border: none; }
+    details > summary { display: none; }
+    details > div { display: block !important; padding: 0; }
+    h2 { border-bottom: 2px solid #1a1a1a; padding-bottom: 0.2rem; }
+    .action, .flag, .context { break-inside: avoid; }
+    section { break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Research Scope — AI Assistant Drop-Off Diagnostic</h1>
-  <div class="meta">Stage: Discovery &nbsp;·&nbsp; Product type: Software only &nbsp;·&nbsp; Date: 2026-04-14 &nbsp;·&nbsp; Duration: 3 weeks</div>
-</header>
+<h1>Gen Z Women Platform Drop-off</h1>
+<div class="header-meta">
+  <span><strong>Stage:</strong> Discovery</span>
+  <span><strong>Date:</strong> 2026-04-15</span>
+  <span><strong>Product type:</strong> Software only</span>
+</div>
 
+<!-- EXEC SUMMARY -->
 <section>
-  <h2>Exec Summary</h2>
-  <p class="preview">Readable in under 90 seconds. Everyone reads this.</p>
+<h2>Exec Summary</h2>
 
-  <h3>Strategic Summary</h3>
-  <p>The week-one adoption signal is likely curiosity, not value — the real question is not which of the four hypotheses is correct, but whether the assistant is solving a problem users return to, and if so, for whom.</p>
+<p class="pullquote">We're losing Gen Z women and we don't know if it's a <mark>safety problem, a product problem, or a market shift</mark>.</p>
+<p>The answer changes everything — whether we invest in trust infrastructure, redesign the experience, or reposition against competitors who are winning on intentionality. We need to talk to these women before the quarterly planning cycle locks.</p>
 
-  <h3>Recommended Path Forward</h3>
-  <table>
-    <tr><th>Element</th><th>Answer</th></tr>
-    <tr><td>What this is really about</td><td>Whether the assistant has a returning-user job to do, and for which segment</td></tr>
-    <tr><td>Is research the right next step</td><td>Yes — but only after a behavioral data review narrows the four hypotheses</td></tr>
-    <tr><td>Recommended method</td><td>Two-stage mixed-method: cohort/log analysis (Week 1) → contrastive interviews with returners vs. lapsed users (Week 2)</td></tr>
-    <tr><td>Decision this unlocks</td><td>Where to invest next cycle: trust repair, onboarding rebuild, output quality, or feature repositioning / sunset</td></tr>
-  </table>
+<table>
+  <thead><tr><th>Element</th><th>Answer</th></tr></thead>
+  <tbody>
+    <tr><td>What this is really about</td><td>We can't tell if Gen Z women are leaving because of how the platform feels (safety, harassment fatigue) or what it offers (swipe fatigue, lack of depth) — and those require different investments</td></tr>
+    <tr><td>Is research the right next step</td><td>Yes — retention data shows the drop but can't explain it, and there's strong public signal we haven't validated internally</td></tr>
+    <tr><td>Recommended method</td><td>In-depth interviews with recently churned and at-risk Gen Z women, human-led</td></tr>
+    <tr><td>Decision this unlocks</td><td>Whether next quarter's investment goes toward safety/trust, product experience, or competitive repositioning</td></tr>
+  </tbody>
+</table>
 
-  <div class="action">
-    <span class="label action">Recommended Action →</span>
-    PM and data lead should pull a cohort breakdown of week-1 users (returned vs. lapsed, by first-session task type and outcome) within the first 3 working days. Without this, interview recruitment is unfocused and the four hypotheses cannot be tested in three weeks.
-  </div>
+<div class="action"><strong>Recommended action:</strong> Research lead should start recruiting recently churned Gen Z women (last 90 days) this week. Findings have to land before the planning cycle locks or leadership makes this call without user evidence.</div>
+
+<table class="actions-table">
+  <thead><tr><th>Role</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td>PM</td><td>Confirm the planning lock date and work backward — if findings arrive late, they're useless</td></tr>
+    <tr><td>Designer</td><td>Pull the last 6 months of safety-related support tickets and app store reviews from this segment before fieldwork starts</td></tr>
+    <tr><td>Eng</td><td>Assess whether the current moderation stack can handle behavioral detection (not just content moderation)</td></tr>
+    <tr><td>Research</td><td>Begin recruiting churned Gen Z women this week. Review desk research and internal retention data before writing the guide</td></tr>
+  </tbody>
+</table>
 </section>
 
+<!-- RESEARCH QUESTIONS -->
 <section>
-  <h2>For the PM</h2>
-  <p class="preview">What's at stake, when things happen, what success looks like, what happens after.</p>
+<h2>Research Questions</h2>
 
-  <h3>Decision and Risk</h3>
-  <table>
-    <tr><th>Element</th><th>Detail</th></tr>
-    <tr><td>Decision being made</td><td>Where to invest the next product cycle on the AI assistant: trust, onboarding, output quality, feature scope, or sunset</td></tr>
-    <tr><td>Risk of getting it wrong</td><td>Investing in the wrong layer wastes a cycle and entrenches drop-off</td></tr>
-    <tr><td>Risk of skipping research</td><td>Team picks the loudest hypothesis, not the correct one; leadership loses confidence in the feature</td></tr>
-    <tr><td>Reversible or irreversible</td><td>Mostly reversible at software level; reputational trust damage is slower to reverse</td></tr>
-  </table>
+<p><strong>Primary question:</strong> Why are Gen Z women disengaging from the platform, and what would need to be true for them to stay or come back?</p>
 
-  <h3>Timeline</h3>
-  <table>
-    <tr><th>Week</th><th>Activity</th></tr>
-    <tr><td>Week 1</td><td>Behavioral data + cohort analysis; review prior signals; recruit returners and lapsed users; finalize guide</td></tr>
-    <tr><td>Week 2</td><td>10–14 contrastive interviews (lapsed + returning users), plus task replay where consented; mid-week synthesis checkpoint</td></tr>
-    <tr><td>Week 3</td><td>Synthesis, triangulation with logs, readout to leadership, decision meeting</td></tr>
-  </table>
-
-  <h3>Success Metrics</h3>
-  <table>
-    <tr><th>Layer</th><th>Metric</th><th>When we will know</th></tr>
-    <tr><td>Research success</td><td>Clear ranking of the four hypotheses with evidence; named segments; named investment recommendation</td><td>End of Week 3</td></tr>
-    <tr><td>Team goal</td><td>Leadership commits to one investment direction at readout</td><td>Week 3 readout</td></tr>
-    <tr><td>User outcome</td><td>Repeat usage rate among target segment improves in the cycle following investment</td><td>6–12 weeks post-change</td></tr>
-    <tr><td>Business / system metric</td><td>Week-2 and week-4 retention; task completion rate; trust-linked support tickets</td><td>Ongoing</td></tr>
-  </table>
-
-  <h3>What Happens After</h3>
-  <ul>
-    <li>Readout format and audience: written brief + 30-min session with product, design, eng, leadership sponsor</li>
-    <li>Decision meeting: end of Week 3 — which investment direction enters next cycle</li>
-    <li>What enters the roadmap: one named workstream (trust / onboarding / output quality / scope) with success metric</li>
-    <li>6-month signal: week-4 retention of AI assistant cohort</li>
-    <li>12-month signal: whether the assistant has a defensible returning-user job</li>
-  </ul>
-
-  <div class="action">
-    <span class="label action">Action Required →</span>
-    PM must confirm the decision sponsor and the date of the decision meeting before Week 1 begins. Without a committed decision forum, the readout becomes informational and the cycle is wasted.
-  </div>
+<ol>
+  <li>What specific experiences or moments made them pull back — and do those map to safety, product friction, or something else entirely?</li>
+  <li>How do they describe what this app is "for" now, compared to where they're spending time instead?</li>
+  <li>What safety or boundary experiences have shaped how they feel about the platform — including things they never reported?</li>
+  <li>What does a dating app that actually works for them look like, in their words?</li>
+</ol>
 </section>
 
-<section>
-  <h2>For the Designer</h2>
-  <p class="preview">Where assumptions and reality diverge, hypotheses to design against, segments, workarounds.</p>
+<hr>
 
-  <h3>Where Assumptions and Reality Diverge</h3>
-  <table>
-    <tr><th>What the team or industry assumes</th><th>What may actually be true</th></tr>
-    <tr><td>High week-1 adoption = product-market fit</td><td>Week-1 usage reflects curiosity and in-app promotion, not durable utility (hypothesis)</td></tr>
-    <tr><td>Drop-off indicates a failure (onboarding, trust, quality)</td><td>Drop-off may be rational — users tried it, got the answer, and don't need it weekly (hypothesis)</td></tr>
-    <tr><td>Users trust the assistant because they trust the app</td><td>Trust in the app brand does not transfer to AI outputs about their money (hypothesis)</td></tr>
-    <tr><td>All four candidate causes are equally likely</td><td>One or two will dominate per segment; they are not equally weighted (hypothesis)</td></tr>
-  </table>
+<!-- FOR THE PM -->
+<details>
+  <summary>
+    <span class="section-title">For the PM</span>
+    <span class="section-action">Confirm planning lock date and work backward — if findings arrive late, they're useless</span>
+  </summary>
+  <div>
+    <p class="director-lens">What a Director of Product is scanning for: What decision does this unlock? What's the timeline? What happens if we skip it?</p>
 
-  <div class="action">
-    <span class="label action">Action Required →</span>
-    Designer should hold concept work until the diagnostic is complete. Early concepting against the wrong hypothesis creates sunk-cost bias in the Week 3 decision.
+    <div class="action"><strong>Action:</strong> PM should confirm the quarterly planning lock date and set the readout deadline by working backward from it. Research that arrives after decisions are made is waste.</div>
+
+    <h3>The decision</h3>
+    <p>We're deciding where to put next quarter's investment: <strong>safety and trust infrastructure</strong>, <strong>core product experience</strong>, or <strong>competitive repositioning</strong>. These are fundamentally different bets that require different teams, timelines, and success metrics. The risk of getting it wrong is building something that doesn't address why people are actually leaving — like adding profile features when the real problem is harassment. This decision is partially reversible (roadmap can shift quarter-over-quarter) but <mark>the reputational cost of continued inaction on safety, if that's the driver, is not</mark>.</p>
+
+    <h3>Timeline</h3>
+    <table>
+      <thead><tr><th>Week</th><th>What happens</th></tr></thead>
+      <tbody>
+        <tr><td>Week 1</td><td>Desk research review, internal signal review (retention cohorts, support tickets, app store reviews). Recruit participants.</td></tr>
+        <tr><td>Week 2</td><td>8–10 in-depth interviews with recently churned and at-risk Gen Z women</td></tr>
+        <tr><td>Week 3</td><td>Synthesis — pattern identification across safety, product, and competitive dimensions</td></tr>
+        <tr><td>Week 4</td><td>Readout to leadership. Decision meeting before quarterly planning lock.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>How we'll know it worked</h3>
+    <p>Research succeeds if the team can <strong>name the top 2–3 drivers of churn with evidence and confidence levels</strong> by end of Week 3. The team-level goal is that at least one initiative in next quarter's plan is directly shaped by these findings. The business signals to track: <strong>30-day retention</strong> for Gen Z women at 6 months, and <strong>DAU/MAU ratio</strong> for this segment returning to pre-decline levels at 12 months.</p>
+
+    <h3>What happens after</h3>
+    <p>30-minute readout to VP Product, Head of Design, Trust &amp; Safety lead, and Engineering leads. That meeting ends with a decision: which investment track are we committing to for next quarter? The chosen track enters the roadmap with research evidence as the supporting rationale.</p>
   </div>
+</details>
 
-  <h3>Hypotheses to Design Against</h3>
-  <ol>
-    <li>Lapsed users tried the assistant for a high-stakes money question, received an output they could not verify, and disengaged — which means the design must make source, confidence, and verification visible before users act.</li>
-    <li>Lapsed users completed a one-off task and had no recurring reason to return — which means the design must either create recurring triggers tied to user events or accept an occasional-use pattern and stop optimizing for retention.</li>
-    <li>Returning users are a narrow behavioral segment whose needs differ from mass-adopters — which means the design should specialize for that segment rather than generalize for the week-1 crowd.</li>
-  </ol>
+<!-- FOR THE DESIGNER -->
+<details>
+  <summary>
+    <span class="section-title">For the Designer</span>
+    <span class="section-action">Pull last 6 months of safety-related support tickets and app store reviews from this segment</span>
+  </summary>
+  <div>
+    <p class="director-lens">What a Director of Design is scanning for: What don't we know about users yet? What assumptions might be wrong? Who are we actually designing for?</p>
 
-  <h3>Who We Are Designing For</h3>
-  <table>
-    <tr><th>Segment</th><th>Behavior definition</th><th>Design implication</th></tr>
-    <tr><td>Returners</td><td>Used the assistant 3+ times across 2+ weeks</td><td>Understand the recurring job; design to reinforce it</td></tr>
-    <tr><td>One-and-done</td><td>Used it once or twice in week 1, did not return</td><td>Understand the task and outcome; decide if this is failure or completion</td></tr>
-    <tr><td>Abandoners mid-task</td><td>Started a session and dropped before completion</td><td>Likely trust or output quality signal; highest diagnostic value</td></tr>
-  </table>
+    <div class="action"><strong>Action:</strong> Design lead should pull the last 6 months of safety-related support tickets and app store reviews filtered to Gen Z women before fieldwork starts. This data shapes the interview guide and prevents us from asking questions we could answer from existing data.</div>
 
-  <h3>Workarounds That Already Exist</h3>
-  <div class="flag">
-    <span class="label flag">Flag ⚠</span>
-    Workarounds are unknown and must be surfaced in fieldwork. Candidates to probe: in-app search, support chat, external search engines, financial advisors, spreadsheets, other fintech apps. Designing without knowing what the assistant competes with risks building against a weaker substitute than the one users actually use.
+    <h3>What we think we know vs. what might actually be true</h3>
+    <p>The industry assumption is that Gen Z women want <strong>more features and engagement mechanics</strong> — more ways to express themselves, more filters, more prompts. But the desk research suggests the opposite: they may be leaving because the product <mark>demands too much emotional labor, not too little</mark>. Swiping feels transactional, conversations feel scripted, and the cumulative weight of low-grade negative interactions is exhausting.</p>
+    <p>We also assume that safety features (report, block) are sufficient because they exist. But public signal strongly suggests that <strong>the experience of needing to use safety tools is itself a deterrent</strong>. Women aren't saying "I reported someone and nothing happened" — they're saying <mark>"I shouldn't have to deal with this at all."</mark> The bar isn't better reporting. It's fewer incidents.</p>
+    <p>And we assume competitive loss is about features. It may actually be about <strong>norms and culture</strong>. Apps like Hinge and Feeld are gaining ground not because they have better features, but because they <em>feel</em> different to use. The behavioral contract between users is different.</p>
+
+    <h3>Hypotheses to design against</h3>
+    <ol>
+      <li>Gen Z women reduce usage after repeated low-grade negative interactions (not just reportable incidents) because the cumulative cost exceeds the value of staying — which means the product needs passive safety signals, not just reactive tools.</li>
+      <li>Gen Z women see the platform's brand as misaligned with how they want to present themselves socially — it's associated with behaviors they find unacceptable — which means the product's public identity may need to shift before features matter.</li>
+      <li>Gen Z women aren't going to one competitor — they're fragmenting across apps with narrower use cases (Hinge for serious, Feeld for exploratory, Thursday for event-driven) — which means the design response may be depth in one use case rather than breadth.</li>
+    </ol>
+
+    <h3>Who we're designing for</h3>
+    <p><strong>Recently churned</strong> — had an active usage pattern, stopped or deleted within the last 90 days. These women can describe specific moments that preceded their decision. Highest signal value for this study.</p>
+    <p><strong>At-risk / declining</strong> — usage has dropped significantly but the account is still active. They can describe what's currently pushing them away vs. what keeps them partially engaged. Good for understanding the friction-to-value ratio.</p>
+    <p><strong>Never-activated</strong> — created an account but never reached meaningful engagement. May reveal first-impression or onboarding barriers specific to this segment. Lower priority for this study but worth including 1–2 if recruitment allows.</p>
+
+    <h3>What people are already doing without us</h3>
+    <p>We don't have direct evidence yet, but desk research and public signal point to several likely patterns: using the app in restricted ways (never initiating, only responding) as self-protection; migrating to apps perceived as safer or more intentional; and using external channels (group chats, Instagram, TikTok) to vet matches before engaging on-platform. Fieldwork must confirm which of these are real and how widespread they are — designing without this data means we're guessing at what behaviors to support or replace.</p>
   </div>
-</section>
+</details>
 
-<section>
-  <h2>For the Eng</h2>
-  <p class="preview">Constraints, irreversible decisions, what research cannot answer, what findings change the build.</p>
+<!-- FOR THE ENG -->
+<details>
+  <summary>
+    <span class="section-title">For the Eng</span>
+    <span class="section-action">Assess whether moderation stack can handle behavioral detection, not just content moderation</span>
+  </summary>
+  <div>
+    <p class="director-lens">What a VP/Director of Eng is scanning for: What could change what we build? What decisions can't be undone? What should we figure out in parallel?</p>
 
-  <h3>Constraints That Affect the Build</h3>
-  <table>
-    <tr><th>Constraint</th><th>Impact on build</th></tr>
-    <tr><td>Financial regulation (disclosure, advice boundaries)</td><td>Output framing, disclaimers, what the assistant is permitted to say</td></tr>
-    <tr><td>Data residency and PII handling in prompts</td><td>What user context can be passed to the model; logging scope</td></tr>
-    <tr><td>Model latency and cost per session</td><td>Affects how much grounding, retrieval, and verification can be layered in</td></tr>
-    <tr><td>Auditability of outputs for compliance</td><td>Logging, output capture, reproducibility</td></tr>
-  </table>
+    <div class="action"><strong>Action:</strong> Engineering lead should assess the current moderation architecture's capacity for behavioral detection (not just content moderation) before the research readout. If findings point to proactive intervention, the team needs to know what's feasible in real time.</div>
 
-  <h3>What Is Irreversible</h3>
-  <ul>
-    <li>Data schema for conversation logs and user feedback signals — changing this later breaks longitudinal measurement</li>
-    <li>Compliance posture on what the assistant asserts about user accounts vs. general information — rolling back is costly</li>
-    <li>Integration surface (which in-app contexts invoke the assistant) — widely deployed entry points are hard to retract</li>
-  </ul>
+    <h3>What's constrained</h3>
+    <p>iOS and Android parity is non-negotiable — any safety or trust feature has to ship on both platforms simultaneously. A gap creates inconsistent user experience in exactly the area where consistency matters most. If research points to behavioral moderation (detecting patterns like repeated boundary-pushing, not just flagged content), the existing moderation stack may need architectural changes. And any new data collection for safety signals has to comply with platform privacy policies and regional regulations.</p>
 
-  <h3>What Research Cannot Answer</h3>
-  <div class="context">
-    <span class="label context">Context</span>
-    Research can identify which of the four hypotheses is driving drop-off and for whom. It cannot determine: whether a given output was factually correct (requires eval infrastructure); whether model quality can be improved to the level users need; compliance and regulatory boundaries on output scope; cost-per-session economics of proposed improvements.
+    <h3>What can't be undone</h3>
+    <p>Matching algorithm changes that affect all users are hard to roll back once shipped — if research points to algorithmic interventions for safety, the rollout and rollback plan needs to be defined before launch. Data schema changes for new safety signals create storage and handling obligations that are difficult to reverse. And public-facing trust and safety commitments, once communicated, become expectations that are costly to walk back.</p>
+
+    <h3>What this study can't answer — and who can</h3>
+    <p>This study will tell us what users need and how they behave, but it can't determine whether behavioral signals (message tone, interaction patterns) can be reliably detected at scale — that's an eng spike. It can't tell us whether moderation latency can meet the threshold where intervention feels timely — that's a performance assessment. And it won't resolve platform-level impact of real-time behavioral monitoring — that needs load testing and architecture review, ideally in parallel with the research.</p>
+
+    <h3>What would change the build</h3>
+    <p>If we find that drop-off is driven by <strong>repeated low-grade negative interactions</strong> rather than reportable incidents, the investment shifts from reactive tools (report/block) to <mark>passive behavioral detection and proactive intervention</mark> — a fundamentally different architecture. If it turns out users are leaving because of how the platform <em>feels</em> (brand, norms, culture) rather than how it <em>works</em>, the technical investment shifts to <strong>community norms infrastructure</strong>: onboarding flows, profile signals, behavioral nudges. And if users are fragmenting to specialized apps, we might need <strong>modular architecture</strong> that supports differentiated experiences within one app rather than one-size-fits-all.</p>
   </div>
+</details>
 
-  <h3>What Would Change the Build</h3>
-  <table>
-    <tr><th>If research finds this</th><th>Engineering should do this</th></tr>
-    <tr><td>Trust is the dominant driver</td><td>Prioritize provenance, source citation, confidence signaling, human handoff</td></tr>
-    <tr><td>Output quality is the dominant driver</td><td>Prioritize evaluation infrastructure and retrieval grounding before UX changes</td></tr>
-    <tr><td>Onboarding is the dominant driver</td><td>Lightweight — re-sequence first-run; not an architectural change</td></tr>
-    <tr><td>Feature-market fit is weak — no recurring job</td><td>Reconsider entry points and investment level; do not scale infrastructure</td></tr>
-  </table>
+<!-- RESEARCH PLAN -->
+<details>
+  <summary>
+    <span class="section-title">Research Plan</span>
+    <span class="section-action">Begin recruiting churned Gen Z women this week; review desk research and internal data before writing the guide</span>
+  </summary>
+  <div>
+    <p class="director-lens">What the research lead is scanning for: What do I already know? What's the recommendation? What do I need before I can start?</p>
 
-  <div class="action">
-    <span class="label action">Action Required →</span>
-    Eng lead should confirm before Week 1 what log fields exist for the cohort analysis (session outcomes, task types, feedback signals, re-engagement events). If fields are missing, instrument now — waiting until after the study wastes the next cycle.
+    <div class="action"><strong>Action:</strong> Begin participant recruitment this week targeting recently churned Gen Z women (last 90 days). In parallel, review the desk research below and pull internal retention cohort data before writing the discussion guide.</div>
+
+    <h3>What's already out there — desk research</h3>
+    <p>There's substantial public signal on this topic. Three themes emerge consistently across Reddit threads, app store reviews, industry reporting, and academic research:</p>
+    <p><strong>Safety and harassment fatigue is the loudest signal.</strong> Research shows sexual harassment on dating apps affects <mark>57–89% of women</mark>, with younger women at higher risk. <mark>57% of female users 18–34</mark> report receiving unsolicited explicit images. But the issue isn't just acute incidents — it's the <strong>cumulative burden</strong>. Women describe exhaustion from constant low-level boundary violations that individually don't feel "bad enough" to report but collectively make the platform feel hostile. A 2025 NPR investigation found that individuals accused of assault could remain on major platforms despite multiple complaints.</p>
+    <p><strong>Swipe fatigue and emotional labor are driving burnout.</strong> <mark>More than half of Gen Z</mark> reports feeling burned out "often or always" on dating apps — the highest of any age group. The swiping mechanic is described as transactional and superficial. Gen Z women aren't asking for more matches; they're asking for <strong>less confusion and fewer scripted conversations</strong>. Apps that emphasize intentionality (Hinge, Thursday, Feeld) are gaining ground specifically because they feel less like work.</p>
+    <p><strong>The competitive landscape has fragmented.</strong> Gen Z women aren't moving to a single competitor — they're spreading across apps with <strong>narrower, more specific value propositions</strong>. Hinge for serious dating, Feeld for exploratory, Her for LGBTQ+ community, Thursday for event-driven connection. The common thread isn't features but <mark>norms</mark> — platforms where the behavioral contract between users feels different.</p>
+
+    <div class="flag"><strong>Gap:</strong> Public signal is strong on the industry-wide trend but thin on what's specific to <em>this</em> platform. Internal retention data, support tickets, and app store reviews need to confirm whether these broader patterns explain our specific drop-off or if something platform-specific is happening.</div>
+
+    <h3>What's already inside — internal signals to review</h3>
+    <p>Before fieldwork, the team should review: (1) retention cohort data for Gen Z women over the past 12 months — when and where in the user journey does drop-off accelerate; (2) Trust &amp; Safety reports filed by Gen Z women — volume, nature, and any changes in the past 6 months; (3) app store reviews and social media mentions filtered to this segment; (4) customer support tickets — themes in complaints and account deletion reasons.</p>
+
+    <div class="flag"><strong>Gap:</strong> If Trust &amp; Safety report data is not segmentable by age and gender, flag this immediately. The research design depends on knowing whether reported incidents correlate with the drop-off timeline.</div>
+
+    <h3>Recommendation</h3>
+    <p>8–10 in-depth interviews (60 min, remote) with recently churned and at-risk Gen Z women. Human-led — this is non-negotiable. The topic involves safety, harassment, and personal boundaries. Participants may disclose experiences with unwanted sexual content, stalking, or boundary violations. The facilitator needs to be trained in trauma-informed interviewing. AI tools can support scheduling, transcription, and preliminary coding, but not moderation or participant interaction.</p>
+
+    <h3>From finding to action</h3>
+    <p>If we find that safety and harassment experiences are the primary driver, the investment goes to trust and safety infrastructure — not feature development. VP Product and the Trust &amp; Safety lead would define the safety investment track for next quarter.</p>
+    <p>If the driver is competitive positioning (brand perception, norms, culture), the problem is how we're perceived, not how we function. Marketing and Product leadership would define a repositioning strategy, and the signals to watch would be brand perception and new user acquisition.</p>
+    <p>If it's specific product friction (features, flows, interaction design), that's the most scoped response — PM and Design lead would identify the specific improvements for next quarter.</p>
+    <p>If it's all three, or no single dominant cause, leadership needs to sequence investments based on reversibility and impact rather than trying to solve everything at once.</p>
   </div>
-</section>
-
-<section>
-  <h2>Research Plan</h2>
-  <p class="preview">For whoever is running the study. Full detail.</p>
-
-  <h3>Existing Signals to Review First</h3>
-  <ol>
-    <li>Session logs segmented by week-1 returners vs. lapsed users — task type, session length, completion, feedback signals</li>
-    <li>Funnel from assistant entry point → first question → outcome → re-entry</li>
-    <li>Existing feedback mechanisms: thumbs ratings, in-app NPS, support tickets mentioning the assistant</li>
-    <li>App store reviews and social mentions from the launch window</li>
-    <li>Any prior qualitative research on the parent app's trust, onboarding, or AI feature expectations</li>
-  </ol>
-
-  <div class="flag">
-    <span class="label flag">Flag ⚠</span>
-    If session logs do not distinguish task type or outcome, the cohort analysis cannot narrow the four hypotheses. Name the gap before Week 1 and instrument if possible.
-  </div>
-
-  <h3>Research Questions</h3>
-  <p><strong>Primary question:</strong> What is driving the drop-off in AI assistant usage after week one, and for which users?</p>
-  <ol>
-    <li>What job did lapsed users come to the assistant to do, and what happened in that session?</li>
-    <li>What distinguishes users who return from those who don't — task type, outcome, context, or prior trust in AI?</li>
-    <li>Where, specifically, does trust break down (before asking, during output, after acting)?</li>
-    <li>What do lapsed users use instead today, and how does the assistant compare?</li>
-  </ol>
-
-  <h3>Research Approach</h3>
-  <table>
-    <tr><th>Method</th><th>Status</th><th>Reason</th></tr>
-    <tr><td>Behavioral cohort and log analysis</td><td>✓ Prioritized — Week 1</td><td>Narrows which hypotheses are plausible before interview time is spent</td></tr>
-    <tr><td>Contrastive interviews: returners vs. lapsed (10–14)</td><td>✓ Prioritized — Week 2</td><td>Diagnostic power comes from contrast; identifies segment-specific drivers</td></tr>
-    <tr><td>Task replay in-session (where consented)</td><td>✓ Prioritized — Week 2</td><td>Surfaces real breakdown moments rather than recalled impressions</td></tr>
-    <tr><td>Large-N survey</td><td>✗ Deprioritized</td><td>Three-week timeline does not allow rigorous design; existing thumbs/NPS is faster to mine</td></tr>
-    <tr><td>Concept testing</td><td>✗ Deprioritized</td><td>Premature — no concept exists and none should be built until the diagnostic is complete</td></tr>
-    <tr><td>Diary study</td><td>✗ Deprioritized</td><td>Timeline too short to yield reliable repeat-use signal</td></tr>
-  </table>
-
-  <h3>When Human-Led Sessions Are Required</h3>
-  <table>
-    <tr><th>Condition</th><th>Present</th><th>Implication</th></tr>
-    <tr><td>Sensitive or trust-dependent topic</td><td>Yes</td><td>Money + AI — trust is fragile; human-led interviews required</td></tr>
-    <tr><td>Vulnerable participants</td><td>Possible</td><td>If segment includes users in financial stress, human-led only</td></tr>
-    <tr><td>Foundational — problem is unknown</td><td>Yes</td><td>Diagnostic discovery; human-led</td></tr>
-    <tr><td>Irreversible decision, no prior signal</td><td>Partial</td><td>Investment direction is reversible at software level; reputational trust is not</td></tr>
-  </table>
-
-  <div class="action">
-    <span class="label action">Action Required →</span>
-    All interviews should be human-led. AI can support transcript coding, log analysis, and synthesis pattern detection — not the sessions themselves.
-  </div>
-
-  <h3>From Finding to Action</h3>
-  <table>
-    <tr><th>Anticipated Finding</th><th>Implication</th><th>Action + Owner</th><th>Metric to Watch</th></tr>
-    <tr><td>Lapsed users did not trust outputs on money-specific questions</td><td>Invest in provenance, confidence signaling, verification UX</td><td>Design + Eng co-own; PM sponsors</td><td>Trust-linked feedback; week-4 retention</td></tr>
-    <tr><td>Lapsed users completed a one-off task and had no return trigger</td><td>Feature is occasional-use; reposition metric or build event-triggered re-engagement</td><td>PM owns repositioning</td><td>Task-to-return rate among triggered cohorts</td></tr>
-    <tr><td>Output quality is the dominant failure</td><td>Eng evaluation infrastructure before UX changes</td><td>Eng lead owns; PM sequences</td><td>Output accuracy eval score; thumbs-down rate</td></tr>
-    <tr><td>Returners are a narrow segment with a distinct job</td><td>Specialize for that segment; stop optimizing for mass adoption</td><td>PM + Design own segmentation strategy</td><td>Retention within named segment</td></tr>
-    <tr><td>Onboarding weakness is real but secondary</td><td>Lightweight first-run redesign</td><td>Design owns</td><td>First-session completion and return rate</td></tr>
-  </table>
-</section>
-
-<footer>
-  <strong>Open flags surfaced to the top:</strong>
-  <ul>
-    <li>Workarounds outside the app are unknown — must be surfaced in fieldwork before concepts are built.</li>
-    <li>Log instrumentation may not distinguish task type or outcome. Confirm with eng lead in Week 1; instrument gaps if present.</li>
-    <li>Decision sponsor and meeting date must be confirmed before Week 1 or the readout becomes informational.</li>
-  </ul>
-</footer>
+</details>
 
 </body>
 </html>
