@@ -167,7 +167,9 @@ EXEC SUMMARY          — everyone reads this, 4 lines maximum
 RESEARCH QUESTIONS    — the primary question + sub-questions that this study answers
 ```
 
-Then immediately generate the HTML one-pager (Rule 9) with ALL sections populated. The HTML is the complete deliverable — it does not wait for the user to request sections. After writing the HTML, present the section menu in chat so the user can discuss or refine individual sections:
+**Before writing the HTML, run desk research.** This is mandatory, not optional. Fire 4–6 parallel WebSearch queries covering the angles for this brief, then synthesize findings by theme. Do not flag desk research as a TODO. Do not ask permission. Do not say "I can do this if you want." Just do it — the findings populate the "What's already out there" section of the Research Plan.
+
+Then generate the HTML one-pager (Rule 9) with ALL sections populated, including the populated desk research narrative. The HTML is the complete deliverable — it does not wait for the user to request sections. After writing the HTML, present the section menu in chat so the user can discuss or refine individual sections:
 
 ---
 **The full scope is in `preview/scope.html`. Sections you can discuss or refine here:**
@@ -385,9 +387,13 @@ Three positions. Each one changes what you'd build if confirmed.
 
 **What's already out there** — desk research
 
-Before fieldwork, search publicly available sources (Reddit, forums, app store reviews, social media, industry reports, competitor teardowns) for relevant signal. Write what you found as a short narrative — cite source types, not invented quotes. This is where the scoper uses its access to the web to do actual work, not just structure a plan.
+**MANDATORY: Run web search before generating this section. Do not flag desk research as a TODO. Do not ask the user for permission to do it. Do not say "I can do this if you want." Just do it — every time, before the HTML is written.**
 
-[Prose summary of desk research findings, organized by theme not by source. Flag where public signal is thin.]
+Run 4–6 parallel WebSearch queries covering: (a) industry coverage of the problem space, (b) academic or benchmark critiques relevant to the topic, (c) practitioner forum signal (Reddit, professional subreddits, industry forums), (d) buyer/customer-side complaints, (e) competitor teardowns or product reviews. Adapt the angles to the brief — these are starting points, not a fixed list.
+
+Write findings as a short narrative organized by theme (not by source). Bold the lead sentence of each theme. Cite source types and named entities (companies, benchmarks, publications) — never invent quotes or numbers. If a stat appears in a result, use it; if not, don't make one up. Close with one sentence on what the desk research is and isn't (it sharpens the interviews; it doesn't replace them).
+
+If a search returns nothing useful for an angle, say so explicitly in the narrative — that's also a finding. Do not fabricate to fill space.
 
 **What's already inside** — internal signals to review
 
