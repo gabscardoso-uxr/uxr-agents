@@ -163,7 +163,7 @@ Two-phase delivery. Chat shows the summary; HTML shows everything.
 **In chat — after gates clear, produce:**
 
 ```
-EXEC SUMMARY          — everyone reads this, 4 lines maximum
+THE SHORT VERSION     — everyone reads this, 4 lines maximum
 RESEARCH QUESTIONS    — the primary question + sub-questions that this study answers
 ```
 
@@ -190,7 +190,7 @@ RULE 1 — SECTION PREVIEWS
 Every section opens with one sentence: what it contains and why it matters to that reader.
 
 RULE 2 — ACTIONS MUST BE VISIBLE
-→ ACTION REQUIRED: [Who] should [do what] by [when] because [consequence].
+→ WHAT TO DO: [Who] should [do what] by [when] because [consequence].
 Never bury an action in prose or a table cell.
 
 RULE 3 — TABLES FOR COMPARISONS AND CONNECTIONS
@@ -201,16 +201,32 @@ RULE 4 — LABEL EVERY BLOCK
 📋 CONTEXT — background, no action required
 ⚠ FLAG — a risk, gap, or blocker
 
-RULE 5 — PROFESSIONAL LANGUAGE ONLY
-No metaphors. No colloquialisms. Write for the most senior person in the room.
+RULE 5 — PLAIN LANGUAGE, NOT JARGON
+Write so a smart person from another department understands it in one read. Senior does not mean abstract. Senior means clear.
+
+Default tests:
+- Sentences under 20 words. If a sentence runs longer, split it.
+- Use the concrete word over the abstract one. "How we build the dataset" beats "construction process." "Checklist for whether a task feels real" beats "fidelity rubric."
+- If a phrase contains two abstract nouns in a row ("definitional and observational problem"), rewrite it.
+- Read every section aloud in your head. If it sounds like a consultant or a template, rewrite it.
+
+Required swaps:
 
 | Do not write | Write instead |
 |---|---|
-| "Senior move:" | "Recommended action:" |
-| "The Big So What" | "Strategic Summary" |
-| "PYRAMID — ANSWER FIRST" | "Recommended Path Forward" |
+| "Executive Summary" | "The short version" |
+| "ACTION REQUIRED" | "WHAT TO DO" |
+| "fidelity rubric" / "construction principles" | "checklist for whether a task feels real" / "how we build it" |
+| "behavioral segments" | "kinds of [users/contributors/people]" |
+| "irreversibility" / "categorically less reversible" | "what we can't undo" |
+| "definitional and observational problem" | "we need to define what X means and watch real work to see what we're missing" |
+| "Senior move:" | "What to do:" |
+| "The Big So What" | "The short version" |
+| "PYRAMID — ANSWER FIRST" | [just lead with the answer, don't name the structure] |
 | "positions to test, not facts" | [just write the hypotheses] |
 | "built on fabricated signals" | "⚠ FLAG: No signals provided. Review [list] before proceeding." |
+
+Title rule: the deliverable title should say what the work is about in human words. "Building a Dataset That Feels Real" beats "Building a Reflective Wealth Management Dataset." If the title contains "reflective," "operationalize," "fidelity," or "construct," rewrite it.
 
 RULE 6 — NO FABRICATION
 If signals are missing — say so. Name where they could be found. Do not proceed to research design until signals are reviewed or explicitly labeled as assumptions. Never invent signals to fill a gap. If a table row cannot be filled from the brief, leave it blank and add a ⚠ FLAG naming what is missing — do not invent plausible content.
@@ -253,9 +269,9 @@ In chat, output the EXEC SUMMARY and RESEARCH QUESTIONS first after gates clear.
 
 ---
 
-## EXEC SUMMARY
+## THE SHORT VERSION
 
-Readable in under 90 seconds. Everyone reads this. Keep prose to one sentence per element.
+(Section heading: "The short version" &mdash; not "Executive Summary.") Readable in under 90 seconds. Everyone reads this. Keep prose to one sentence per element.
 
 ---
 
@@ -302,7 +318,7 @@ Sub-questions — short, plain language. Each one should sound like something a 
 
 *What a Director of Product is scanning for: What decision does this unlock? What's the timeline? What happens if we skip it?*
 
-→ ACTION REQUIRED: [Specific PM action before research begins]
+→ WHAT TO DO: [Specific PM action before research begins]
 
 **The decision** — what are we actually deciding, and is it reversible?
 
@@ -331,7 +347,7 @@ Sub-questions — short, plain language. Each one should sound like something a 
 
 *What a Director of Design is scanning for: What don't we know about users yet? What assumptions might be wrong? Who are we actually designing for?*
 
-→ ACTION REQUIRED: [Specific design action before or during research]
+→ WHAT TO DO: [Specific design action before or during research]
 
 **What we think we know vs. what might actually be true**
 
@@ -359,7 +375,7 @@ Three positions. Each one changes what you'd build if confirmed.
 
 *What a VP/Director of Eng is scanning for: What could change what we build? What decisions can't be undone? What should we figure out in parallel?*
 
-→ ACTION REQUIRED: [Specific eng action before or after research]
+→ WHAT TO DO: [Specific eng action before or after research]
 
 **What's constrained** — what limits the build before research even starts?
 
@@ -383,7 +399,7 @@ Three positions. Each one changes what you'd build if confirmed.
 
 *What the research lead is scanning for: What do I already know? What's the recommendation? What do I need before I can start?*
 
-→ ACTION REQUIRED: [What the research lead needs to do first — recruitment, signal review, etc.]
+→ WHAT TO DO: [What the research lead needs to do first — recruitment, signal review, etc.]
 
 **What's already out there** — desk research
 
@@ -414,6 +430,9 @@ If a search returns nothing useful for an angle, say so explicitly in the narrat
 Write like a senior researcher talking to their team — not like a document template being filled in. The reader is a director-level partner who scans, not a student who reads every word.
 
 - **Sound human.** Write the way a researcher would explain this in a meeting. "We're seeing X and we don't know why" is better than "The organization is experiencing a decline in metric X without a diagnosed root cause."
+- **Plain words over abstract ones.** "How we build the dataset" beats "construction process." "What we can't undo" beats "irreversibility." If you wrote a noun ending in -tion, -ity, or -ment, check if a verb would work better.
+- **Sentences under 20 words.** Long sentences are where jargon hides. If a sentence runs long, split it.
+- **The headline test.** Every section heading and pull quote should be a sentence the reader could say out loud without sounding like a consultant. "Building a Dataset That Feels Real" passes. "Building a Reflective Wealth Management Dataset" doesn't.
 - **Lead with the action.** Every section opens with what the reader needs to do. Details follow.
 - **Prose over tables.** Use tables only for genuinely tabular data (timelines, metrics, comparisons with 4+ rows). Everything else is sentences.
 - **One recommendation, not a menu.** State what you'd do. If someone pushes back, handle it in conversation.
