@@ -31,11 +31,37 @@ To stay up to date, `git pull` in the cloned repo (Option 1) or re-copy the skil
 
 ---
 
+## Example: running `/scoper`
+
+You're a researcher whose PM just dropped this in Slack: *"Trial-to-paid conversion is down 12% this quarter. Can you figure out why?"*
+
+In Claude Code:
+
+```
+/scoper trial-to-paid conversion is down 12% this quarter, PM wants to know why
+```
+
+**What the skill does, step by step:**
+
+1. **Pre-flight gate.** Before generating anything, the skill checks the brief for a workable problem, infers the research stage (Discovery, in this case), and outputs a checklist asking you to confirm the stage and add any context (existing data, prior conversations, senior bets). It will not produce a scope until you confirm.
+
+2. **Desk research.** Once you confirm, it runs 4–6 parallel web searches for industry signal on the problem space (in this case: SaaS trial conversion benchmarks, common churn causes at the trial-to-paid stage, recent vendor case studies). Findings get synthesized into the Research Plan section by theme — not by source.
+
+3. **Chat output.** You see "The short version" (one strategic sentence + the recommended path) and the research questions.
+
+4. **HTML deliverable.** The full scope is written to `scope.html` in your working directory — a one-pager with collapsible sections for the PM, Designer, Developers, and Research lead. Every section opens with the action that role needs to take. Open it in a browser to share.
+
+5. **Refinement menu.** The skill lists the four sections you can iterate on in chat before sharing the HTML.
+
+The skill won't fabricate signals. If the brief is missing pieces — no metric definition, no segment data, no prior conversations — it flags those gaps in the scope rather than inventing plausible content.
+
+---
+
 ## Skills
 
 ### `/scoper` — Research Scoper
 **Input:** A research brief (problem, goals, research questions)
-**Output:** A scoped research plan — one document, four readers (Exec, PM, Designer, Eng)
+**Output:** A scoped research plan — one document, four readers (Exec, PM, Designer, Developers)
 
 What it does:
 - Confirms the research stage (Discovery / Definition / Validation) before producing anything
