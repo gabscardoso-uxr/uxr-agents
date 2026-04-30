@@ -9,7 +9,7 @@ user-invocable: true
 Transforms vague briefs into decision-ready research plans.
 Four readers, one scope. Stage-aware. No fabrication.
 
-The chat output is the working draft. The **HTML one-pager at `preview/scope.html`** is the shared deliverable (see Rule 9).
+The chat output is the working draft. The **HTML one-pager at `scope.html`** (in the current working directory) is the shared deliverable (see Rule 9). If a project has a different convention (e.g. `preview/scope.html`, `docs/scope.html`), the user's CLAUDE.md can override the path.
 
 ---
 
@@ -146,13 +146,13 @@ If research is not the right next step — state it clearly. Name what is instea
 
 ## STEP 1B — DETECT PRODUCT TYPE
 
-Before producing output, identify the product type. State it once. Apply it throughout — especially in FOR THE ENG.
+Before producing output, identify the product type. State it once. Apply it throughout — especially in FOR THE DEVELOPERS.
 
 | Product type | What this means for the scope |
 |---|---|
-| **Software only** | Eng section covers data, architecture, platform, reversibility of software decisions |
-| **Hardware + software** | Eng section covers both layers. Hardware decisions are categorically less reversible. Flag them first. |
-| **Hardware only** | Eng section covers physical constraints, manufacturing, safety, certification |
+| **Software only** | Developers section covers data, architecture, platform, what we can't undo about software decisions |
+| **Hardware + software** | Developers section covers both layers. Hardware decisions are much harder to undo — flag them first. |
+| **Hardware only** | Developers section covers physical constraints, manufacturing, safety, certification |
 
 ---
 
@@ -172,10 +172,10 @@ RESEARCH QUESTIONS    — the primary question + sub-questions that this study a
 Then generate the HTML one-pager (Rule 9) with ALL sections populated, including the populated desk research narrative. The HTML is the complete deliverable — it does not wait for the user to request sections. After writing the HTML, present the section menu in chat so the user can discuss or refine individual sections:
 
 ---
-**The full scope is in `preview/scope.html`. Sections you can discuss or refine here:**
+**The full scope is in `scope.html`. Sections you can discuss or refine here:**
 1. FOR THE PM — decision, risk, timeline, success metrics
-2. FOR THE DESIGNER — mental model gap, hypotheses, segments, workarounds
-3. FOR THE ENG — constraints, irreversibility, build implications
+2. FOR THE DESIGNER — what we don't know about users, hypotheses, who we're building for
+3. FOR THE DEVELOPERS — constraints, what we can't undo, build implications
 4. RESEARCH PLAN — existing signals, method, approach, from-finding-to-action
 
 Reply with a number, multiple numbers, or "all" to discuss.
@@ -238,15 +238,15 @@ RULE 8 — NO PRESENTATION OR SLIDE DECK STRUCTURES
 Do not generate slide deck outlines, presentation structures, or slide-by-slide breakdowns. The scoper produces a research scope document — not a presentation plan. If the brief mentions a deliverable format (e.g. "5–8 slides"), note it once in the timeline or "What Happens After" section as the expected output format. Do not expand it into a table of slide contents.
 
 RULE 9 — GENERATE HTML ONE-PAGER (PRIMARY DELIVERABLE)
-Always generate the HTML file at `preview/scope.html` proactively after producing the Exec Summary and Research Questions. The HTML is always the **complete** document — all sections included, all content populated. This is the artifact that gets shared; the chat output is the working draft.
+Always generate the HTML file at `scope.html` (in the working directory, unless the user's CLAUDE.md specifies a different path) proactively after producing The Short Version and Research Questions. The HTML is always the **complete** document — all sections included, all content populated. This is the artifact that gets shared; the chat output is the working draft.
 
 Structure (in order):
 1. Header — study title, stage, date, product type
-2. EXEC SUMMARY — strategic summary, recommended path table, recommended action, **actions at a glance table** (always open)
+2. THE SHORT VERSION — strategic summary, recommended path table, recommended action, **actions at a glance table** (always open)
 3. RESEARCH QUESTIONS — primary + sub-questions (always open)
 4. FOR THE PM (collapsed `<details>`) — `<summary>` includes the PM's action in a subtitle line
 5. FOR THE DESIGNER (collapsed `<details>`) — `<summary>` includes the Designer's action in a subtitle line
-6. FOR THE ENG (collapsed `<details>`) — `<summary>` includes the Eng's action in a subtitle line
+6. FOR THE DEVELOPERS (collapsed `<details>`) — `<summary>` includes the developers' action in a subtitle line
 7. RESEARCH PLAN (collapsed `<details>`) — `<summary>` includes the Research lead's action in a subtitle line
 
 The HTML includes all sections from the first generation. Do not wait for the user to expand sections in chat before including them in the HTML.
@@ -261,22 +261,22 @@ Style contract:
 - **Readability and emphasis:** Optimize for scanning. Use `<strong>` to bold key phrases, decisions, and names within prose so a reader can skim a paragraph and catch the important parts. Use `<mark>` with a soft mint background (`#36FFCA40`) to highlight critical findings, numbers, or the single most important sentence in a section. Use short pull-quote styled callouts (larger font, left-aligned, no border) for the single most important insight in each section. Don't over-highlight — if everything is bold, nothing is.
 - ACTION blocks: coral left border, light coral background. These are the most visually prominent element on the page.
 - FLAG blocks: warm amber left border. CONTEXT blocks: light gray left border.
-- Collapsible sections: `<details><summary>` for PM, Designer, Eng, Research Plan — closed by default. Each `<summary>` shows the section title AND the role's required action as a subtitle line beneath it (styled smaller, coral text). This ensures actions are visible without expanding.
+- Collapsible sections: `<details><summary>` for PM, Designer, Developers, Research Plan — closed by default. Each `<summary>` shows the section title AND the role's required action as a subtitle line beneath it (styled smaller, coral text). This ensures actions are visible without expanding.
 - `@media print`: expand all `<details>`, `page-break-inside: avoid` on sections
 
 RULE 10 — PROGRESSIVE DISCLOSURE (CHAT ONLY)
-In chat, output the EXEC SUMMARY and RESEARCH QUESTIONS first after gates clear. Then present the section menu so the user can choose what to discuss or refine. The HTML deliverable (Rule 9) is always the complete document with all sections — it does not wait for chat expansion. The chat menu exists for the user to iterate on individual sections before sharing the HTML.
+In chat, output THE SHORT VERSION and RESEARCH QUESTIONS first after gates clear. Then present the section menu so the user can choose what to discuss or refine. The HTML deliverable (Rule 9) is always the complete document with all sections — it does not wait for chat expansion. The chat menu exists for the user to iterate on individual sections before sharing the HTML.
 
 ---
 
 ## THE SHORT VERSION
 
-(Section heading: "The short version" &mdash; not "Executive Summary.") Readable in under 90 seconds. Everyone reads this. Keep prose to one sentence per element.
+Readable in under 90 seconds. Everyone reads this. Keep prose to one sentence per element. The section heading is always literally "The short version" — never "Executive Summary."
 
 ---
 
-**STRATEGIC SUMMARY**
-[One sentence — the business direction implication. Not what users did. What it means for where the organization should go.]
+**Lead sentence** — the strategic implication in one sentence. Not what users did. What it means for where the team should go.
+[One sentence — the business direction implication.]
 
 **RECOMMENDED PATH FORWARD**
 
@@ -287,17 +287,17 @@ In chat, output the EXEC SUMMARY and RESEARCH QUESTIONS first after gates clear.
 | Recommended method | [One method, one reason] |
 | Decision this unlocks | [What the team can do after that they cannot do now] |
 
-→ RECOMMENDED ACTION: [One action. Specific owner. Specific timeframe. Consequence of not doing it.]
+→ WHAT TO DO NEXT: [One action. Specific owner. Specific timeframe. Consequence of not doing it.]
 
-**ACTIONS AT A GLANCE**
+**WHO NEEDS TO DO WHAT**
 
-Every role's required action, surfaced here so no one has to open a section to know what they owe.
+Every role's action, here so no one has to open a section to know what they owe.
 
 | Role | Action |
 |---|---|
 | PM | [One-line action from the PM section] |
 | Designer | [One-line action from the Designer section] |
-| Eng | [One-line action from the Eng section] |
+| Developers | [One-line action from the Developers section] |
 | Research | [One-line action from the Research Plan section] |
 
 ---
@@ -371,11 +371,11 @@ Three positions. Each one changes what you'd build if confirmed.
 
 ---
 
-## FOR THE ENG
+## FOR THE DEVELOPERS
 
-*What a VP/Director of Eng is scanning for: What could change what we build? What decisions can't be undone? What should we figure out in parallel?*
+*What a VP/Director of Engineering is scanning for: What could change what we build? What can't we undo? What should we figure out in parallel?*
 
-→ WHAT TO DO: [Specific eng action before or after research]
+→ WHAT TO DO: [Specific developer action before or after research]
 
 **What's constrained** — what limits the build before research even starts?
 
@@ -383,7 +383,7 @@ Three positions. Each one changes what you'd build if confirmed.
 
 **What can't be undone** — which decisions are we locked into once we ship?
 
-[2–3 sentences. Name the irreversible decisions. For software: architecture, data schema, auth. For hardware: form factor, tooling, manufacturing.]
+[2–3 sentences. Name the decisions we can't take back. For software: architecture, data schema, auth. For hardware: form factor, tooling, manufacturing.]
 
 **What this study can't answer — and who can**
 
