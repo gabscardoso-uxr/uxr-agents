@@ -9,10 +9,24 @@ user-invocable: true
 Transforms vague briefs into decision-ready research plans.
 Five readers, one scope. Stage-aware. No fabrication.
 
-The deliverable is two HTML files:
+The deliverable is three HTML files:
 
 1. **`intake.html`** — the visual pre-flight. Shows the inferred stage with a confidence label, evidence, and context probe as a styled card with clickable stage buttons and a "Copy all my answers" button at the bottom. Generated *before* the scope.
-2. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface, a Short Version, Research Questions, and checkable actions with status pills.
+2. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface linking to figjam.html, a Short Version, Research Questions, and checkable actions with status pills.
+3. **`figjam.html`** — a fake-FigJam mockup of the team alignment session. Sticky-note board with four columns (Goals, Success metrics, Guardrails, Risks), each populated with stickies authored by the five roles. Linked from the "Open FigJam alignment board" button in `scope.html`. This is the demo artifact for what the alignment session looks like — in a real team, this would be a real FigJam URL.
+
+### Progress tracker
+
+Every HTML file (intake.html, scope.html, figjam.html) shows the same progress tracker at the top so the reader always knows where in the scoper workflow they are. Six steps:
+
+1. Brief
+2. Pre-flight
+3. Scope
+4. Alignment
+5. Research
+6. Findings
+
+The current step is rendered with a dark pill background and a coral step number. Completed steps are rendered with a light green pill and a green step number. Upcoming steps are rendered with a light grey pill. This is a visual indicator only — the steps are not clickable, but their numbers + labels are stable so a reader can orient instantly. Both Brief and Pre-flight are "done" by the time intake.html is being read; on scope.html, Scope is "current"; on figjam.html, Alignment is "current."
 
 ### Where the files land — output path resolution
 
@@ -367,9 +381,12 @@ Every collapsed section's `<summary>` shows the section title AND the role's act
 
 The scope is not a wall of text — it's a working document the team uses across the project. Inline JS is allowed for these specific interactions, no others:
 
-1. **Checkable actions** — each `→ WHAT TO DO` line is a `<label>` wrapping a checkbox. Checking it strikes through the action text. State persists in `localStorage` under `scoper:[scope-id]:action:[action-id]`.
-2. **Status pills** — clickable pill next to each ACTION, cycles `Not started → In progress → Done → Not started`. State persists under `scoper:[scope-id]:status:[action-id]`.
-3. **No other JS.** No forms, no AJAX, no analytics, no external scripts. Everything is one self-contained file.
+1. **Checkable actions, linked to status pills** — each `→ WHAT TO DO` line is a `<label>` wrapping a checkbox. The checkbox and the status pill share the same `data-action-id` and stay in sync:
+   - Checking the box → checkbox turns green (accent-color `#4F9F3A`), action text strikes through, **status pill auto-flips to "Done"**.
+   - Unchecking a "Done" box → pill auto-reverts to "Not started."
+   - Clicking the pill cycles `Not started → In progress → Done → Not started`. When the pill reaches "Done," the checkbox auto-checks; when it leaves "Done," the checkbox auto-unchecks.
+   - This means: the checkbox and the pill are two views of the same state. Either control can drive it. State persists in `localStorage` under `scoper:[scope-id]:action:[action-id]` and `scoper:[scope-id]:status:[action-id]`.
+2. **No other JS.** No forms, no AJAX, no analytics, no external scripts. Everything is one self-contained file.
 
 The `[scope-id]` is a slug of the study title written once into the page; the `[action-id]` is a stable kebab-case slug per action ("pm-write-success-metric", "research-recruit-walkaways"). This way two scopes on the same machine don't collide.
 
@@ -527,20 +544,21 @@ Sub-questions — short, plain language. Each one should sound like something a 
 
 [Name the research-level metric (was the question answered with enough confidence to act?), the team-level metric (did the team change a plan because of this?), and the business-level metric (what number do we expect to move in 6–12 months?). Don't pad — three lines.]
 
-**Guardrails — the constraints this study has to stay inside**
+**Guardrails — the things we can't undo or get wrong**
 
-Guardrails are the existing constraints the work has to operate within. They are not promises about what the study won't do. They are the railings: budget, system limits, pre-existing evaluation criteria, principles or frameworks the company has already adopted, and data the team already has and is expected to use.
+The Team Alignment section is read by the whole team — PM, Designer, Content, Developer, Research. The guardrails here are the *build* and *reputation* constraints the whole team has to respect, not the research-specific ones. Anything in this section is one-way: getting it wrong damages trust, reputation, or the team's ability to ship the next thing.
 
-Cover the categories that apply. Skip the ones that don't.
+Cover constraints in these categories where they apply:
 
-- **Cost / budget** — the dollar cap, hours cap, vendor cap, or recruit cost ceiling this study has to fit inside.
-- **System limitations** — what the tools, methods, or platform can and can't do (e.g. recruiter panel can't reach the walk-away segment; analytics doesn't segment by tenure; legal won't allow recording certain audiences).
-- **Evaluation call-outs** — the pre-existing evaluation criteria or quality bar the work will be judged against (e.g. the company's research quality rubric, a specific exec's "I need to see X before I'll act" standard).
-- **Pre-made principles** — company principles, design principles, or research principles already adopted that this study has to respect.
-- **Frameworks** — existing frameworks the team uses (e.g. the OKR cycle the timeline has to fit, a jobs-to-be-done framework already in play, a research-ops framework that governs participant compensation).
-- **Data** — existing data the team has and is expected to draw on before doing primary research (funnel data, prior studies, support tickets, sales notes).
+- **Trust / reputation** — the one-shot moments. The first wrong move with the target audience that becomes public and shapes the category's perception of you.
+- **Things hard to undo** — architectural decisions, schema choices, vetting models, matching logic. Anything you'd have to walk back publicly if you ship the wrong version.
+- **Public commitments** — words on the landing page, in the offer, or in the contract that the team has to deliver against. Brand claims are constraints because they reduce future flexibility.
+- **Compliance / legal** — things that require sign-off before going live (PII handling, payment flows, IP terms, recording consent).
+- **Coordination with adjacent teams** — surfaces where another team will see and react to your change (security, legal, partnerships, growth).
 
-Write each guardrail as one short line. If a category doesn't apply, leave it out — don't pad.
+Write each guardrail as one short line + one sentence on why it's a guardrail rather than a goal. If a category doesn't apply, leave it out — don't pad.
+
+**Research-specific constraints** (cost, system limits, evaluation criteria, principles, frameworks, existing data) belong in the **Research Plan section** under "Research guardrails," not here. The two are different audiences: the public guardrails are for the whole team; the research guardrails are for the researcher and the team members reviewing the study design.
 
 **Risks — what could make this study not land**
 
@@ -548,7 +566,7 @@ Write each guardrail as one short line. If a category doesn't apply, leave it ou
 
 **Figma link**
 
-[Paste the Figma board URL here. If it doesn't exist yet, name who owns creating it and by when.]
+[Link to the FigJam board (or `figjam.html` mockup for demos). If it doesn't exist yet, name who owns creating it and by when. The button in `scope.html` is labeled "Open FigJam alignment board" and links to `figjam.html` by default.]
 
 ---
 
@@ -678,6 +696,23 @@ Each one frames the same offer differently. The study should be able to tell us 
 **Recommendation** — method and why
 
 [1–2 sentences. Name the method, the sample, and why this is the right approach for this study. If the topic requires human-led sessions (sensitive, trust-dependent, vulnerable participants), state it here — don't use a checklist.]
+
+**Research guardrails — what this study has to operate inside**
+
+The constraints that bound the research itself. Different audience from the public guardrails in Team Alignment (which are about what the *whole team* can't undo or get wrong in the product). These are for the researcher and the team members reviewing the study design.
+
+Cover the categories that apply. Skip the ones that don't.
+
+| Constraint | What to write |
+|---|---|
+| Cost | The dollar cap, hours cap, vendor cap, or recruit cost ceiling. |
+| System limitations | What the tools, panels, methods, or platform can and can't do. |
+| Evaluation | The pre-existing quality bar the work will be judged against (research rubric, exec's bar, decision-readiness criteria). |
+| Pre-made principles | Research principles, ethics commitments, or company principles the study must respect. |
+| Frameworks | Existing frameworks the team uses (OKR cycle the timeline has to fit, JTBD framework in play, research-ops framework on incentives). |
+| Data | Existing data the team has and is expected to draw on before commissioning new primary research. |
+
+Write each one as one short line. If a category doesn't apply, leave it out — don't pad.
 
 **From finding to action** — what we expect to learn and what happens next
 
