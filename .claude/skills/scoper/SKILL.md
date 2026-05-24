@@ -347,12 +347,12 @@ Section order:
 1. **Header** — study title, stage badge (color-coded by stage), date, product type, owner
 2. **THE SHORT VERSION** — lead sentence, recommended path table, recommended action, "who needs to do what" table (always open). The "who needs to do what" table shows a colored dot per role matching the role palette.
 3. **RESEARCH QUESTIONS** — primary + sub-questions (always open)
-4. **TEAM ALIGNMENT — for the Figma session** (always open) — the surface where the team agrees on goals, success metrics, guardrails, and risks before research starts. Includes a Figma link slot. See template below.
+4. **NEXT STEP CTA** — a single visually prominent card that links to `figjam.html`. It carries an eyebrow "NEXT STEP," a title "Team alignment session," one short paragraph explaining what FigJam is for in this study, and a dark "Open FigJam alignment board →" button. **The card is the only thing in scope.html that points to alignment.** Goals, success metrics, guardrails, and risks do NOT live on scope.html — they live exclusively on figjam.html where the team actually edits them as sticky notes. Duplicating them on scope.html created a dead document; the CTA points to the live one.
 5. **FOR THE PM** (collapsed `<details>`, **coral** `#FF6636` left border + summary text color)
 6. **FOR THE DESIGNER** (collapsed `<details>`, **warm coral-red** `#D85C4F`)
 7. **FOR THE CONTENT WRITER** (collapsed `<details>`, **warm tan** `#B8956A`)
 8. **FOR THE DEVELOPER** (collapsed `<details>`, **charcoal** `#3D3D3D`)
-9. **RESEARCH PLAN** (collapsed `<details>`, **deep brown** `#6B3D2E`)
+9. **RESEARCH PLAN** (collapsed `<details>`, **deep brown** `#6B3D2E`) — includes a "Research guardrails" sub-section (cost, system limits, evaluation criteria, principles, frameworks, data). Research-specific constraints stay here, with the researcher audience.
 
 Every collapsed section's `<summary>` shows the section title AND the role's action as a subtitle (smaller, in the role's color). Actions are visible without expanding.
 
@@ -399,12 +399,13 @@ Present the section menu so the user can discuss or refine individual sections:
 ```
 The full scope is in scope.html. Sections you can discuss or refine here:
 1. SHORT VERSION — lead sentence, recommended path, who does what
-2. TEAM ALIGNMENT — goals, metrics, guardrails, risks for the Figma session
+2. RESEARCH QUESTIONS — primary + sub-questions
 3. FOR THE PM — decision, risk, timeline, success metrics
 4. FOR THE DESIGNER — what we don't know about users, hypotheses, who we're building for
 5. FOR THE CONTENT WRITER — voice, naming, copy risks, what to test
 6. FOR THE DEVELOPER — constraints, what we can't undo, build implications
-7. RESEARCH PLAN — existing signals, method, approach, from-finding-to-action
+7. RESEARCH PLAN — existing signals, method, research guardrails, approach, from-finding-to-action
+8. FIGJAM ALIGNMENT BOARD (figjam.html) — goals, metrics, guardrails, risks as sticky notes
 
 Reply with a number, multiple numbers, or "all" to discuss.
 ```
@@ -530,43 +531,34 @@ Sub-questions — short, plain language. Each one should sound like something a 
 
 ---
 
-### TEAM ALIGNMENT — for the Figma session
+### NEXT STEP CTA (in scope.html)
 
-*This is the surface the team uses to agree on what the study is for, before research begins. Goals, metrics, guardrails, and risks live here together so a PM, designer, content lead, developer, and researcher can read the same sentences in the same room. Update it in Figma during the alignment session; mirror the agreed version back into this card.*
+A single visually prominent card placed after RESEARCH QUESTIONS and before the role sections. Structure:
 
-→ WHAT TO DO: Open the Figma board ([link]). Each role reads the four blocks below in this card and brings one disagreement to the meeting. Lock the agreed version before recruiting starts.
+- **Eyebrow:** `NEXT STEP` (coral, small, uppercase, letter-spaced)
+- **Title:** `Team alignment session` (large, bold)
+- **Body:** one paragraph: *"Take this scope to FigJam. Each role drops a sticky on goals, success metrics, guardrails, and risks. Sign off only when the columns read coherent to a senior reader."*
+- **Action:** dark pill button `Open FigJam alignment board →` linking to `figjam.html`
 
-**Goals — what this study is actually for**
+The whole card is a clickable `<a>`, so the entire tile is a click target — not just the button. The card is the only thing in scope.html that points to alignment. Goals, success metrics, guardrails, and risks do NOT live on scope.html; they live exclusively on figjam.html.
 
-[2–3 short sentences. Not "learn about users" — name what the team can do *after* the study that they can't do *now*. If the goal is a decision, name the decision and who makes it.]
+### TEAM ALIGNMENT (lives in figjam.html, not scope.html)
 
-**Success metrics — how we'll know it worked**
+The alignment artifact is a separate file (`figjam.html`) styled as a fake-FigJam board. It contains:
 
-[Name the research-level metric (was the question answered with enough confidence to act?), the team-level metric (did the team change a plan because of this?), and the business-level metric (what number do we expect to move in 6–12 months?). Don't pad — three lines.]
+- **Toolbar** — dark bar mimicking FigJam: logo, file name, tool icons (Cursor, Sticky highlighted, Marker, Section, Stamp), and a row of role-colored avatar bubbles.
+- **Progress tracker** — same six-step bar as the other files, with "Alignment" as the current step.
+- **Back link** — `← Back to scope.html` near the top.
+- **Board** — four columns of slightly-rotated sticky notes:
+  - **Goals** (yellow stickies, `#FFE8B4`) — what the study is for
+  - **Success metrics** (green stickies, `#D5F0C8`) — research / team / business level
+  - **Guardrails** (coral stickies, `#FFCCC2`) — build / reputation / undoability constraints. Research-specific constraints (cost, system limits, evaluation criteria, principles, frameworks, data) belong in the Research Plan section of `scope.html`, NOT here.
+  - **Risks** (pink stickies, `#F4D6E8`) — what could make this study not land, with early signals and mitigations
+- Each sticky tagged with author name + role-color dot. Stickies from PM, Designer, Content, Developer, Research.
+- Comment bubbles from teammates surface disagreement or follow-up ideas mid-board.
+- **Decision banner** at the bottom — dark block summarizing the alignment outcome, with role sign-off chips (each role + green checkmark).
 
-**Guardrails — the things we can't undo or get wrong**
-
-The Team Alignment section is read by the whole team — PM, Designer, Content, Developer, Research. The guardrails here are the *build* and *reputation* constraints the whole team has to respect, not the research-specific ones. Anything in this section is one-way: getting it wrong damages trust, reputation, or the team's ability to ship the next thing.
-
-Cover constraints in these categories where they apply:
-
-- **Trust / reputation** — the one-shot moments. The first wrong move with the target audience that becomes public and shapes the category's perception of you.
-- **Things hard to undo** — architectural decisions, schema choices, vetting models, matching logic. Anything you'd have to walk back publicly if you ship the wrong version.
-- **Public commitments** — words on the landing page, in the offer, or in the contract that the team has to deliver against. Brand claims are constraints because they reduce future flexibility.
-- **Compliance / legal** — things that require sign-off before going live (PII handling, payment flows, IP terms, recording consent).
-- **Coordination with adjacent teams** — surfaces where another team will see and react to your change (security, legal, partnerships, growth).
-
-Write each guardrail as one short line + one sentence on why it's a guardrail rather than a goal. If a category doesn't apply, leave it out — don't pad.
-
-**Research-specific constraints** (cost, system limits, evaluation criteria, principles, frameworks, existing data) belong in the **Research Plan section** under "Research guardrails," not here. The two are different audiences: the public guardrails are for the whole team; the research guardrails are for the researcher and the team members reviewing the study design.
-
-**Risks — what could make this study not land**
-
-[2–3 risks as short prose lines. For each: the risk, what makes it likely, and the early signal you'd watch for. Examples: "Recruit fails — we can't reach the walk-away segment because we don't have their emails. Signal: Week 1 ends with fewer than 2 confirms."]
-
-**Figma link**
-
-[Link to the FigJam board (or `figjam.html` mockup for demos). If it doesn't exist yet, name who owns creating it and by when. The button in `scope.html` is labeled "Open FigJam alignment board" and links to `figjam.html` by default.]
+`figjam.html` is allowed minimal inline CSS, no JS. The board is a static snapshot of the agreed alignment — the team would actually edit it in a real FigJam, but the static HTML version is the demo artifact.
 
 ---
 
