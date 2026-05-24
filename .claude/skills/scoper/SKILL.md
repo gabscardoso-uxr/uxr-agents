@@ -68,13 +68,18 @@ Style:
 - Default state on intake.html: **expanded** (the user is verifying the brief here, so it's prominent).
 - Default state on scope.html and figjam.html: **collapsed inside a `<details>`** with summary "The brief — what we were asked." Reader can expand it to re-anchor at any moment.
 
-### Forward-nav CTA at the bottom of every HTML
+### Forward navigation — what counts as enough
 
-Every HTML ends with a "next step" block so the reader always knows where to go next:
+Each HTML already has two forward-nav surfaces by default: the **progress tracker** at the top (clickable links to siblings) and the **action surface** that produces the next artifact (the submit button on brief.html, the stage buttons + "Copy all my answers" on intake.html, etc.). That's enough.
 
-- **intake.html footer:** Until the user confirms stage, the footer is the existing footer-note ("Reply in chat with the confirmed stage..."). After the scope is generated, this footer becomes a "Continue → scope.html" CTA. Since intake.html is generated only once at pre-flight time, write the CTA pointing to scope.html (the link will be broken until scope.html exists, but the reader will see "scope coming next" framing).
-- **scope.html footer:** The existing NEXT STEP CTA card linking to figjam.html stays where it is.
-- **figjam.html footer:** Currently shows the decision banner. Add a small "Sequence" footer below it with: `← Back to scope.html` and `Research phase →` (the latter is a muted, non-link placeholder for future synthesis output, with a tooltip "generated after research runs").
+**Do not add a separate "next phase" CTA card** to brief.html or intake.html. The tracker shows where you're going; the action surface tells you how to get there. A third "Preview scope.html →" card below adds clutter without information — the file it points to doesn't exist yet, and the user already knows what's next.
+
+Two exceptions where a forward-nav block does carry weight:
+
+- **scope.html:** Keep the NEXT STEP CTA card linking to figjam.html. scope.html has no other action surface — the tracker is the only forward nav, and the card makes the alignment handoff visible to a reader who hasn't read the contract.
+- **figjam.html footer:** A small "Sequence" footer below the decision banner with `← Back to scope.html` on the left and a muted `Research phase →` placeholder on the right (tooltip: "generated after research runs"). This closes the loop on the alignment board.
+
+The principle: forward nav appears when the page has no other action to take. Where the page already has buttons that produce the next phase, the tracker is sufficient.
 
 ### Where the files land — output path resolution
 
@@ -193,8 +198,7 @@ Self-contained, light color-scheme pinned, same font stack as the other HTMLs. L
   - **Timeline / deadline** — single-line input
   - **Prior signals or work** — textarea
   - **Senior theories on the table** — textarea
-- **Submit block** at the bottom — dark background, green "Generate pre-flight →" button. Clicking it compiles every non-empty field into a structured paste-back and copies it to the clipboard (with execCommand + inline-display fallbacks).
-- **Forward CTA** below the submit block — cream card pointing to intake.html with a preview link.
+- **Submit block** at the bottom — dark background, green "Generate pre-flight →" button. Clicking it compiles every non-empty field into a structured paste-back and copies it to the clipboard (with execCommand + inline-display fallbacks). The button **is** the forward CTA — do not add a separate "next phase" card below it. The tracker at the top already shows the sequence, and the button label already says what's next.
 
 ### Brief paste-back format
 
