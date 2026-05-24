@@ -7,9 +7,25 @@ user-invocable: true
 # SKILL: Research Scoper
 
 Transforms vague briefs into decision-ready research plans.
-Four readers, one scope. Stage-aware. No fabrication.
+Five readers, one scope. Stage-aware. No fabrication.
 
-The chat output is the working draft. The **HTML one-pager at `scope.html`** (in the working directory) is the shared deliverable. If a project uses a different convention (e.g. `preview/scope.html`, `docs/scope.html`), the user's CLAUDE.md can override the path.
+The deliverable is two HTML files:
+
+1. **`intake.html`** — the visual pre-flight. Shows the inferred stage with a confidence label, evidence, and context probe as a styled card with clickable stage buttons and a "Copy all my answers" button at the bottom. Generated *before* the scope.
+2. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface, a Short Version, Research Questions, and checkable actions with status pills.
+
+### Where the files land — output path resolution
+
+The skill can be invoked from any working directory. To make the output predictable, the path is resolved in this order:
+
+1. **Explicit `path=` argument.** If the user invokes `/scoper path=~/work/study-x/ <brief>`, both files land in that directory. Tilde-expanded, created if missing.
+2. **CLAUDE.md override.** If the working directory's CLAUDE.md (or any parent's) specifies a scoper output path, use it.
+3. **Git repo root.** If `git rev-parse --show-toplevel` returns a path, files land at `<repo-root>/scopes/<study-slug>/`. The `<study-slug>` is derived from the brief (kebab-case, ~30 chars max). Created if missing.
+4. **Fallback.** Files land at `~/uxr/scopes/<study-slug>/`. Created if missing.
+
+Always announce the chosen path in chat after writing intake.html: *"Wrote intake.html to `<path>/intake.html`."* Same for scope.html when it's written.
+
+The `<study-slug>` is the same for both files — they live in the same directory together.
 
 ---
 
@@ -26,11 +42,11 @@ You know: people misread systems. Trust is fragile. Teams confuse symptoms with 
 **User:** "Sales is asking us to figure out why churn went up last quarter. Want to scope it?"
 
 **What the skill does:**
-1. Outputs the pre-flight block (Step 0) and **stops** — waits for the user to confirm the stage
+1. Writes `intake.html` — a visual pre-flight card with the inferred stage, evidence, context probe, and three clickable stage buttons. Shows the user the link and **stops** — waits for the user to either click a button in the card (which copies a paste-back phrase) or confirm the stage in chat directly.
 2. After confirmation, runs 4–6 parallel WebSearch queries for industry signal
 3. Produces THE SHORT VERSION + RESEARCH QUESTIONS in chat
-4. Writes the full scope to `scope.html` (header, short version, research questions, four collapsible role sections)
-5. Lists the four sections the user can iterate on in chat
+4. Writes the full scope to `scope.html` (header, short version, research questions, five color-coded role sections, Figma alignment surface)
+5. Lists the sections the user can iterate on in chat
 
 The HTML is always complete on first generation. The chat menu exists for refinement, not for "expand to see more."
 
@@ -38,15 +54,31 @@ The HTML is always complete on first generation. The chat menu exists for refine
 
 ## BRAND CUSTOMIZATION
 
-The HTML deliverable uses three colors. To use your own brand, find and replace these hex codes in the HTML's inline `<style>` block:
+The HTML deliverables use a warm, earthy palette. Each role has its own color so a reader can spot their section at a glance. Highlights and accents stay consistent across roles.
 
-| Color | Hex | Used for |
+**Role palette** (used on `<details>` left borders, `<summary>` text colors, action subtitle dots):
+
+| Role | Hex | Why |
 |---|---|---|
-| Coral | `#FF6636` | ACTION blocks, primary accent, action subtitles |
-| Blue | `#366BFF` | Links, secondary accent, `<details>` markers |
-| Mint | `#36FFCA` | Pull-quote borders, `<mark>` highlights (use `#36FFCA40` for the highlight fill) |
+| PM | `#FF6636` Coral | Decisions, action, the page's primary accent |
+| Designer | `#D85C4F` Warm coral-red | Visual craft, sits adjacent to PM |
+| Content | `#B8956A` Warm tan | Narrative, considered, written word |
+| Developer | `#3D3D3D` Charcoal | Structural, hard to undo |
+| Research | `#6B3D2E` Deep brown | Depth, inquiry, foundation |
 
-The layout, font stack, and spacing don't depend on the color choice. Swap freely.
+**Shared accents:**
+
+| Token | Hex | Used for |
+|---|---|---|
+| Highlight | `#F2C94C` (`#F2C94C40` fill) | `<mark>` for the single most important sentence in a section |
+| Pull-quote | `#FF6636` left border | Lead sentence per section |
+| Section background | `#F5EFE6` | Optional warm cream wash on role sections |
+| Action background | `#FF66361A` | ACTION block fill |
+| Flag background | `#fff7e6` | FLAG block fill |
+| Context background | `#f3f3f1` | CONTEXT block fill |
+| Body text | `#1a1a1a` on `#ffffff` | Default |
+
+To rebrand, swap any hex above. The layout, font stack, and spacing don't depend on the color choice.
 
 ---
 
@@ -75,7 +107,7 @@ If the brief is workable, proceed to Step 0 without outputting this block.
 
 ## STEP 0 — HARD GATE: CONFIRM STAGE AND PRE-FLIGHT BEFORE ANYTHING ELSE
 
-This step is a **hard gate**. No scope output — no sections, no tables, no HTML, no drafting — is permitted until the human has explicitly confirmed the stage in a subsequent turn.
+This step is a **hard gate**. No scope output — no sections, no tables, no scope HTML, no drafting — is permitted until the human has explicitly confirmed the stage in a subsequent turn.
 
 Read the brief carefully. Infer which stage this work is at. State your assumption and the evidence for it.
 
@@ -85,14 +117,19 @@ Read the brief carefully. Infer which stage this work is at. State your assumpti
 | **Definition** | A direction exists but no concept or solution is committed. Team is deciding which hypothesis to pursue. |
 | **Validation** | A concept, prototype, or early build exists or is referenced. Team is deciding whether it works and for whom. |
 
-**Output exactly the pre-flight block below and STOP. Do not produce anything else until the human responds in a new turn.**
+**Do two things, in this order, and STOP:**
 
-The pre-flight checklist must be echoed back to the user verbatim — every item, every checkbox. This is how the user verifies you actually read the skill and the brief before scoping.
+1. **Write `intake.html`** to the working directory. This is the visual pre-flight card. It must contain every item in the verbatim chat block below — plus three clickable stage buttons with clear hover, selected, and deselected states (see button state contract below).
+2. **Echo the pre-flight block in chat verbatim** (every item, every checkbox) and tell the user the intake card is ready at `intake.html`. They can confirm by clicking a stage button or by replying in chat directly.
+
+The chat echo is how the user verifies you read the skill and the brief. The intake card is how the team gets a shared surface to align on stage and context before the scope is written.
 
 ---
 🛑 SCOPER PRE-FLIGHT — AWAITING CONFIRMATION
 
-**Brief workability (Step -1):**
+Intake card written to `intake.html` — open it to see the stage inference visually and click to confirm.
+
+**What's in your brief:**
 - [ ] Named problem or decision present
 - [ ] Product / feature / audience referenced
 - [ ] Trigger or reason-why-now present
@@ -100,13 +137,17 @@ The pre-flight checklist must be echoed back to the user verbatim — every item
 
 **Stage inference (Step 0):**
 - STAGE ASSUMED: [Discovery / Definition / Validation]
+- CONFIDENCE: [High / Medium / Low] — based on signal strength and counter-evidence (see scale below)
 - EVIDENCE FROM BRIEF: [One or two specific signals from the brief, quoted or paraphrased, that support this]
 - COUNTER-EVIDENCE CONSIDERED: [Any signal that points to a different stage, or "none"]
 
-**Downstream gates I will run AFTER you confirm stage:**
-- [ ] Step 0B — multi-RQ detection
-- [ ] Step 1 — is research the right next step
-- [ ] Step 1B — product type (software / hardware+software / hardware)
+**What I'll need from you to scope this well:**
+
+These are the things I can't infer from the brief alone. Answer what you can; flag what you can't.
+
+- [ ] **Are these one study or several?** If the brief contains multiple research questions, tell me whether they belong to the same study or should be sequenced.
+- [ ] **Has this already been studied?** If a prior study, dashboard, or note already answers part of this, point me to it so I don't repeat work.
+- [ ] **What kind of product is this?** Software only / hardware + software / hardware only. Hardware decisions are much harder to undo and change the scope.
 
 **CONTEXT PROBE — what else do you have?**
 
@@ -119,8 +160,80 @@ Skip what doesn't apply.
 5. **Senior bets** — Does anyone senior already have a theory?
 6. **Adjacent work** — Is another team touching the same users or flows?
 
-**CONFIRM OR CORRECT:** Please reply with the confirmed stage (or a correction), plus any context from the questions above. I will not produce any scope, sections, tables, or HTML until you do.
+**CONFIRM OR CORRECT:** Click a stage button in `intake.html` (it'll copy a phrase to paste here), or just reply with the confirmed stage and any context. I will not produce any scope until you do.
 ---
+
+### Confidence scale
+
+Confidence is the AI's read of how solid the stage inference is. It's how the user knows whether to push back hard or let the inference stand. Three levels:
+
+| Level | When it applies |
+|---|---|
+| **High** | Brief contains direct signals for the stage (e.g. explicit problem statement with no solution mentioned → Discovery; named prototype to test → Validation). No counter-evidence worth considering. |
+| **Medium** | Strong signals for the stage but at least one piece of counter-evidence is in play (e.g. Discovery problem, but team also names three specific tactics they're considering — could be sliding into Definition). |
+| **Low** | Brief is ambiguous; the AI is guessing more than inferring. Two stages are plausible. Treat this as "stage is open — please confirm." |
+
+The confidence level appears in three places: the chat echo block, the AI's-guess pill on intake.html, and as a one-line note under the stage name in the intake stage card.
+
+### intake.html style contract
+
+Self-contained, light color-scheme pinned, same font stack as `scope.html`. The card layout:
+
+- **Header band** — title (study name in plain language), eyebrow "Scoper · Pre-flight," date.
+- **Stage inference card** — cream background. Eyebrow label "Stage assumed," then the stage name large and colored (Discovery = `#FF6636`, Definition = `#D85C4F`, Validation = `#6B3D2E`). Confidence label as a small line under the stage name ("High confidence — strong signal" / "Medium confidence — some counter-evidence" / "Low confidence — please confirm"). Evidence and counter-evidence as short prose underneath.
+- **Three stage buttons** — Discovery / Definition / Validation. See **button state contract** below.
+- **"What's in your brief"** — four items rendered as `<label><input type="checkbox" checked> …</label>`. Plain language heading. Purely visual; no behavior needed.
+- **"What I'll need from you to scope this well"** — three items, framed as things the *user* must answer for the scope to be solid. Heading must be in the second person. Do not name internal AI steps ("Step 0B", "Step 1B") — the user does not care what they're called internally. Tell them what they need to provide.
+- **"Context probe — what else do you have?"** — six numbered prompts as plain prose. Each prompt has a `<textarea>` so the team can jot answers in the card directly.
+- **"Copy all my answers" button** — at the bottom of the card. Compiles selected stage + checklist state + filled context-probe textareas into one structured paste-back block that the user can drop into chat in one shot. See **copy-all behavior** below.
+- **Footer note** — "Reply in chat with the confirmed stage and any context (or use the buttons above). Nothing else is generated until you do."
+
+### Button state contract
+
+The three stage buttons must communicate four pieces of information at a glance: which stage the AI inferred, how confident the AI is, which one the user is hovering, and which one the user has selected (the "decision"). The user must also be able to deselect.
+
+| State | Background | Border | Text color | Visible label/badge | When |
+|---|---|---|---|---|---|
+| Default (unselected, not hovered, not inferred) | `#ffffff` | `2px solid #d4d4d4` | `#4a4a4a` | — | A stage the AI didn't infer and the user hasn't picked |
+| AI's guess (persistent on the inferred stage) | `#F5EFE6` cream | `2px solid` stage color | Stage color | Coral pill above button: `AI's GUESS · [confidence]` | The stage the AI inferred. **This pill stays visible forever**, even after the user picks a different stage — so the user can always see what the AI thought vs what they decided. |
+| Hover | `#fbf5ec` warmer cream | `2px solid #888` | `#1a1a1a` | Whatever was there before | Cursor over an unselected button |
+| Selected (the user's decision) | `#4F9F3A` solid green | `2px solid #4F9F3A` | `#ffffff` | Checkmark `✓` + "Confirmed" sub-label | The user clicked this button. **All selected buttons are green** regardless of which stage they represent — green = "this is the decision." |
+| Selected + was AI's guess | `#4F9F3A` solid green | `2px solid #4F9F3A` | `#ffffff` | Checkmark + the AI's-guess pill still shows above | The user clicked the same stage the AI inferred. Both signals stay visible: "AI's guess" pill on top + green confirmation fill. |
+| Manual-copy fallback | `#f0f7ea` light green | `2px solid #7eb05e` | `#1a3a14` | Phrase shown inline in monospace | Clipboard API rejected (e.g. window not focused). Show the phrase so user can copy manually. |
+
+**Persistence rule for the AI's-guess pill:** The pill is on the originally-inferred stage and *never leaves it* during the user's session. Clicking other buttons does not move it. Clicking the inferred stage does not remove it. It's the AI's anchor — the user can always see "this is what I thought," even after they've made a different decision.
+
+**Deselect behavior:** Clicking a green/selected button a second time returns it to its default state (or to the AI's-guess state if it was the originally-inferred stage). Only one button can be green at a time — clicking a different button moves green to the new selection.
+
+**Clipboard behavior on stage click:** Write `Confirmed: [Stage]. Proceed with scoping.` to the clipboard. If the Clipboard API rejects, fall back to `document.execCommand('copy')` from a hidden textarea. If that fails, show the phrase inline (manual-copy state). Never let the click silently do nothing.
+
+### Copy-all behavior
+
+The "Copy all my answers" button at the bottom of the intake compiles a structured paste-back. Format:
+
+```
+Confirmed: [Selected stage, or "no stage selected — open for discussion"]. Proceed with scoping.
+
+What's in the brief (verified):
+- [each checked item, one per line]
+
+What you'll need from me:
+- [each item the user checked, one per line — leave blank lines if unchecked]
+
+Context probe:
+1. Data: [filled answer, or "—"]
+2. User contact: [filled answer, or "—"]
+3. Team disagreement: [filled answer, or "—"]
+4. Prior attempts: [filled answer, or "—"]
+5. Senior bets: [filled answer, or "—"]
+6. Adjacent work: [filled answer, or "—"]
+```
+
+The button label updates to indicate state: "Copy all my answers" → "✓ Copied — paste in chat" on success → reverts after 2 seconds. If clipboard fails, the button expands inline to show the whole paste-back in a `<pre>` block so the user can copy manually.
+
+The button is the way context-probe answers reach the chat. Telling the user "you can write answers in the textareas" without giving them a way to send those answers back is a dead end — the button closes the loop.
+
+The intake card is allowed minimal inline JS (clipboard handlers + state toggling + the copy-all compiler). `scope.html` follows a stricter contract — see below.
 
 **CRITICAL: Do not produce the research scope, run Steps 0B / 1 / 1B, or preview any section until the human explicitly confirms or corrects the stage in a new turn. If you catch yourself drafting scope content in the same turn as the pre-flight, stop and delete it. Steps 0B, 1, and 1B belong to a later turn — not this one.**
 
@@ -217,27 +330,50 @@ Generate the file in the working directory (or wherever the user's CLAUDE.md spe
 
 Section order:
 
-1. **Header** — study title, stage, date, product type
-2. **THE SHORT VERSION** — lead sentence, recommended path table, recommended action, "who needs to do what" table (always open)
+1. **Header** — study title, stage badge (color-coded by stage), date, product type, owner
+2. **THE SHORT VERSION** — lead sentence, recommended path table, recommended action, "who needs to do what" table (always open). The "who needs to do what" table shows a colored dot per role matching the role palette.
 3. **RESEARCH QUESTIONS** — primary + sub-questions (always open)
-4. **FOR THE PM** (collapsed `<details>`) — `<summary>` includes the PM's action as a subtitle
-5. **FOR THE DESIGNER** (collapsed `<details>`) — `<summary>` includes the Designer's action as a subtitle
-6. **FOR THE DEVELOPERS** (collapsed `<details>`) — `<summary>` includes the developers' action as a subtitle
-7. **RESEARCH PLAN** (collapsed `<details>`) — `<summary>` includes the Research lead's action as a subtitle
+4. **TEAM ALIGNMENT — for the Figma session** (always open) — the surface where the team agrees on goals, success metrics, guardrails, and risks before research starts. Includes a Figma link slot. See template below.
+5. **FOR THE PM** (collapsed `<details>`, **coral** `#FF6636` left border + summary text color)
+6. **FOR THE DESIGNER** (collapsed `<details>`, **warm coral-red** `#D85C4F`)
+7. **FOR THE CONTENT WRITER** (collapsed `<details>`, **warm tan** `#B8956A`)
+8. **FOR THE DEVELOPER** (collapsed `<details>`, **charcoal** `#3D3D3D`)
+9. **RESEARCH PLAN** (collapsed `<details>`, **deep brown** `#6B3D2E`)
+
+Every collapsed section's `<summary>` shows the section title AND the role's action as a subtitle (smaller, in the role's color). Actions are visible without expanding.
 
 ### HTML style contract
 
-- **Self-contained:** inline CSS, no external fonts, no JS, no external assets
+- **Self-contained:** inline CSS, no external fonts, no external assets. Minimal inline JS allowed for interactivity (checkboxes, status pills, localStorage) — see Interactivity contract below.
 - **Pin light color-scheme:** `html { color-scheme: light; background: #ffffff; }` with explicit `background` and `color` on `body`
 - **Font stack:** `-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`
-- **Width:** max content width ~720px, line-height 1.6+, readable at A4/Letter print
-- **Colors:** see BRAND CUSTOMIZATION section above
+- **Width:** max content width ~760px, line-height 1.6+, readable at A4/Letter print
+- **Colors:** see BRAND CUSTOMIZATION section above. Each role section gets its color on:
+  - The `<details>` left border (4px solid)
+  - The `<summary>` title text color
+  - The action subtitle dot prefix
+  - The pull-quote border within that section
 - **Less form-like:** prefer prose with inline emphasis over rigid table grids. Tables only for genuinely tabular data (timelines, metrics, comparisons). Hypotheses, workarounds, narrative content → paragraphs, not table cells.
-- **Readability and emphasis:** `<strong>` to bold key phrases within prose so a reader can skim and catch the important parts. `<mark>` with a soft mint background (`#36FFCA40`) for the single most important sentence in a section. Pull-quote callouts (larger font, mint left border) for the headline insight per section. Don't over-highlight — if everything is bold, nothing is.
-- **ACTION blocks:** coral left border, light coral background. Most visually prominent element on the page.
-- **FLAG blocks:** warm amber left border. **CONTEXT blocks:** light gray left border.
-- **Collapsible sections:** `<details><summary>` for PM, Designer, Developers, Research Plan — closed by default. Each `<summary>` shows the section title AND the role's action as a subtitle (smaller, coral). This ensures actions are visible without expanding.
-- **Print:** `@media print` expands all `<details>` and adds `page-break-inside: avoid` on sections.
+- **Readability and emphasis:** `<strong>` to bold key phrases. `<mark>` with a soft yellow background (`#F2C94C40`) for the single most important sentence per section. Pull-quote callouts (larger font, role-colored left border) for the headline insight per section. Don't over-highlight — if everything is bold, nothing is.
+- **ACTION blocks:** coral left border, light coral background (`#FF66361A`). Most visually prominent element on the page.
+- **FLAG blocks:** warm amber left border (`#e0a23a`), `#fff7e6` background.
+- **CONTEXT blocks:** light gray left border, `#f3f3f1` background.
+- **Status pills:** small inline pills next to each ACTION reading "Not started" (`#e5e5e5` bg) / "In progress" (`#F2C94C` bg) / "Done" (`#9CCB7E` bg). Clickable — cycles through the three states. Persists via localStorage keyed by action ID.
+- **Checkable actions:** every `WHAT TO DO` line has a `<input type="checkbox">` that, when checked, strikes through the line. Persists via localStorage. Each action needs a stable `id` for persistence.
+- **Collapsible sections:** `<details><summary>` for the five role sections — closed by default. Each `<summary>` shows the section title (in the role's color) AND the role's action as a subtitle (smaller, in the role's color, prefixed by a colored dot).
+- **Print:** `@media print` expands all `<details>` and adds `page-break-inside: avoid` on sections. Status pills and checkboxes are hidden in print.
+
+### Interactivity contract
+
+The scope is not a wall of text — it's a working document the team uses across the project. Inline JS is allowed for these specific interactions, no others:
+
+1. **Checkable actions** — each `→ WHAT TO DO` line is a `<label>` wrapping a checkbox. Checking it strikes through the action text. State persists in `localStorage` under `scoper:[scope-id]:action:[action-id]`.
+2. **Status pills** — clickable pill next to each ACTION, cycles `Not started → In progress → Done → Not started`. State persists under `scoper:[scope-id]:status:[action-id]`.
+3. **No other JS.** No forms, no AJAX, no analytics, no external scripts. Everything is one self-contained file.
+
+The `[scope-id]` is a slug of the study title written once into the page; the `[action-id]` is a stable kebab-case slug per action ("pm-write-success-metric", "research-recruit-walkaways"). This way two scopes on the same machine don't collide.
+
+A single `<script>` block at the end of `<body>` wires all of this up — under 40 lines. The script is the same boilerplate every time; only the data attributes vary.
 
 ### Phase 3 — Chat menu (after HTML lands)
 
@@ -245,10 +381,13 @@ Present the section menu so the user can discuss or refine individual sections:
 
 ```
 The full scope is in scope.html. Sections you can discuss or refine here:
-1. FOR THE PM — decision, risk, timeline, success metrics
-2. FOR THE DESIGNER — what we don't know about users, hypotheses, who we're building for
-3. FOR THE DEVELOPERS — constraints, what we can't undo, build implications
-4. RESEARCH PLAN — existing signals, method, approach, from-finding-to-action
+1. SHORT VERSION — lead sentence, recommended path, who does what
+2. TEAM ALIGNMENT — goals, metrics, guardrails, risks for the Figma session
+3. FOR THE PM — decision, risk, timeline, success metrics
+4. FOR THE DESIGNER — what we don't know about users, hypotheses, who we're building for
+5. FOR THE CONTENT WRITER — voice, naming, copy risks, what to test
+6. FOR THE DEVELOPER — constraints, what we can't undo, build implications
+7. RESEARCH PLAN — existing signals, method, approach, from-finding-to-action
 
 Reply with a number, multiple numbers, or "all" to discuss.
 ```
@@ -310,6 +449,20 @@ Do not explain research process. Write for the most senior person in the room.
 **RULE 8 — NO PRESENTATION OR SLIDE DECK STRUCTURES**
 Do not generate slide deck outlines, presentation structures, or slide-by-slide breakdowns. The scoper produces a research scope document, not a presentation plan. If the brief mentions a deliverable format (e.g. "5–8 slides"), note it once in the timeline or "What Happens After" section. Do not expand it into a table of slide contents.
 
+**RULE 9 — NO "THIS, NOT THAT" FRAMING**
+Do not write sentences whose rhetorical move is to negate one claim and assert another. "It's not a recruitment problem. It's a positioning problem." "The team thinks X. The truth is Y." "Same number, opposite signal." "Same offer, different category."
+
+This pattern feels punchy on first read and shallow on second. It splits the reader's attention between two ideas where one would do, and it makes the writer sound clever instead of clear. Write the single positive claim directly.
+
+| Do not write | Write instead |
+|---|---|
+| "It's not a recruitment problem. It's a positioning problem." | "Experienced people walk away because the platform reads as gig work." |
+| "The current frame is X. The real frame is Y." | "Industry signal points to a different story: experienced people are looking, then walking away." |
+| "Same offer, different category." | "Surge calls the work 'cognition-heavy' and gets a different audience." |
+| "Same number, opposite signal." | "'$45/hr starting' reads as gig work; 'day rates from $1,200' reads as consulting." |
+
+When you catch yourself writing a sentence that contrasts A with B by negating A, delete A and keep the positive claim about B. If the contrast is genuinely load-bearing (a true comparison), use a table — not a rhetorical pair.
+
 ---
 
 ## TEMPLATES
@@ -336,14 +489,15 @@ Readable in under 90 seconds. Everyone reads this. Keep prose to one sentence pe
 
 **WHO NEEDS TO DO WHAT**
 
-Every role's action, here so no one has to open a section to know what they owe.
+Every role's action, here so no one has to open a section to know what they owe. Each row shows a colored dot matching the role palette.
 
 | Role | Action |
 |---|---|
-| PM | [One-line action from the PM section] |
-| Designer | [One-line action from the Designer section] |
-| Developers | [One-line action from the Developers section] |
-| Research | [One-line action from the Research Plan section] |
+| ● PM | [One-line action from the PM section] |
+| ● Designer | [One-line action from the Designer section] |
+| ● Content | [One-line action from the Content section] |
+| ● Developer | [One-line action from the Developer section] |
+| ● Research | [One-line action from the Research Plan section] |
 
 ---
 
@@ -356,6 +510,45 @@ Sub-questions — short, plain language. Each one should sound like something a 
 2.
 3.
 4.
+
+---
+
+### TEAM ALIGNMENT — for the Figma session
+
+*This is the surface the team uses to agree on what the study is for, before research begins. Goals, metrics, guardrails, and risks live here together so a PM, designer, content lead, developer, and researcher can read the same sentences in the same room. Update it in Figma during the alignment session; mirror the agreed version back into this card.*
+
+→ WHAT TO DO: Open the Figma board ([link]). Each role reads the four blocks below in this card and brings one disagreement to the meeting. Lock the agreed version before recruiting starts.
+
+**Goals — what this study is actually for**
+
+[2–3 short sentences. Not "learn about users" — name what the team can do *after* the study that they can't do *now*. If the goal is a decision, name the decision and who makes it.]
+
+**Success metrics — how we'll know it worked**
+
+[Name the research-level metric (was the question answered with enough confidence to act?), the team-level metric (did the team change a plan because of this?), and the business-level metric (what number do we expect to move in 6–12 months?). Don't pad — three lines.]
+
+**Guardrails — the constraints this study has to stay inside**
+
+Guardrails are the existing constraints the work has to operate within. They are not promises about what the study won't do. They are the railings: budget, system limits, pre-existing evaluation criteria, principles or frameworks the company has already adopted, and data the team already has and is expected to use.
+
+Cover the categories that apply. Skip the ones that don't.
+
+- **Cost / budget** — the dollar cap, hours cap, vendor cap, or recruit cost ceiling this study has to fit inside.
+- **System limitations** — what the tools, methods, or platform can and can't do (e.g. recruiter panel can't reach the walk-away segment; analytics doesn't segment by tenure; legal won't allow recording certain audiences).
+- **Evaluation call-outs** — the pre-existing evaluation criteria or quality bar the work will be judged against (e.g. the company's research quality rubric, a specific exec's "I need to see X before I'll act" standard).
+- **Pre-made principles** — company principles, design principles, or research principles already adopted that this study has to respect.
+- **Frameworks** — existing frameworks the team uses (e.g. the OKR cycle the timeline has to fit, a jobs-to-be-done framework already in play, a research-ops framework that governs participant compensation).
+- **Data** — existing data the team has and is expected to draw on before doing primary research (funnel data, prior studies, support tickets, sales notes).
+
+Write each guardrail as one short line. If a category doesn't apply, leave it out — don't pad.
+
+**Risks — what could make this study not land**
+
+[2–3 risks as short prose lines. For each: the risk, what makes it likely, and the early signal you'd watch for. Examples: "Recruit fails — we can't reach the walk-away segment because we don't have their emails. Signal: Week 1 ends with fewer than 2 confirms."]
+
+**Figma link**
+
+[Paste the Figma board URL here. If it doesn't exist yet, name who owns creating it and by when.]
 
 ---
 
@@ -416,7 +609,35 @@ Three positions. Each one changes what you'd build if confirmed.
 
 ---
 
-### FOR THE DEVELOPERS
+### FOR THE CONTENT WRITER
+
+*What a Head of Content is scanning for: What language does the audience actually use? What words are we putting in front of them that aren't landing? Where is copy doing structural work — naming, categorizing, framing — that the rest of the team thinks is "just words"?*
+
+→ WHAT TO DO: [Specific content action before or during research — e.g. audit existing copy for jargon, run a card-sort on category names, draft three positioning variants for the study to test]
+
+**The words the audience uses vs. the words we use**
+
+[2–3 sentences. Name the gap between the team's internal vocabulary and what the audience says out loud. If unknown, flag that the interviews must surface real phrasing — and that copy decisions should wait until they do.]
+
+**Where copy is doing structural work**
+
+[2–3 sentences. Name the places where naming, labels, or framing carry the load (category names, CTA labels, error states, onboarding sequence headers, navigation taxonomy). Copy here is not decoration; it's the product's argument.]
+
+**Three positioning angles worth testing**
+
+Each one frames the same offer differently. The study should be able to tell us which one the audience recognizes themselves in.
+
+1. [Frame A — what it emphasizes, who it's aimed at, what it deprioritizes]
+2. [Frame B —]
+3. [Frame C —]
+
+**What we shouldn't ship without testing**
+
+[Name the specific copy choices that are high-stakes and unproven: category labels, the headline on the landing page, the words used at the moment of sign-up or paywall. These are the lines where the team has been guessing.]
+
+---
+
+### FOR THE DEVELOPER
 
 *What a VP/Director of Engineering is scanning for: What could change what we build? What can't we undo? What should we figure out in parallel?*
 
