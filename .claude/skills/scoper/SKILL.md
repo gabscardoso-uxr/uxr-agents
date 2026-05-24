@@ -15,9 +15,9 @@ The deliverable is three HTML files:
 2. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface linking to figjam.html, a Short Version, Research Questions, and checkable actions with status pills.
 3. **`figjam.html`** — a fake-FigJam mockup of the team alignment session. Sticky-note board with four columns (Goals, Success metrics, Guardrails, Risks), each populated with stickies authored by the five roles. Linked from the "Open FigJam alignment board" button in `scope.html`. This is the demo artifact for what the alignment session looks like — in a real team, this would be a real FigJam URL.
 
-### Progress tracker
+### Progress tracker — a real navigation bar, not decoration
 
-Every HTML file (intake.html, scope.html, figjam.html) shows the same progress tracker at the top so the reader always knows where in the scoper workflow they are. Six steps:
+Every HTML file (intake.html, scope.html, figjam.html) shows the same progress tracker at the top. The six steps:
 
 1. Brief
 2. Pre-flight
@@ -26,7 +26,42 @@ Every HTML file (intake.html, scope.html, figjam.html) shows the same progress t
 5. Research
 6. Findings
 
-The current step is rendered with a dark pill background and a coral step number. Completed steps are rendered with a light green pill and a green step number. Upcoming steps are rendered with a light grey pill. This is a visual indicator only — the steps are not clickable, but their numbers + labels are stable so a reader can orient instantly. Both Brief and Pre-flight are "done" by the time intake.html is being read; on scope.html, Scope is "current"; on figjam.html, Alignment is "current."
+**Each step that points to a generated sibling file must be a real `<a>` link.** Past-tense steps (completed) and future steps that have files (e.g. scope.html exists by the time you're on figjam.html) get an `href`. Steps for files that don't exist yet (e.g. "Findings" before synthesis ran) stay as `<div>` and render in the muted upcoming style.
+
+Mapping:
+
+| Step | Links to | When |
+|---|---|---|
+| 1 Brief | (in-page anchor to `#the-brief` block on the current page) | Always — every HTML has the brief embedded |
+| 2 Pre-flight | `intake.html` | Always (intake.html is the first artifact) |
+| 3 Scope | `scope.html` | Once scope.html has been generated |
+| 4 Alignment | `figjam.html` | Once figjam.html has been generated |
+| 5 Research | TBD (future skill) | Not yet — render as upcoming |
+| 6 Findings | TBD (future skill) | Not yet — render as upcoming |
+
+The current step is rendered with a dark pill background and a coral step number. Completed steps are clickable green pills. Upcoming steps with no file are muted grey, not clickable.
+
+This way the tracker is the navigation bar — readers move between phases by clicking. The progress is visible AND walkable.
+
+### "The brief" block — every HTML must show the original brief verbatim
+
+Every HTML deliverable (intake.html, scope.html, figjam.html) must include a "The brief" block near the top so the document is self-contained and the reader can ground every output back to what was asked. Without it, the HTML floats in space.
+
+Style:
+
+- Heading: `The brief`, with an in-page anchor id `#the-brief` so the tracker's step 1 can link to it.
+- Body: the brief text verbatim, as a `<blockquote>` styled with a coral left border and cream background. Quote the brief exactly — no summarizing, no paraphrasing.
+- Position: directly under the page header, before any content sections.
+- Default state on intake.html: **expanded** (the user is verifying the brief here, so it's prominent).
+- Default state on scope.html and figjam.html: **collapsed inside a `<details>`** with summary "The brief — what we were asked." Reader can expand it to re-anchor at any moment.
+
+### Forward-nav CTA at the bottom of every HTML
+
+Every HTML ends with a "next step" block so the reader always knows where to go next:
+
+- **intake.html footer:** Until the user confirms stage, the footer is the existing footer-note ("Reply in chat with the confirmed stage..."). After the scope is generated, this footer becomes a "Continue → scope.html" CTA. Since intake.html is generated only once at pre-flight time, write the CTA pointing to scope.html (the link will be broken until scope.html exists, but the reader will see "scope coming next" framing).
+- **scope.html footer:** The existing NEXT STEP CTA card linking to figjam.html stays where it is.
+- **figjam.html footer:** Currently shows the decision banner. Add a small "Sequence" footer below it with: `← Back to scope.html` and `Research phase →` (the latter is a muted, non-link placeholder for future synthesis output, with a tooltip "generated after research runs").
 
 ### Where the files land — output path resolution
 
