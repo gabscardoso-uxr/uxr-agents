@@ -9,11 +9,22 @@ user-invocable: true
 Transforms vague briefs into decision-ready research plans.
 Five readers, one scope. Stage-aware. No fabrication.
 
-The deliverable is three HTML files:
+The deliverable is four HTML files that form a clickable sequence — brief → pre-flight → scope → alignment. Each one is a real artifact, navigable from the others via the progress tracker.
 
-1. **`intake.html`** — the visual pre-flight. Shows the inferred stage with a confidence label, evidence, and context probe as a styled card with clickable stage buttons and a "Copy all my answers" button at the bottom. Generated *before* the scope.
-2. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface linking to figjam.html, a Short Version, Research Questions, and checkable actions with status pills.
-3. **`figjam.html`** — a fake-FigJam mockup of the team alignment session. Sticky-note board with four columns (Goals, Success metrics, Guardrails, Risks), each populated with stickies authored by the five roles. Linked from the "Open FigJam alignment board" button in `scope.html`. This is the demo artifact for what the alignment session looks like — in a real team, this would be a real FigJam URL.
+1. **`brief.html`** — the entry surface. A form with fields for the problem, product, audience, why-now, prior signals, timeline, and senior theories. A green "Generate pre-flight →" button at the bottom compiles every field into a structured paste-back the user drops into chat. Generated when `/scoper` is invoked **with no brief argument**; the user fills it out and submits it. When `/scoper` is invoked **with a brief argument**, brief.html still gets written — pre-filled with a best-effort parse of the arg — so the artifact chain stays intact.
+2. **`intake.html`** — the visual pre-flight. Shows the inferred stage with a confidence label, evidence, and context probe as a styled card with clickable stage buttons and a "Copy all my answers" button at the bottom. Generated *after* the brief, *before* the scope.
+3. **`scope.html`** — the shared deliverable. Five color-coded role sections (PM, Designer, Content, Developer, Research), a Figma alignment surface linking to figjam.html, a Short Version, Research Questions, and checkable actions with status pills.
+4. **`figjam.html`** — a fake-FigJam mockup of the team alignment session. Sticky-note board with four columns (Goals, Success metrics, Guardrails, Risks), each populated with stickies authored by the five roles. Linked from the "Open FigJam alignment board" button in `scope.html`. This is the demo artifact for what the alignment session looks like — in a real team, this would be a real FigJam URL.
+
+### Why brief.html exists
+
+Without brief.html, the brief lives only in chat. The user invokes `/scoper <brief>`, the brief becomes an invisible argument, and the tracker's step 1 "Brief" points to nothing tangible. That breaks the "click through phases" mental model.
+
+brief.html turns the brief into a real artifact:
+- The user fills out a structured form (or accepts pre-filled fields if they passed a brief arg).
+- The form's "Generate pre-flight" button compiles the fields into a paste-back, so submitting the brief is one click + one paste.
+- The tracker's step 1 on every later page links to brief.html — so the brief is reachable as a source artifact, not just embedded text.
+- Empty fields in brief.html become explicit questions in the pre-flight (intake.html). The pre-flight is the AI's read of what's known and what isn't.
 
 ### Progress tracker — a real navigation bar, not decoration
 
@@ -32,12 +43,14 @@ Mapping:
 
 | Step | Links to | When |
 |---|---|---|
-| 1 Brief | (in-page anchor to `#the-brief` block on the current page) | Always — every HTML has the brief embedded |
-| 2 Pre-flight | `intake.html` | Always (intake.html is the first artifact) |
+| 1 Brief | `brief.html` | Always — brief.html is the first artifact |
+| 2 Pre-flight | `intake.html` | Always — generated right after the brief is submitted |
 | 3 Scope | `scope.html` | Once scope.html has been generated |
 | 4 Alignment | `figjam.html` | Once figjam.html has been generated |
 | 5 Research | TBD (future skill) | Not yet — render as upcoming |
 | 6 Findings | TBD (future skill) | Not yet — render as upcoming |
+
+Each later HTML (intake.html, scope.html, figjam.html) also keeps an in-page collapsible "The brief" block (anchor `#the-brief`) so the brief is readable inline without leaving the page. The tracker is for navigating between source artifacts; the in-page block is for quick reference.
 
 The current step is rendered with a dark pill background and a coral step number. Completed steps are clickable green pills. Upcoming steps with no file are muted grey, not clickable.
 
@@ -135,7 +148,19 @@ To rebrand, swap any hex above. The layout, font stack, and spacing don't depend
 
 Before inferring stage, check whether the brief contains enough to reason about. Minimum viable input: a named problem or decision, a product or audience referenced, and some signal about why this is being asked now.
 
-If any of those are missing, do not guess. Output the block below and stop — do not proceed to Step 0.
+### When `/scoper` is invoked with no brief argument
+
+Don't flag the user. Generate **`brief.html`** with a blank form (all fields empty) and tell them: *"I've written a brief form to brief.html — fill it out, then hit the green button at the bottom to send it back."* This is the website-style entry point: instead of forcing the user to cram a brief into a chat argument, they fill a structured form.
+
+After they paste back the compiled brief, evaluate it against the minimum-viable bar above. If it still misses things, output the BRIEF INCOMPLETE flag (next block) and stop.
+
+### When `/scoper` is invoked with a brief argument
+
+Parse the arg into the brief fields (best-effort: problem → "What I'm trying to figure out," product/audience → respective fields, etc.). Write `brief.html` pre-filled with the parse so the artifact chain stays intact. Then evaluate against the minimum-viable bar.
+
+### If the brief is missing key info
+
+Output the block below and stop — do not proceed to Step 0.
 
 ---
 ⚠ FLAG — BRIEF INCOMPLETE
@@ -147,10 +172,63 @@ Missing:
 - [Why this is being asked now — trigger, stakeholder, deadline]
 - [Any signals or prior work that exist]
 
-Please answer what you can. I will not fabricate the rest.
+Please answer what you can — or open brief.html and fill in the missing fields. I will not fabricate the rest.
 ---
 
 If the brief is workable, proceed to Step 0 without outputting this block.
+
+### brief.html style contract
+
+Self-contained, light color-scheme pinned, same font stack as the other HTMLs. Layout:
+
+- **Tracker** at the top — step 1 "Brief" is the current dark pill; steps 2–4 are clickable upcoming-link pills pointing to intake/scope/figjam (the links will be broken until those files exist — that's fine, they're the visible roadmap).
+- **Header band** — eyebrow "Scoper · Brief," title "Start a study — fill out the brief."
+- **Intro block** — cream background, one paragraph explaining what to do.
+- **Sections of form fields**, grouped under "The study," "Product & audience," "Why now," and "What you already have":
+  - **Working title** — single-line input
+  - **What you're trying to figure out** — large textarea
+  - **Product or feature** — textarea
+  - **Audience** — textarea
+  - **Why now / trigger** — textarea
+  - **Timeline / deadline** — single-line input
+  - **Prior signals or work** — textarea
+  - **Senior theories on the table** — textarea
+- **Submit block** at the bottom — dark background, green "Generate pre-flight →" button. Clicking it compiles every non-empty field into a structured paste-back and copies it to the clipboard (with execCommand + inline-display fallbacks).
+- **Forward CTA** below the submit block — cream card pointing to intake.html with a preview link.
+
+### Brief paste-back format
+
+The compiled paste-back looks like:
+
+```
+SCOPER BRIEF
+
+Study: [working title]
+
+What I'm trying to figure out:
+[problem text]
+
+Product / surface:
+[product text]
+
+Audience:
+[audience text]
+
+Why now:
+[why-now text]
+
+Timeline: [timeline text]
+
+Prior signals or work:
+[prior signals text]
+
+Senior bets / theories on the table:
+[senior bets text]
+
+— Proceed with pre-flight.
+```
+
+Empty fields are skipped entirely (no "—" placeholders). The user sees only what they filled in. The `— Proceed with pre-flight.` line at the bottom is the signal to the skill that this is a brief paste-back, not just chat text.
 
 ---
 
